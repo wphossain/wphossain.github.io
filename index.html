@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WP Hossain | Google Ads Specialist for HVAC Contractors</title>
+<meta name="description" content="WP Hossain is a Google Ads Specialist helping HVAC contractors generate more service calls through Search Ads, Performance Max, and accurate conversion tracking with GTM and GA4." />
+<meta name="keywords" content="Google Ads Specialist, HVAC Google Ads, HVAC Marketing, Lead Generation, Conversion Tracking, Google Tag Manager, Google Analytics 4, Performance Max, Landing Page Optimization, Google Ads Audit, HVAC PPC" />
+<meta name="author" content="Mikail Hossain" />
+<link rel="canonical" href="https://wphossain.com/" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="WP Hossain | Google Ads Specialist for HVAC Contractors" />
+<meta property="og:description" content="Search Ads, Conversion Tracking, and more booked service calls for HVAC contractors." />
+<meta property="og:url" content="https://wphossain.com/" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
+
+<style>
+  /* =========================================================
+     TOKENS
+  ========================================================= */
+  :root {
+    --ink-base: #0E1B24;
+    --ink-raised: #142530;
+    --ink-raised-2: #1A2E3B;
+    --line: rgba(244,239,228,0.10);
+    --line-strong: rgba(244,239,228,0.20);
+
+    --paper: #F4EFE4;
+    --paper-dim: #E7E0D0;
+
+    --text-hi: #F4EFE4;
+    --text-mid: rgba(244,239,228,0.70);
+    --text-low: rgba(244,239,228,0.45);
+
+    --copper: #C97C3D;
+    --copper-hi: #E0985A;
+    --flame: #3E7CFF;
+    --signal: #2E9E6C;
+    --alert: #D65B5B;
+
+    --g-blue: #4285F4; --g-yellow: #FBBC04; --g-green: #34A853; --g-red: #EA4335;
+
+    --radius-card: 18px;
+    --radius-sm: 10px;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  /* =========================================================
+     RESET / BASE
+  ========================================================= */
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--ink-base);
+    color: var(--text-hi);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--copper); color: var(--ink-base); }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: var(--ink-base); }
+  ::-webkit-scrollbar-thumb { background: var(--copper); border-radius: 6px; }
+
+  h1, h2, h3, h4 { font-family: var(--font-display); margin: 0; letter-spacing: -0.01em; }
+  p { margin: 0; }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+  section { position: relative; }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--copper-hi);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 6px; height: 6px;
+    background: var(--copper);
+    border-radius: 1px;
+    transform: rotate(45deg);
+    display: inline-block;
+  }
+
+  /* blueprint grid background, used sparingly */
+  .blueprint-grid {
+    background-image:
+      linear-gradient(rgba(244,239,228,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(244,239,228,0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  /* perforation / ticket-tear divider */
+  .tear {
+    height: 1px;
+    position: relative;
+    background: repeating-linear-gradient(90deg, var(--line-strong) 0 10px, transparent 10px 18px);
+  }
+
+  /* buttons */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 15px 26px;
+    border-radius: 999px;
+    font-weight: 700; font-size: 14px;
+    font-family: var(--font-body);
+    cursor: pointer; border: none;
+    transition: transform .25s ease, box-shadow .25s ease, filter .2s ease, background .2s ease;
+  }
+  .btn-copper {
+    background: linear-gradient(135deg, var(--copper) 0%, var(--copper-hi) 100%);
+    color: #1A0F05;
+    box-shadow: 0 14px 34px -14px rgba(201,124,61,0.65), inset 0 1px 0 rgba(255,255,255,0.25);
+  }
+  .btn-copper:hover { transform: translateY(-2px); filter: brightness(1.06); }
+  .btn-ghost {
+    background: rgba(244,239,228,0.04);
+    color: var(--text-hi);
+    border: 1px solid var(--line-strong);
+  }
+  .btn-ghost:hover { transform: translateY(-2px); background: rgba(244,239,228,0.08); border-color: var(--copper); }
+
+  /* =========================================================
+     REVEAL ANIMATION
+  ========================================================= */
+  [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+  [data-reveal].in { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* =========================================================
+     NAVBAR
+  ========================================================= */
+  #navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 18px 0;
+    transition: padding .3s ease;
+  }
+  #navbar.scrolled { padding: 10px 0; }
+  #navbar-inner {
+    max-width: 1180px; margin: 0 auto; padding: 0 16px;
+  }
+  #navbar-pill {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 12px 10px 16px;
+    border-radius: 999px;
+    background: rgba(14,27,36,0.72);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    transition: box-shadow .3s ease, border-color .3s ease;
+  }
+  #navbar.scrolled #navbar-pill {
+    border-color: var(--line-strong);
+    box-shadow: 0 18px 50px -28px rgba(0,0,0,0.7);
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand-mark {
+    width: 34px; height: 34px; border-radius: 9px;
+    background: linear-gradient(135deg, var(--copper) 0%, var(--copper-hi) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-weight: 700; font-size: 15px; color: #1A0F05;
+    flex-shrink: 0;
+  }
+  .brand-text { line-height: 1.15; }
+  .brand-text .name { font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--text-hi); }
+  .brand-text .role { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-low); }
+
+  .nav-links { display: none; align-items: center; gap: 2px; }
+  .nav-links a {
+    padding: 9px 14px; border-radius: 999px;
+    font-size: 13.5px; font-weight: 600; color: var(--text-mid);
+    transition: color .2s ease, background .2s ease;
+  }
+  .nav-links a:hover { color: var(--text-hi); background: rgba(244,239,228,0.06); }
+
+  .nav-cta { display: flex; align-items: center; gap: 8px; }
+  .nav-cta .btn-copper { display: none; padding: 11px 20px; font-size: 13px; }
+
+  #mobile-toggle {
+    width: 40px; height: 40px; border-radius: 999px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(244,239,228,0.06); border: 1px solid var(--line-strong);
+    cursor: pointer;
+  }
+  #mobile-toggle span { display: block; width: 16px; height: 1.5px; background: var(--text-hi); position: relative; }
+  #mobile-toggle span::before, #mobile-toggle span::after {
+    content: ""; position: absolute; left: 0; width: 16px; height: 1.5px; background: var(--text-hi); transition: transform .25s ease;
+  }
+  #mobile-toggle span::before { top: -5px; }
+  #mobile-toggle span::after { top: 5px; }
+
+  #mobile-menu {
+    display: none;
+    margin: 8px 16px 0; padding: 8px;
+    border-radius: 18px;
+    background: rgba(14,27,36,0.92);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(18px);
+  }
+  #mobile-menu.open { display: block; }
+  #mobile-menu a {
+    display: block; padding: 13px 16px; border-radius: 12px;
+    font-size: 14.5px; font-weight: 600; color: var(--text-mid);
+  }
+  #mobile-menu a:hover { background: rgba(244,239,228,0.06); color: var(--text-hi); }
+
+  @media (min-width: 900px) {
+    .nav-links { display: flex; }
+    .nav-cta .btn-copper { display: inline-flex; }
+    #mobile-toggle { display: none; }
+  }
+
+  /* =========================================================
+     HERO
+  ========================================================= */
+  #hero {
+    padding: 168px 0 96px;
+    background:
+      radial-gradient(900px 500px at 85% -6%, rgba(201,124,61,0.14), transparent 60%),
+      radial-gradient(700px 500px at 5% 20%, rgba(62,124,255,0.10), transparent 60%),
+      var(--ink-base);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .hero-eyebrow-row {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 22px;
+  }
+  .status-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 13px; border-radius: 999px;
+    background: rgba(46,158,108,0.12); border: 1px solid rgba(46,158,108,0.35);
+    font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; color: var(--signal);
+  }
+  .status-dot {
+    width: 7px; height: 7px; border-radius: 999px; background: var(--signal);
+    box-shadow: 0 0 0 0 rgba(46,158,108,0.6);
+    animation: pulseDot 2s ease-out infinite;
+  }
+  @keyframes pulseDot {
+    0% { box-shadow: 0 0 0 0 rgba(46,158,108,0.55); }
+    70% { box-shadow: 0 0 0 9px rgba(46,158,108,0); }
+    100% { box-shadow: 0 0 0 0 rgba(46,158,108,0); }
+  }
+
+  .hero-h1 {
+    font-size: clamp(32px, 5.4vw, 54px);
+    line-height: 1.06;
+    font-weight: 700;
+    color: var(--text-hi);
+    max-width: 15ch;
+  }
+  .hero-h1 .accent { color: var(--copper-hi); }
+
+  .hero-desc {
+    margin-top: 22px;
+    font-size: 17px; line-height: 1.6;
+    color: var(--text-mid);
+    max-width: 52ch;
+  }
+
+  .hero-actions {
+    margin-top: 32px;
+    display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+  }
+  .hero-actions .btn-copper { padding: 17px 28px; font-size: 14.5px; }
+  .hero-actions .btn-ghost { padding: 17px 24px; font-size: 14.5px; }
+
+  .hero-stats-row {
+    margin-top: 44px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    max-width: 460px;
+  }
+  .hero-stat .num {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 24px; color: var(--text-hi);
+  }
+  .hero-stat .lbl {
+    font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em;
+    color: var(--text-low); margin-top: 4px; text-transform: uppercase; line-height: 1.4;
+  }
+
+  /* ---- Signature visual: work order ticket + google ad mock ---- */
+  .hero-visual { position: relative; }
+
+  .ticket {
+    background: var(--paper);
+    color: #241A0E;
+    border-radius: 14px;
+    padding: 22px 22px 24px;
+    box-shadow: 0 40px 80px -30px rgba(0,0,0,0.55);
+    position: relative;
+    max-width: 420px;
+    margin: 0 auto;
+    transform: rotate(-1.6deg);
+  }
+  .ticket::before, .ticket::after {
+    content: ""; position: absolute; width: 22px; height: 22px;
+    background: var(--ink-base); border-radius: 999px; top: 50%; transform: translateY(-50%);
+  }
+  .ticket::before { left: -11px; }
+  .ticket::after { right: -11px; }
+
+  .ticket-head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding-bottom: 14px; border-bottom: 1px dashed rgba(36,26,14,0.25);
+  }
+  .ticket-head .job-no { font-family: var(--font-mono); font-size: 11px; color: rgba(36,26,14,0.55); }
+  .ticket-head .job-title { font-family: var(--font-display); font-weight: 700; font-size: 15.5px; margin-top: 3px; }
+  .ticket-status {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
+    padding: 5px 10px; border-radius: 999px; background: rgba(46,158,108,0.15); color: #1F7A50;
+    text-transform: uppercase; white-space: nowrap;
+  }
+
+  .ad-mock {
+    margin-top: 16px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 14px 14px 12px;
+    border: 1px solid rgba(36,26,14,0.1);
+  }
+  .ad-mock .ad-tag {
+    display: inline-block; font-family: var(--font-body); font-weight: 700; font-size: 10.5px;
+    color: #1a5d33; background: #e6f4ea; padding: 2px 6px; border-radius: 3px; margin-bottom: 6px;
+  }
+  .ad-mock .ad-url { font-family: var(--font-body); font-size: 12.5px; color: #1a1a1a; opacity: 0.7; }
+  .ad-mock .ad-headline { font-family: var(--font-body); font-size: 15.5px; color: #1558d6; font-weight: 600; margin-top: 3px; line-height: 1.35; }
+  .ad-mock .ad-desc { font-family: var(--font-body); font-size: 12.5px; color: #444; margin-top: 5px; line-height: 1.5; }
+
+  .ticket-metrics {
+    margin-top: 16px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  }
+  .ticket-metrics .m-item { text-align: left; }
+  .ticket-metrics .m-num { font-family: var(--font-mono); font-weight: 600; font-size: 16px; color: #241A0E; }
+  .ticket-metrics .m-lbl { font-family: var(--font-mono); font-size: 9px; color: rgba(36,26,14,0.5); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+
+  .ticket-footer {
+    margin-top: 16px; padding-top: 12px; border-top: 1px dashed rgba(36,26,14,0.25);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .ticket-footer .assigned { font-family: var(--font-mono); font-size: 10.5px; color: rgba(36,26,14,0.55); }
+  .ticket-footer .assigned b { color: #241A0E; }
+
+  .floater-badge {
+    position: absolute;
+    background: var(--ink-raised);
+    border: 1px solid var(--line-strong);
+    border-radius: 12px;
+    padding: 10px 14px;
+    display: flex; align-items: center; gap: 9px;
+    box-shadow: 0 20px 40px -18px rgba(0,0,0,0.6);
+    animation: floatSlow 7s ease-in-out infinite;
+  }
+  .floater-badge .fb-icn { font-size: 15px; }
+  .floater-badge .fb-txt { font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--text-hi); white-space: nowrap; }
+  .floater-1 { top: -18px; right: 6%; animation-delay: 0s; }
+  .floater-2 { bottom: 6%; left: -4%; animation-delay: 1.2s; }
+  @keyframes floatSlow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @media (max-width: 640px) {
+    .floater-badge { display: none; }
+  }
+
+  @media (min-width: 980px) {
+    .hero-grid { grid-template-columns: 1.05fr 0.95fr; gap: 40px; }
+    .ticket { margin: 0; }
+  }
+
+  /* =========================================================
+     TRUST / CERTIFICATIONS STRIP
+  ========================================================= */
+  #trust {
+    padding: 40px 0 44px;
+    background: var(--ink-base);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .trust-label {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-low);
+    margin-bottom: 22px;
+  }
+  .trust-marquee { overflow: hidden; position: relative; }
+  .trust-marquee::before, .trust-marquee::after {
+    content: ""; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2;
+  }
+  .trust-marquee::before { left: 0; background: linear-gradient(90deg, var(--ink-base), transparent); }
+  .trust-marquee::after { right: 0; background: linear-gradient(270deg, var(--ink-base), transparent); }
+  .trust-track {
+    display: flex; gap: 14px; width: max-content;
+    animation: trustScroll 30s linear infinite;
+  }
+  @keyframes trustScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .cert-badge {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 18px;
+    border-radius: 12px;
+    background: var(--ink-raised);
+    border: 1px solid var(--line);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .cert-badge .cert-dots { display: flex; gap: 3px; }
+  .cert-badge .cert-dots span { width: 7px; height: 7px; border-radius: 999px; }
+  .cert-badge .cert-name { font-family: var(--font-body); font-size: 13px; font-weight: 600; color: var(--text-mid); }
+  .cert-badge .cert-name b { color: var(--text-hi); }
+
+  /* =========================================================
+     SERVICES ("JOB CATEGORIES")
+  ========================================================= */
+  #services { padding: 108px 0; background: var(--ink-base); }
+  .section-head { max-width: 640px; margin-bottom: 52px; }
+  .section-head .eyebrow { margin-bottom: 14px; }
+  .section-head h2 { font-size: clamp(26px, 3.6vw, 38px); line-height: 1.15; color: var(--text-hi); font-weight: 700; }
+  .section-head p { margin-top: 14px; font-size: 15.5px; line-height: 1.65; color: var(--text-mid); max-width: 56ch; }
+
+  .svc-grid {
+    display: grid; grid-template-columns: 1fr; gap: 14px;
+  }
+  .svc-card {
+    background: var(--ink-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: 26px 24px;
+    transition: transform .3s cubic-bezier(.2,.7,.2,1), border-color .3s ease, background .3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .svc-card:hover { transform: translateY(-4px); border-color: var(--line-strong); background: var(--ink-raised-2); }
+  .svc-card .svc-top {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
+  }
+  .svc-icn {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    background: rgba(201,124,61,0.12); border: 1px solid rgba(201,124,61,0.25);
+  }
+  .svc-tag {
+    font-family: var(--font-mono); font-size: 10px; color: var(--text-low);
+    border: 1px solid var(--line-strong); padding: 4px 9px; border-radius: 999px;
+  }
+  .svc-card h3 { font-size: 17.5px; font-weight: 700; color: var(--text-hi); margin-bottom: 8px; }
+  .svc-card p { font-size: 14px; line-height: 1.6; color: var(--text-mid); }
+
+  @media (min-width: 720px) {
+    .svc-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1080px) {
+    .svc-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  /* =========================================================
+     WHY CHOOSE ME
+  ========================================================= */
+  #why { padding: 108px 0; background: var(--ink-raised); border-top: 1px solid var(--line); }
+  .why-grid { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: start; }
+
+  .why-photo-wrap { display: flex; justify-content: center; }
+  .why-photo {
+    width: 100%; max-width: 300px; aspect-ratio: 4/5;
+    border-radius: 20px;
+    background: linear-gradient(160deg, var(--ink-raised-2), var(--ink-base));
+    border: 1px solid var(--line-strong);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .why-photo .ph-initial {
+    font-family: var(--font-display); font-weight: 700; font-size: 64px;
+    color: var(--copper); opacity: 0.85;
+  }
+  .why-photo .ph-frame {
+    position: absolute; inset: 14px; border: 1px dashed var(--line-strong); border-radius: 14px;
+    pointer-events: none;
+  }
+  .why-photo-badge {
+    margin-top: -22px; z-index: 2;
+    background: var(--ink-base); border: 1px solid var(--line-strong);
+    border-radius: 999px; padding: 10px 18px;
+    font-family: var(--font-mono); font-size: 11.5px; color: var(--text-mid);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .why-photo-col { display: flex; flex-direction: column; align-items: center; }
+
+  .why-points { display: grid; grid-template-columns: 1fr; gap: 22px; }
+  .why-point { display: flex; gap: 16px; }
+  .why-point .wp-num {
+    font-family: var(--font-mono); font-size: 12px; color: var(--copper-hi);
+    width: 30px; flex-shrink: 0; padding-top: 3px;
+  }
+  .why-point h3 { font-size: 16.5px; font-weight: 700; color: var(--text-hi); margin-bottom: 6px; }
+  .why-point p { font-size: 14.5px; line-height: 1.65; color: var(--text-mid); }
+
+  @media (min-width: 940px) {
+    .why-grid { grid-template-columns: 0.8fr 1.2fr; gap: 64px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+<header id="navbar">
+  <div id="navbar-inner">
+    <div id="navbar-pill">
+      <a href="#top" class="brand">
+        <span class="brand-mark">WP</span>
+        <span class="brand-text">
+          <div class="name">WP Hossain</div>
+          <div class="role">Google Ads Specialist</div>
+        </span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#results">Results</a>
+        <a href="#process">Process</a>
+        <a href="#case-studies">Case Studies</a>
+        <a href="#testimonials">Reviews</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a href="#contact" class="btn btn-copper">Free Audit</a>
+        <button id="mobile-toggle" aria-label="Menu" aria-expanded="false">
+          <span></span>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu">
+      <a href="#services">Services</a>
+      <a href="#results">Results</a>
+      <a href="#process">Process</a>
+      <a href="#case-studies">Case Studies</a>
+      <a href="#testimonials">Reviews</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section id="top">
+  <div id="hero" class="blueprint-grid">
+    <div class="wrap">
+      <div class="hero-grid">
+
+        <div data-reveal>
+          <div class="hero-eyebrow-row">
+            <span class="status-chip"><span class="status-dot"></span> Booking Q3 audits</span>
+            <span class="eyebrow">HVAC · SEARCH ADS</span>
+          </div>
+
+          <h1 class="hero-h1">Google Ads for HVAC contractors, built around <span class="accent">booked service calls.</span></h1>
+
+          <p class="hero-desc">I run Search Ads and Performance Max for HVAC companies, with Conversion Tracking, GTM, and GA4 set up correctly from day one — so every lead is tracked and every dollar is measured, not guessed at.</p>
+
+          <div class="hero-actions">
+            <a href="#contact" class="btn btn-copper">Book a Free Google Ads Audit →</a>
+            <a href="#case-studies" class="btn btn-ghost">See Case Studies</a>
+          </div>
+
+          <div class="hero-stats-row">
+            <div class="hero-stat">
+              <div class="num">USA · CA · UK</div>
+              <div class="lbl">Markets Served</div>
+            </div>
+            <div class="hero-stat">
+              <div class="num">100%</div>
+              <div class="lbl">Tracking Verified</div>
+            </div>
+            <div class="hero-stat">
+              <div class="num">HVAC</div>
+              <div class="lbl">Primary Focus</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual" data-reveal>
+          <div class="floater-badge floater-1">
+            <span class="fb-icn">📞</span>
+            <span class="fb-txt">+1 service call — 0:42s ago</span>
+          </div>
+
+          <div class="ticket">
+            <div class="ticket-head">
+              <div>
+                <div class="job-no">WORK ORDER #WPH-2291</div>
+                <div class="job-title">HVAC Search Campaign</div>
+              </div>
+              <span class="ticket-status">● Live</span>
+            </div>
+
+            <div class="ad-mock">
+              <span class="ad-tag">Ad</span>
+              <div class="ad-url">www.yourhvaccompany.com</div>
+              <div class="ad-headline">24/7 Emergency AC Repair — Same-Day Service</div>
+              <div class="ad-desc">Licensed HVAC technicians near you. Free estimate, no overtime fees. Book online in 60 seconds.</div>
+            </div>
+
+            <div class="ticket-metrics">
+              <div class="m-item">
+                <div class="m-num">3.8x</div>
+                <div class="m-lbl">Search ROAS</div>
+              </div>
+              <div class="m-item">
+                <div class="m-num">$0</div>
+                <div class="m-lbl">Wasted Spend</div>
+              </div>
+              <div class="m-item">
+                <div class="m-num">GA4</div>
+                <div class="m-lbl">Tracking Live</div>
+              </div>
+            </div>
+
+            <div class="ticket-footer">
+              <span class="assigned">Assigned: <b>WP Hossain</b></span>
+              <span class="job-no">GTM ✓ VERIFIED</span>
+            </div>
+          </div>
+
+          <div class="floater-badge floater-2">
+            <span class="fb-icn">✅</span>
+            <span class="fb-txt">Conversion tracked in GA4</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TRUST / CERTIFICATIONS
+============================================================ -->
+<section id="trust">
+  <div class="wrap">
+    <div class="trust-label" data-reveal>Verified Google credentials</div>
+    <div class="trust-marquee" data-reveal>
+      <div class="trust-track" id="trust-track"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SERVICES
+============================================================ -->
+<section id="services">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Job Categories</span>
+      <h2>Everything a Google Ads account needs to actually produce calls.</h2>
+      <p>No bundled "social media + SEO + ads" packages. Just the Google Ads stack, done correctly, for one industry.</p>
+    </div>
+
+    <div class="svc-grid">
+      <div class="svc-card" data-reveal>
+        <div class="svc-top"><div class="svc-icn">🔍</div><span class="svc-tag">CORE</span></div>
+        <h3>Google Search Ads</h3>
+        <p>Search campaigns built around emergency and high-intent HVAC terms — the searches that turn into same-day calls.</p>
+      </div>
+      <div class="svc-card" data-reveal>
+        <div class="svc-top"><div class="svc-icn">📈</div><span class="svc-tag">SCALE</span></div>
+        <h3>Performance Max</h3>
+        <p>PMax layered on top of Search once tracking is solid, so it's optimizing toward real bookings — not vanity clicks.</p>
+      </div>
+      <div class="svc-card" data-reveal>
+        <div class="svc-top"><div class="svc-icn">🎯</div><span class="svc-tag">TRACKING</span></div>
+        <h3>Conversion Tracking</h3>
+        <p>Calls, form fills, and booking clicks tracked as real conversions, so Google's bidding actually learns from them.</p>
+      </div>
+      <div class="svc-card" data-reveal>
+        <div class="svc-top"><div class="svc-icn">🏷️</div><span class="svc-tag">SETUP</span></div>
+        <h3>Google Tag Manager</h3>
+        <p>Clean GTM container setup — no duplicate tags, no broken triggers, nothing quietly double-counting your leads.</p>
+      </div>
+      <div class="svc-card" data-reveal>
+        <div class="svc-top"><div class="svc-icn">📊</div><span class="svc-tag">SETUP</span></div>
+        <h3>GA4 Setup</h3>
+        <p>Google Analytics 4 configured to match your actual funnel, so the reports answer real questions, not just show traffic.</p>
+      </div>
+      <div class="svc-card" data-reveal>
+        <div class="svc-top"><div class="svc-icn">🧾</div><span class="svc-tag">AUDIT</span></div>
+        <h3>Google Ads Audit</h3>
+        <p>A full account review — wasted spend, broken conversions, weak match types — with a plain-English fix list.</p>
+      </div>
+      <div class="svc-card" data-reveal>
+        <div class="svc-top"><div class="svc-icn">🖥️</div><span class="svc-tag">REVIEW</span></div>
+        <h3>Landing Page Review</h3>
+        <p>Your ad can be perfect and still lose the job at the landing page. I review it for speed, clarity, and call-to-action.</p>
+      </div>
+      <div class="svc-card" data-reveal>
+        <div class="svc-top"><div class="svc-icn">⚙️</div><span class="svc-tag">ONGOING</span></div>
+        <h3>Campaign Optimization</h3>
+        <p>Ongoing bid, budget, and search-term management so cost-per-call trends down as the account matures.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WHY CHOOSE ME
+============================================================ -->
+<section id="why">
+  <div class="wrap">
+    <div class="why-grid">
+      <div class="why-photo-col" data-reveal>
+        <div class="why-photo">
+          <div class="ph-frame"></div>
+          <span class="ph-initial">MH</span>
+        </div>
+        <div class="why-photo-badge">📍 Mikail Hossain — WP Hossain</div>
+      </div>
+
+      <div data-reveal>
+        <span class="eyebrow">Why Choose Me</span>
+        <h2 style="font-size: clamp(24px, 3.2vw, 32px); color: var(--text-hi); margin-top: 14px; margin-bottom: 28px; max-width: 30ch;">Built for HVAC accounts, not general "PPC management."</h2>
+
+        <div class="why-points">
+          <div class="why-point">
+            <span class="wp-num">01</span>
+            <div>
+              <h3>HVAC is the primary focus, not one niche among many</h3>
+              <p>I work mainly with HVAC contractors, with plumbing, roofing, and electrical as secondary — so campaign structures, negative keywords, and seasonal patterns are already known, not researched from scratch.</p>
+            </div>
+          </div>
+          <div class="why-point">
+            <span class="wp-num">02</span>
+            <div>
+              <h3>Tracking is verified, not assumed</h3>
+              <p>Conversion Tracking, GTM, and GA4 are checked line by line before a campaign scales — so the numbers in your dashboard match the calls actually coming in.</p>
+            </div>
+          </div>
+          <div class="why-point">
+            <span class="wp-num">03</span>
+            <div>
+              <h3>A landing page background, not just a media-buying background</h3>
+              <p>Before Google Ads, I worked as a website and CMS specialist. That's why I still review the page behind the ad, not only the campaign in front of it.</p>
+            </div>
+          </div>
+          <div class="why-point">
+            <span class="wp-num">04</span>
+            <div>
+              <h3>One core promise</h3>
+              <p>Helping HVAC contractors generate more booked service calls — that's the single metric every account is built around.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT SECTIONS GO HERE: Results / Process / Case Studies / Testimonials / FAQ / Contact / Footer -->
+
+<script>
+  // Certification badges (marquee, duplicated for seamless loop)
+  const CERTS = [
+    { name: "Google Ads Search Certification", dots: ["#4285F4","#EA4335"] },
+    { name: "Google Ads Measurement Certification", dots: ["#FBBC04","#34A853"] },
+    { name: "Google Analytics Certification (GA4)", dots: ["#4285F4","#FBBC04"] },
+    { name: "Google Ads Display Certification", dots: ["#EA4335","#34A853"] },
+    { name: "Google Ads Apps Certification", dots: ["#4285F4","#34A853"] },
+  ];
+  const track = document.getElementById('trust-track');
+  function buildCerts() {
+    return CERTS.map(c => `
+      <div class="cert-badge">
+        <span class="cert-dots"><span style="background:${c.dots[0]}"></span><span style="background:${c.dots[1]}"></span></span>
+        <span class="cert-name">${c.name}</span>
+      </div>`).join('');
+  }
+  track.innerHTML = buildCerts() + buildCerts();
+
+  // Mobile menu toggle
+  const mobileToggle = document.getElementById('mobile-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  mobileToggle.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    const expanded = mobileMenu.classList.contains('open');
+    mobileToggle.setAttribute('aria-expanded', expanded);
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+  // Sticky navbar shrink
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
