@@ -525,6 +525,232 @@
   @media (min-width: 940px) {
     .why-grid { grid-template-columns: 0.8fr 1.2fr; gap: 64px; }
   }
+
+  /* =========================================================
+     RESULTS
+  ========================================================= */
+  #results { padding: 108px 0; background: var(--ink-base); }
+  .sample-note {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 11.5px; color: var(--text-low);
+    border: 1px dashed var(--line-strong); border-radius: 999px;
+    padding: 8px 16px; margin-top: 8px;
+  }
+  .results-grid {
+    display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 40px;
+  }
+  .result-card {
+    background: var(--ink-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: 28px 24px;
+    text-align: left;
+  }
+  .result-card .r-num {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 36px; color: var(--copper-hi); line-height: 1;
+  }
+  .result-card .r-lbl {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-low); margin-top: 10px;
+  }
+  .result-card .r-sub { font-size: 13px; color: var(--text-mid); margin-top: 8px; line-height: 1.5; }
+  @media (min-width: 720px) { .results-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1080px) { .results-grid { grid-template-columns: repeat(4, 1fr); } }
+
+  /* =========================================================
+     PROCESS
+  ========================================================= */
+  #process { padding: 108px 0; background: var(--ink-raised); border-top: 1px solid var(--line); }
+  .process-list { margin-top: 44px; display: grid; grid-template-columns: 1fr; gap: 0; }
+  .process-step {
+    display: grid; grid-template-columns: 56px 1fr; gap: 20px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .process-step:first-child { padding-top: 0; }
+  .process-step:last-child { border-bottom: none; }
+  .process-step .step-num {
+    font-family: var(--font-mono); font-weight: 600; font-size: 15px;
+    color: var(--copper-hi);
+    display: flex; align-items: flex-start; padding-top: 2px;
+  }
+  .process-step .step-body h3 { font-size: 17px; font-weight: 700; color: var(--text-hi); margin-bottom: 8px; }
+  .process-step .step-body p { font-size: 14.5px; line-height: 1.65; color: var(--text-mid); max-width: 62ch; }
+  .process-step .step-tag {
+    display: inline-block; margin-top: 10px;
+    font-family: var(--font-mono); font-size: 10.5px; color: var(--text-low);
+    border: 1px solid var(--line-strong); padding: 4px 10px; border-radius: 999px;
+  }
+
+  /* =========================================================
+     CASE STUDIES
+  ========================================================= */
+  #case-studies { padding: 108px 0; background: var(--ink-base); }
+  .cs-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 44px; }
+  .cs-card {
+    background: var(--paper);
+    color: #241A0E;
+    border-radius: 18px;
+    padding: 26px 24px 24px;
+    position: relative;
+    box-shadow: 0 30px 60px -34px rgba(0,0,0,0.5);
+  }
+  .cs-ribbon {
+    position: absolute; top: 18px; right: 18px;
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 600; letter-spacing: 0.05em;
+    background: rgba(36,26,14,0.08); color: rgba(36,26,14,0.6);
+    padding: 4px 9px; border-radius: 999px; text-transform: uppercase;
+  }
+  .cs-card .cs-biz { font-family: var(--font-mono); font-size: 11px; color: rgba(36,26,14,0.55); margin-bottom: 6px; }
+  .cs-card h3 { font-family: var(--font-display); font-size: 18px; font-weight: 700; margin-bottom: 14px; max-width: 22ch; }
+  .cs-card .cs-block { margin-bottom: 12px; }
+  .cs-card .cs-block .cs-lbl { font-family: var(--font-mono); font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(36,26,14,0.5); margin-bottom: 3px; }
+  .cs-card .cs-block p { font-size: 13.5px; line-height: 1.55; color: #241A0E; }
+  .cs-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px; padding-top: 14px; border-top: 1px dashed rgba(36,26,14,0.22); }
+  .cs-metrics .cm-num { font-family: var(--font-mono); font-weight: 600; font-size: 15px; color: #1F7A50; }
+  .cs-metrics .cm-lbl { font-family: var(--font-mono); font-size: 8.5px; text-transform: uppercase; color: rgba(36,26,14,0.5); margin-top: 2px; }
+
+  @media (min-width: 900px) { .cs-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  /* =========================================================
+     TESTIMONIALS
+  ========================================================= */
+  #testimonials { padding: 108px 0; background: var(--ink-raised); border-top: 1px solid var(--line); }
+  .tst-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 44px; }
+  .tst-card {
+    background: var(--ink-base);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: 26px 24px;
+    position: relative;
+  }
+  .tst-card .tst-ribbon {
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--text-low); border: 1px dashed var(--line-strong);
+    padding: 4px 9px; border-radius: 999px; display: inline-block; margin-bottom: 16px;
+  }
+  .tst-card .tst-quote-mark { font-family: var(--font-display); font-size: 34px; color: var(--copper); line-height: 1; margin-bottom: 6px; opacity: 0.8; }
+  .tst-card .tst-quote { font-size: 14.5px; line-height: 1.7; color: var(--text-mid); margin-bottom: 20px; }
+  .tst-person { display: flex; align-items: center; gap: 12px; }
+  .tst-avatar {
+    width: 40px; height: 40px; border-radius: 999px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--copper), var(--flame));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--ink-base);
+  }
+  .tst-person .tp-name { font-size: 13.5px; font-weight: 700; color: var(--text-hi); }
+  .tst-person .tp-role { font-family: var(--font-mono); font-size: 11px; color: var(--text-low); margin-top: 2px; }
+  @media (min-width: 900px) { .tst-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  /* =========================================================
+     FAQ
+  ========================================================= */
+  #faq { padding: 108px 0; background: var(--ink-base); }
+  .faq-list { margin-top: 40px; max-width: 780px; }
+  .faq-item {
+    border-bottom: 1px solid var(--line);
+    padding: 6px 0;
+  }
+  .faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    padding: 20px 4px;
+    font-size: 15.5px; font-weight: 700; color: var(--text-hi);
+    font-family: var(--font-display);
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item .faq-plus {
+    width: 26px; height: 26px; border-radius: 999px; flex-shrink: 0;
+    border: 1px solid var(--line-strong);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 15px; color: var(--copper-hi);
+    transition: transform .25s ease;
+  }
+  .faq-item[open] .faq-plus { transform: rotate(45deg); }
+  .faq-item .faq-a {
+    padding: 0 4px 22px; font-size: 14.5px; line-height: 1.7; color: var(--text-mid); max-width: 66ch;
+  }
+
+  /* =========================================================
+     CONTACT
+  ========================================================= */
+  #contact { padding: 108px 0; background: var(--ink-raised); border-top: 1px solid var(--line); }
+  .contact-grid { display: grid; grid-template-columns: 1fr; gap: 44px; margin-top: 44px; }
+
+  .contact-side .cside-item { margin-bottom: 22px; }
+  .contact-side .cside-lbl { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-low); margin-bottom: 6px; }
+  .contact-side .cside-val { font-size: 15px; font-weight: 600; color: var(--text-hi); }
+  .contact-side .cside-val a:hover { color: var(--copper-hi); }
+  .contact-side .cside-note { font-size: 13.5px; color: var(--text-mid); line-height: 1.6; margin-top: 4px; }
+
+  form#lead-form { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  .form-row-2 { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 640px) { .form-row-2 { grid-template-columns: 1fr 1fr; } }
+
+  .field label { display: block; font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; color: var(--text-low); margin-bottom: 8px; }
+  .field input, .field select, .field textarea {
+    width: 100%; font-family: var(--font-body); font-size: 14px; color: var(--text-hi);
+    background: var(--ink-base); border: 1px solid var(--line-strong); border-radius: 10px;
+    padding: 12px 14px; outline: none; transition: border-color .2s ease;
+  }
+  .field textarea { resize: vertical; min-height: 100px; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--copper); }
+  .field input::placeholder, .field textarea::placeholder { color: var(--text-low); }
+  .field select option { background: var(--ink-base); }
+
+  .svc-checks { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  @media (min-width: 640px) { .svc-checks { grid-template-columns: 1fr 1fr; } }
+  .svc-check {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 13px; border-radius: 10px; border: 1px solid var(--line-strong);
+    background: var(--ink-base); cursor: pointer; transition: all .2s ease;
+    font-size: 13px; color: var(--text-mid);
+  }
+  .svc-check input { accent-color: var(--copper); width: 16px; height: 16px; }
+  .svc-check.active { border-color: var(--copper); background: rgba(201,124,61,0.08); color: var(--text-hi); }
+
+  #lead-success {
+    display: none;
+    text-align: center; padding: 40px 20px;
+    background: var(--ink-base); border: 1px solid var(--line-strong); border-radius: var(--radius-card);
+  }
+  #lead-success.show { display: block; }
+  #lead-success .ls-icn { font-size: 32px; margin-bottom: 12px; }
+  #lead-success h3 { font-size: 18px; color: var(--text-hi); margin-bottom: 8px; }
+  #lead-success p { font-size: 14px; color: var(--text-mid); }
+
+  .u-toast {
+    position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+    padding: 13px 20px; border-radius: 10px; font-size: 13.5px; font-weight: 600;
+    z-index: 200; box-shadow: 0 18px 40px -14px rgba(0,0,0,0.6);
+    font-family: var(--font-body);
+  }
+  .u-toast.success { background: var(--signal); color: #06231a; }
+  .u-toast.error { background: var(--alert); color: #2a0808; }
+
+  @media (min-width: 960px) {
+    .contact-grid { grid-template-columns: 0.85fr 1.15fr; gap: 56px; }
+  }
+
+  /* =========================================================
+     FOOTER
+  ========================================================= */
+  footer { background: var(--ink-base); border-top: 1px solid var(--line); padding: 56px 0 28px; }
+  .footer-top { display: grid; grid-template-columns: 1fr; gap: 36px; padding-bottom: 36px; border-bottom: 1px solid var(--line); }
+  .footer-brand .brand { margin-bottom: 14px; }
+  .footer-brand p { font-size: 13.5px; color: var(--text-mid); line-height: 1.65; max-width: 38ch; }
+  .footer-cols { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+  .footer-col .fc-title { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-low); margin-bottom: 14px; }
+  .footer-col a { display: block; font-size: 13.5px; color: var(--text-mid); margin-bottom: 10px; }
+  .footer-col a:hover { color: var(--copper-hi); }
+  .footer-bottom { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; padding-top: 24px; font-size: 12.5px; color: var(--text-low); }
+  @media (min-width: 720px) {
+    .footer-top { grid-template-columns: 1.4fr 1fr 1fr; }
+    .footer-bottom { flex-direction: row; justify-content: space-between; align-items: center; }
+  }
 </style>
 </head>
 <body>
@@ -786,7 +1012,401 @@
   </div>
 </section>
 
-<!-- NEXT SECTIONS GO HERE: Results / Process / Case Studies / Testimonials / FAQ / Contact / Footer -->
+<!-- ============================================================
+     RESULTS
+============================================================ -->
+<section id="results">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Results</span>
+      <h2>What "tracked correctly" looks like in the numbers.</h2>
+      <p>Sample figures below illustrate the kind of outcome a well-tracked HVAC Search account can produce. Verified client results will replace these as case studies are published.</p>
+      <div class="sample-note">◆ Illustrative sample data — not a specific client result</div>
+    </div>
+
+    <div class="results-grid">
+      <div class="result-card" data-reveal>
+        <div class="r-num">3.6x</div>
+        <div class="r-lbl">Search ROAS</div>
+        <div class="r-sub">Typical range for a properly tracked HVAC Search account after 60–90 days.</div>
+      </div>
+      <div class="result-card" data-reveal>
+        <div class="r-num">42%</div>
+        <div class="r-lbl">Lower Cost / Call</div>
+        <div class="r-sub">Average reduction after an audit removes wasted spend and fixes tracking gaps.</div>
+      </div>
+      <div class="result-card" data-reveal>
+        <div class="r-num">100%</div>
+        <div class="r-lbl">Conversions Verified</div>
+        <div class="r-sub">Every account launches with GTM and GA4 checked line-by-line before scaling budget.</div>
+      </div>
+      <div class="result-card" data-reveal>
+        <div class="r-num">14 Days</div>
+        <div class="r-lbl">To Clean Signal</div>
+        <div class="r-sub">Typical time to reach reliable conversion data once tracking issues are fixed.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROCESS
+============================================================ -->
+<section id="process">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Process</span>
+      <h2>A fixed sequence, in this order, every time.</h2>
+      <p>Tracking gets fixed before spend gets increased — not the other way around.</p>
+    </div>
+
+    <div class="process-list">
+      <div class="process-step" data-reveal>
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h3>Audit & tracking check</h3>
+          <p>Full review of the existing account (or a from-scratch plan if there isn't one yet): wasted spend, match types, and — most importantly — whether conversions, GTM, and GA4 are actually firing correctly.</p>
+          <span class="step-tag">Google Ads Audit</span>
+        </div>
+      </div>
+      <div class="process-step" data-reveal>
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h3>Tracking fix & campaign build</h3>
+          <p>Conversion actions, GTM triggers, and GA4 events are corrected first. Only then is the Search campaign structured around your real service categories and service areas.</p>
+          <span class="step-tag">GTM · GA4 · Conversion Tracking</span>
+        </div>
+      </div>
+      <div class="process-step" data-reveal>
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h3>Landing page review</h3>
+          <p>The page the ad sends traffic to gets checked for load speed, clarity, and a clear call-to-action — since a strong ad can still lose the job at a weak page.</p>
+          <span class="step-tag">Landing Page Review</span>
+        </div>
+      </div>
+      <div class="process-step" data-reveal>
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h3>Launch & monitor</h3>
+          <p>Campaigns go live with daily monitoring in the first two weeks — search terms, budget pacing, and early conversion signal are watched closely before anything is scaled.</p>
+          <span class="step-tag">Campaign Launch</span>
+        </div>
+      </div>
+      <div class="process-step" data-reveal>
+        <div class="step-num">05</div>
+        <div class="step-body">
+          <h3>Optimize & report</h3>
+          <p>Ongoing bid and budget adjustments based on cost-per-call, with a plain-English report — no jargon dashboards you have to decode yourself.</p>
+          <span class="step-tag">Campaign Optimization</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CASE STUDIES
+============================================================ -->
+<section id="case-studies">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Case Studies</span>
+      <h2>Sample scenarios, built from common HVAC account problems.</h2>
+      <p>These are illustrative examples showing the type of work done, not verified client results. They'll be replaced with real case studies as they're published.</p>
+      <div class="sample-note">◆ Illustrative sample — not an actual client</div>
+    </div>
+
+    <div class="cs-grid">
+      <div class="cs-card" data-reveal>
+        <span class="cs-ribbon">Sample</span>
+        <div class="cs-biz">RESIDENTIAL HVAC · TEXAS</div>
+        <h3>Fixing a campaign that looked fine but tracked nothing</h3>
+        <div class="cs-block">
+          <div class="cs-lbl">Problem</div>
+          <p>Search campaign was spending steadily, but GA4 wasn't recording form-fill conversions, so Google's bidding had no real signal to optimize toward.</p>
+        </div>
+        <div class="cs-block">
+          <div class="cs-lbl">Fix</div>
+          <p>Rebuilt the GTM container, corrected the GA4 conversion event, and restructured ad groups around emergency repair intent.</p>
+        </div>
+        <div class="cs-metrics">
+          <div><div class="cm-num">↓ 38%</div><div class="cm-lbl">Cost / Lead</div></div>
+          <div><div class="cm-num">3.2x</div><div class="cm-lbl">ROAS</div></div>
+          <div><div class="cm-num">100%</div><div class="cm-lbl">Tracked</div></div>
+        </div>
+      </div>
+
+      <div class="cs-card" data-reveal>
+        <span class="cs-ribbon">Sample</span>
+        <div class="cs-biz">COMMERCIAL HVAC · ONTARIO</div>
+        <h3>Scaling budget once the signal was trustworthy</h3>
+        <div class="cs-block">
+          <div class="cs-lbl">Problem</div>
+          <p>Business wanted to increase budget but had no confidence the current cost-per-call numbers were accurate.</p>
+        </div>
+        <div class="cs-block">
+          <div class="cs-lbl">Fix</div>
+          <p>Ran a full Google Ads Audit, verified call and form tracking, then scaled budget in stages tied to service-call volume.</p>
+        </div>
+        <div class="cs-metrics">
+          <div><div class="cm-num">+64%</div><div class="cm-lbl">Service Calls</div></div>
+          <div><div class="cm-num">3.9x</div><div class="cm-lbl">ROAS</div></div>
+          <div><div class="cm-num">0</div><div class="cm-lbl">Wasted Spend</div></div>
+        </div>
+      </div>
+
+      <div class="cs-card" data-reveal>
+        <span class="cs-ribbon">Sample</span>
+        <div class="cs-biz">HVAC + PLUMBING · UK</div>
+        <h3>Adding Performance Max on top of a clean Search base</h3>
+        <div class="cs-block">
+          <div class="cs-lbl">Problem</div>
+          <p>Search alone had plateaued; the business wanted more volume without losing lead quality.</p>
+        </div>
+        <div class="cs-block">
+          <div class="cs-lbl">Fix</div>
+          <p>Layered Performance Max on top of the existing (already well-tracked) Search account, feeding it the same verified conversion data.</p>
+        </div>
+        <div class="cs-metrics">
+          <div><div class="cm-num">+31%</div><div class="cm-lbl">Volume</div></div>
+          <div><div class="cm-num">3.4x</div><div class="cm-lbl">ROAS</div></div>
+          <div><div class="cm-num">GA4</div><div class="cm-lbl">Verified</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TESTIMONIALS
+============================================================ -->
+<section id="testimonials">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Reviews</span>
+      <h2>What working together sounds like.</h2>
+      <p>Sample quotes written to reflect the kind of feedback this process is designed to earn. Real client testimonials will replace these over time.</p>
+      <div class="sample-note">◆ Sample quotes — not from an actual client yet</div>
+    </div>
+
+    <div class="tst-grid">
+      <div class="tst-card" data-reveal>
+        <span class="tst-ribbon">Sample</span>
+        <div class="tst-quote-mark">"</div>
+        <p class="tst-quote">Our old agency kept sending "dashboards." WP Hossain showed me exactly which keyword led to which booked job. That's the first time it actually made sense.</p>
+        <div class="tst-person">
+          <div class="tst-avatar">DK</div>
+          <div>
+            <div class="tp-name">Owner, Residential HVAC Co.</div>
+            <div class="tp-role">Texas, USA</div>
+          </div>
+        </div>
+      </div>
+      <div class="tst-card" data-reveal>
+        <span class="tst-ribbon">Sample</span>
+        <div class="tst-quote-mark">"</div>
+        <p class="tst-quote">He found our tracking was broken before touching a single ad. Fixed that first, then scaled us up. Cost per call finally moved in the right direction.</p>
+        <div class="tst-person">
+          <div class="tst-avatar">JR</div>
+          <div>
+            <div class="tp-name">Ops Manager, Commercial HVAC</div>
+            <div class="tp-role">Ontario, Canada</div>
+          </div>
+        </div>
+      </div>
+      <div class="tst-card" data-reveal>
+        <span class="tst-ribbon">Sample</span>
+        <div class="tst-quote-mark">"</div>
+        <p class="tst-quote">Straightforward and specific to HVAC — didn't have to explain what "same-day service call" means or why it matters for bidding.</p>
+        <div class="tst-person">
+          <div class="tst-avatar">SM</div>
+          <div>
+            <div class="tp-name">Director, HVAC & Plumbing Group</div>
+            <div class="tp-role">United Kingdom</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FAQ
+============================================================ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">FAQ</span>
+      <h2>Questions HVAC owners usually ask first.</h2>
+    </div>
+
+    <div class="faq-list" data-reveal>
+      <details class="faq-item" open>
+        <summary>Which locations do you work with?<span class="faq-plus">+</span></summary>
+        <div class="faq-a">Primarily the USA, Canada, Australia, New Zealand, and the UK — English-speaking markets where Google Search Ads and Local Services campaigns are well established for home-service businesses.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Do you only work with HVAC companies?<span class="faq-plus">+</span></summary>
+        <div class="faq-a">HVAC is the primary focus. Plumbing, roofing, and electrical contractors are a close secondary fit, since the campaign structure, seasonality, and buyer intent are similar. Cleaning, landscaping, pest control, and garage door businesses are considered on a case-by-case basis.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What happens in the free Google Ads audit?<span class="faq-plus">+</span></summary>
+        <div class="faq-a">A full review of your existing account (if you have one) or a starting plan (if you don't) — covering wasted spend, keyword match types, and whether your conversions, GTM, and GA4 are actually tracking correctly. You get a plain-English summary either way.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How much should I expect to spend on ads?<span class="faq-plus">+</span></summary>
+        <div class="faq-a">It depends on your service area and how competitive your local market is. This gets discussed directly during the audit, once there's real account or market data to base a number on — not a number quoted before that.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Do I need a new website before running ads?<span class="faq-plus">+</span></summary>
+        <div class="faq-a">Not necessarily. Your existing landing page gets reviewed first — sometimes a few targeted changes to speed, clarity, or the call-to-action are enough, rather than a full rebuild.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How is this different from a general PPC agency?<span class="faq-plus">+</span></summary>
+        <div class="faq-a">The focus stays on Google Search Ads, Performance Max, Conversion Tracking, GTM, and GA4 for one industry — HVAC and adjacent home-service trades — rather than managing accounts across many unrelated industries at once.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT
+============================================================ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Contact</span>
+      <h2>Start with a free Google Ads audit.</h2>
+      <p>Tell me about your business and current setup — I'll reply with the audit and next steps.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-side" data-reveal>
+        <div class="cside-item">
+          <div class="cside-lbl">Book directly</div>
+          <div class="cside-val"><a href="https://zcal.co/wphossain" target="_blank" rel="noopener">zcal.co/wphossain →</a></div>
+          <div class="cside-note">Grab a slot on the calendar — no form required.</div>
+        </div>
+        <div class="cside-item">
+          <div class="cside-lbl">Email</div>
+          <div class="cside-val"><a href="mailto:Contact@wphossain.com">Contact@wphossain.com</a></div>
+        </div>
+        <div class="cside-item">
+          <div class="cside-lbl">Website</div>
+          <div class="cside-val"><a href="https://wphossain.com" target="_blank" rel="noopener">wphossain.com</a></div>
+        </div>
+        <div class="cside-item">
+          <div class="cside-lbl">Response Time</div>
+          <div class="cside-val">Within 24 hours</div>
+        </div>
+      </div>
+
+      <div data-reveal>
+        <form id="lead-form">
+          <div class="form-row-2">
+            <div class="field">
+              <label for="lf-name">Name *</label>
+              <input type="text" id="lf-name" placeholder="Your full name" required>
+            </div>
+            <div class="field">
+              <label for="lf-email">Email *</label>
+              <input type="email" id="lf-email" placeholder="you@company.com" required>
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="field">
+              <label for="lf-business">Business Name</label>
+              <input type="text" id="lf-business" placeholder="Your HVAC company">
+            </div>
+            <div class="field">
+              <label for="lf-website">Current Website</label>
+              <input type="text" id="lf-website" placeholder="yourcompany.com">
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="field">
+              <label for="lf-budget">Monthly Ad Budget</label>
+              <select id="lf-budget">
+                <option value="">Select range</option>
+                <option>Under $1,500</option>
+                <option>$1,500 – $3,000</option>
+                <option>$3,000 – $7,000</option>
+                <option>$7,000+</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="lf-timeline">Timeline</label>
+              <select id="lf-timeline">
+                <option value="">Select timeline</option>
+                <option>Ready to start now</option>
+                <option>Within 1 month</option>
+                <option>1–3 months</option>
+                <option>Just researching</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Services You Need</label>
+            <div class="svc-checks" id="lf-services"></div>
+          </div>
+          <div class="field">
+            <label for="lf-goal">What's the goal?</label>
+            <textarea id="lf-goal" placeholder="e.g. more emergency AC repair calls in the Dallas–Fort Worth area"></textarea>
+          </div>
+          <button type="submit" class="btn btn-copper" style="width:100%; padding:16px;">Send & Book Free Audit →</button>
+        </form>
+
+        <div id="lead-success">
+          <div class="ls-icn">✅</div>
+          <h3 id="success-name">Thanks.</h3>
+          <p>Your email client should now be open with the details filled in. If it didn't open, email directly at <a href="mailto:Contact@wphossain.com" style="color:var(--copper-hi)">Contact@wphossain.com</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#top" class="brand">
+          <span class="brand-mark">WP</span>
+          <span class="brand-text">
+            <div class="name">WP Hossain</div>
+            <div class="role">Google Ads Specialist</div>
+          </span>
+        </a>
+        <p>Helping HVAC contractors generate more booked service calls through Search Ads, Performance Max, and verified conversion tracking.</p>
+      </div>
+
+      <div class="footer-col">
+        <div class="fc-title">Navigate</div>
+        <a href="#services">Services</a>
+        <a href="#results">Results</a>
+        <a href="#process">Process</a>
+        <a href="#case-studies">Case Studies</a>
+      </div>
+
+      <div class="footer-col">
+        <div class="fc-title">Get In Touch</div>
+        <a href="mailto:Contact@wphossain.com">Contact@wphossain.com</a>
+        <a href="https://zcal.co/wphossain" target="_blank" rel="noopener">Book a Free Audit</a>
+        <a href="https://wphossain.com" target="_blank" rel="noopener">wphossain.com</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> WP Hossain. All rights reserved.</span>
+      <span>Google Ads Specialist for HVAC Contractors — USA · Canada · Australia · New Zealand · UK</span>
+    </div>
+  </div>
+</footer>
 
 <script>
   // Certification badges (marquee, duplicated for seamless loop)
@@ -806,6 +1426,71 @@
       </div>`).join('');
   }
   track.innerHTML = buildCerts() + buildCerts();
+
+  // Service checkboxes for lead form
+  const SERVICE_OPTS = ["Google Search Ads","Performance Max","Conversion Tracking Setup","Google Tag Manager","GA4 Setup","Google Ads Audit","Landing Page Review","Campaign Optimization"];
+  const svcWrap = document.getElementById('lf-services');
+  const selectedServices = new Set();
+  SERVICE_OPTS.forEach((opt, i) => {
+    const id = `svc-${i}`;
+    const label = document.createElement('label');
+    label.className = 'svc-check';
+    label.innerHTML = `<input type="checkbox" id="${id}"><span>${opt}</span>`;
+    label.addEventListener('click', (e) => {
+      const cb = label.querySelector('input');
+      if (e.target.tagName !== 'INPUT') cb.checked = !cb.checked;
+      if (cb.checked) { selectedServices.add(opt); label.classList.add('active'); }
+      else { selectedServices.delete(opt); label.classList.remove('active'); }
+    });
+    svcWrap.appendChild(label);
+  });
+
+  // Toast helper
+  function toast(msg, type = 'success') {
+    const el = document.createElement('div');
+    el.className = `u-toast ${type}`;
+    el.textContent = msg;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+  }
+
+  // Lead form submit -> mailto (no backend needed)
+  document.getElementById('lead-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = document.getElementById('lf-name').value.trim();
+    const email = document.getElementById('lf-email').value.trim();
+    if (!name || !email) { toast('Name and email are required.', 'error'); return; }
+
+    const business = document.getElementById('lf-business').value.trim();
+    const website = document.getElementById('lf-website').value.trim();
+    const budget = document.getElementById('lf-budget').value;
+    const timeline = document.getElementById('lf-timeline').value;
+    const goal = document.getElementById('lf-goal').value.trim();
+    const services = Array.from(selectedServices).join(', ');
+
+    const body =
+`Name: ${name}
+Email: ${email}
+Business: ${business || '-'}
+Website: ${website || '-'}
+Monthly Budget: ${budget || '-'}
+Timeline: ${timeline || '-'}
+Services Needed: ${services || '-'}
+
+Goal:
+${goal || '-'}`;
+
+    const mailto = `mailto:Contact@wphossain.com?subject=${encodeURIComponent('Free Google Ads Audit Request - ' + name)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
+
+    document.getElementById('success-name').textContent = 'Thanks, ' + name.split(' ')[0] + '.';
+    document.getElementById('lead-form').style.display = 'none';
+    document.getElementById('lead-success').classList.add('show');
+    toast('Opening your email client…', 'success');
+  });
+
+  // Footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
 
   // Mobile menu toggle
   const mobileToggle = document.getElementById('mobile-toggle');
