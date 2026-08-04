@@ -1,0 +1,132 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model SiteSettings {
+  id                 String   @id @default(uuid())
+  business_name      String   @default("WPHossain")
+  owner_name         String   @default("Mikail Hossain")
+  job_title          String   @default("Google Ads Specialist for HVAC Contractors")
+  niche_category     String   @default("HVAC")
+  email              String   @default("Contact@wphossain.com")
+  phone              String   @default("+1...")
+  whatsapp_number    String   @default("+1...")
+  address            String   @default("United States")
+  logo_url           String?
+  avatar_url         String?  @default("https://wphossain.com/headshot.jpg")
+  availability_status String  @default("Available for new projects")
+  primary_color      String   @default("#1a73e8")
+  gold_accent_color  String   @default("#f2a93d")
+  bg_navy_color      String   @default("#050f1f")
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+}
+
+model PageSection {
+  id           String   @id @default(uuid())
+  section_key  String   @unique
+  title        String
+  subtitle     String?
+  eyebrow      String?
+  content_json Json
+  is_visible   Boolean  @default(true)
+  updated_at   DateTime @updatedAt
+}
+
+model Service {
+  id                String   @id @default(uuid())
+  title             String
+  slug              String   @unique
+  badge             String   @default("Core")
+  short_description String
+  full_description  String?
+  icon_svg          String?
+  display_order     Int      @default(0)
+  is_active         Boolean  @default(true)
+}
+
+model CaseStudy {
+  id             String   @id @default(uuid())
+  title          String
+  slug           String   @unique
+  client_niche   String   @default("HVAC")
+  challenge      String
+  strategy       String
+  result_summary String
+  metrics_json   Json
+  featured_image String?
+  display_order  Int      @default(0)
+}
+
+model Testimonial {
+  id            String   @id @default(uuid())
+  client_name   String
+  client_role   String
+  quote         String
+  rating        Int      @default(5)
+  avatar_url    String?
+  display_order Int      @default(0)
+  is_published  Boolean  @default(true)
+}
+
+model FAQ {
+  id            String   @id @default(uuid())
+  question      String
+  answer        String
+  category      String   @default("General")
+  display_order Int      @default(0)
+}
+
+model BlogPost {
+  id                   String    @id @default(uuid())
+  title                String
+  slug                 String    @unique
+  excerpt              String
+  content_html         String
+  featured_image       String?
+  category_id          String
+  author_id            String
+  status               String    @default("draft")
+  published_at         DateTime?
+  meta_title           String?
+  meta_description     String?
+  canonical_url        String?
+  og_image             String?
+  reading_time_minutes Int       @default(5)
+  views_count          Int       @default(0)
+  created_at           DateTime  @default(now())
+}
+
+model TrackingCodes {
+  id                       String   @id @default(uuid())
+  gtm_id                   String?
+  gtm_enabled              Boolean  @default(false)
+  ga4_measurement_id       String?
+  ga4_enabled              Boolean  @default(false)
+  meta_pixel_id            String?
+  meta_pixel_enabled       Boolean  @default(false)
+  google_ads_conversion_id String?
+  clarity_project_id       String?
+  clarity_enabled          Boolean  @default(false)
+  custom_head_scripts      String?
+  custom_body_scripts      String?
+  updated_at               DateTime @updatedAt
+}
+
+model LeadSubmission {
+  id               String   @id @default(uuid())
+  form_type        String   @default("contact")
+  full_name        String
+  email            String
+  phone            String?
+  website_url      String?
+  monthly_ad_spend String?
+  message          String?
+  status           String   @default("new")
+  created_at       DateTime @default(now())
+}
