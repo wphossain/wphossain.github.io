@@ -2,19 +2,18 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { 
   LayoutDashboard, 
   FileText, 
   Settings, 
-  BarChart, 
   Code, 
-  Image, 
+  Image as ImageIcon, 
   LogOut,
   FolderOpen,
-  HelpCircle,
   MessageSquare
 } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
 
 export default function AdminLayout({
   children,
@@ -22,16 +21,29 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
+
+  // On login page, render full screen login UI without the admin sidebar
+  if (pathname === '/admin/login') {
+    return <>{children}</>;
+  }
 
   const navItems = [
     { name: 'Overview', href: '/admin', icon: LayoutDashboard },
     { name: 'Page Editor', href: '/admin/content', icon: FolderOpen },
     { name: 'Blog CRUD', href: '/admin/blog', icon: FileText },
-    { name: 'Media Storage', href: '/admin/media', icon: Image },
     { name: 'Leads & Audits', href: '/admin/leads', icon: MessageSquare },
+    { name: 'Media Storage', href: '/admin/media', icon: ImageIcon },
     { name: 'Tracking & Pixels', href: '/admin/tracking', icon: Code },
     { name: 'System Settings', href: '/admin/settings', icon: Settings },
   ];
+
+  const handleLogout = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push('/admin/login');
+    router.refresh();
+  };
 
   return (
     <div className="flex h-screen bg-[#050f1f] text-[#eef3fb] font-sans">
@@ -70,14 +82,21 @@ export default function AdminLayout({
           </nav>
         </div>
 
-        <div className="p-4 border-t border-[#0e2340]">
+        <div className="p-4 border-t border-[#0e2340] space-y-2">
           <Link
             href="/"
-            className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-[14px] font-semibold text-[#7b8bad] hover:text-white transition-all"
+            className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-[14px] font-semibold text-[#7b8bad] hover:text-white transition-all w-full"
           >
             <LogOut size={18} />
-            Exit Admin
+            View Public Site
           </Link>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-[14px] font-semibold text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all w-full"
+          >
+            <LogOut size={18} />
+            Logout
+          </button>
         </div>
       </aside>
 
