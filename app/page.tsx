@@ -4,16 +4,26 @@ import { MobileHeader } from '@/components/public/MobileHeader';
 import { PulseCard } from '@/components/public/PulseCard';
 import { TestimonialsSlider } from '@/components/public/TestimonialsSlider';
 import { FaqAccordion } from '@/components/public/FaqAccordion';
+import { StructuredData } from '@/components/public/StructuredData';
 
 export const metadata = {
   title: 'WPHossain | Google Ads Specialist for HVAC Contractors',
   description: 'Google Ads Specialist for HVAC contractors. Search Ads, Conversion Tracking, GTM, GA4 — built to turn ad spend into booked service calls.',
 };
 
+const faqs = [
+  { question: "How much ad budget do I need?", answer: "It depends on your service area and competition. For most local HVAC businesses, the better starting question isn't budget size — it's whether that budget is being spent efficiently and tracked correctly." },
+  { question: "How long before I see results?", answer: "Some improvements show up quickly after campaign cleanup and tracking fixes, especially if the account already has demand. Bigger gains build over time as search-term quality and targeting improve." },
+  { question: "Which industries do you work with?", answer: "HVAC is the primary focus. I also work with plumbing, roofing, and electrical contractors, plus cleaning, landscaping, pest control, and garage door companies where the same call-focused approach applies." },
+  { question: "What tracking will I actually get?", answer: "GTM, GA4, and conversion tracking are core to every engagement — calls, form fills, and booking clicks are tracked so you can see exactly what's producing service calls." },
+  { question: "Do you require long-term contracts?", answer: "No lock-in is required. The audit and early setup work are designed to show value quickly, so continuing makes sense on its own merits." },
+  { question: "Can Google Ads handle seasonal HVAC demand?", answer: "Yes. Cooling demand, heating demand, and emergency search behavior shift throughout the year, and campaign structure and messaging should shift with them." }
+];
+
 export default function Home() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "ProfessionalService", "name": "WPHossain — Mikail Hossain, Google Ads Specialist", "url": "https://wphossain.com", "email": "Contact@wphossain.com", "founder": { "@type": "Person", "name": "Mikail Hossain", "jobTitle": "Google Ads Specialist" }, "address": { "@type": "PostalAddress", "addressCountry": "US" }, "areaServed": ["United States", "Canada", "Australia", "New Zealand", "United Kingdom"] }) }} />
+      <StructuredData faqs={faqs} />
       <Sidebar />
       <MobileHeader />
 
@@ -138,7 +148,7 @@ export default function Home() {
                 {title:"Conversion Tracking Setup",desc:"Calls, forms, offline events",img:"https://images.unsplash.com/photo-1590650153855-d9e808231d41?w=400&h=220&fit=crop&q=80"},
                 {title:"Landing Page Lift",desc:"Before/after conversion rate",img:"https://images.unsplash.com/photo-1555421689-d68471e189f2?w=400&h=220&fit=crop&q=80"},
                 {title:"Local Keyword Expansion",desc:"New market search terms",img:"https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=400&h=220&fit=crop&q=80"},
-                {title:"Cost-Per-Call Trend",desc:"Optimization window",img:"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=220&fit=crop&q=80&sat=-50"}
+                {title:"Cost-Per-Call Trend",desc:"Optimization window",img:"https://images.unsplash.com/photo-1608228088998-578283668896?w=400&h=220&fit=crop&q=80"}
               ].map((item,i) => (
                 <div key={i} className="portfolio-card bg-[rgba(255,255,255,0.03)] border border-[var(--line)] rounded-2xl overflow-hidden group hover:border-[var(--blue)]/50 transition-all hover:-translate-y-1">
                   <div className="portfolio-thumb h-[130px] overflow-hidden relative">
