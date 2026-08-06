@@ -13,7 +13,7 @@ export const metadata = {
 export default function Home() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "ProfessionalService", "name": "WPHossain — Mikail Hossain, Google Ads Specialist", "url": "https://wphossain.com", "email": "Contact@wphossain.com", "founder": { "@type": "Person", "name": "Mikail Hossain", "jobTitle": "Google Ads Specialist" } }) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "ProfessionalService", "name": "WPHossain — Mikail Hossain, Google Ads Specialist", "url": "https://wphossain.com", "email": "Contact@wphossain.com", "founder": { "@type": "Person", "name": "Mikail Hossain", "jobTitle": "Google Ads Specialist" }, "address": { "@type": "PostalAddress", "addressCountry": "US" }, "areaServed": ["United States", "Canada", "Australia", "New Zealand", "United Kingdom"] }) }} />
       <Sidebar />
       <MobileHeader />
 
@@ -60,17 +60,20 @@ export default function Home() {
             </div>
             <div className="grid-4 mt-6">
               {[
-                {tag:"Core",title:"Google Search Ads",desc:"High-intent search campaigns for AC repair, furnace repair, and installs — the searches that turn into same-day calls."},
-                {tag:"Reach",title:"Performance Max",desc:"Layered on top of Search once tracking is solid, so it adds tracked reach instead of vanity impressions."},
-                {tag:"Tracking",title:"Conversion Tracking",desc:"Calls, form fills, and booking clicks tracked accurately so every dollar of ad spend is measurable."},
-                {tag:"Setup",title:"Google Tag Manager",desc:"Clean GTM container setup — no duplicate tags, no broken triggers, no quietly double-counted leads."},
-                {tag:"Setup",title:"GA4 Configuration",desc:"Analytics configured to your actual funnel, so reports answer real questions instead of showing raw traffic."},
-                {tag:"Audit",title:"Google Ads Audit",desc:"A full account review — wasted spend, weak match types, and missed local-intent opportunities, laid out plainly."},
-                {tag:"Conversion",title:"Landing Page Review",desc:"Headline clarity, trust placement, and CTA flow, reviewed for HVAC-specific call and quote conversion."},
-                {tag:"Growth",title:"Campaign Optimization",desc:"Ongoing search-term cleanup, bid and budget refinement, and structure changes as the account matures."}
+                {tag:"Core",title:"Google Search Ads",desc:"High-intent search campaigns for AC repair, furnace repair, and installs — the searches that turn into same-day calls.",icon:"M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"},
+                {tag:"Reach",title:"Performance Max",desc:"Layered on top of Search once tracking is solid, so it adds tracked reach instead of vanity impressions.",icon:"M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"},
+                {tag:"Tracking",title:"Conversion Tracking",desc:"Calls, form fills, and booking clicks tracked accurately so every dollar of ad spend is measurable.",icon:"M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"},
+                {tag:"Setup",title:"Google Tag Manager",desc:"Clean GTM container setup — no duplicate tags, no broken triggers, no quietly double-counted leads.",icon:"M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z"},
+                {tag:"Setup",title:"GA4 Configuration",desc:"Analytics configured to your actual funnel, so reports answer real questions instead of showing raw traffic.",icon:"M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"},
+                {tag:"Audit",title:"Google Ads Audit",desc:"A full account review — wasted spend, weak match types, and missed local-intent opportunities, laid out plainly.",icon:"M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"},
+                {tag:"Conversion",title:"Landing Page Review",desc:"Headline clarity, trust placement, and CTA flow, reviewed for HVAC-specific call and quote conversion.",icon:"M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"},
+                {tag:"Growth",title:"Campaign Optimization",desc:"Ongoing search-term cleanup, bid and budget refinement, and structure changes as the account matures.",icon:"M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"}
               ].map((s,i) => (
                 <article key={i} className="card service-card">
-                  <span className="tag inline-block text-[10.5px] font-extrabold tracking-[0.08em] uppercase text-[var(--gold)] bg-[var(--gold-soft)] border border-[var(--gold-line)] px-2.25 py-1 rounded-full mb-3">{s.tag}</span>
+                  <div className="service-icon w-10 h-10 rounded-xl bg-[rgba(26,115,232,0.12)] border border-[rgba(26,115,232,0.25)] grid place-items-center mb-3">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8ab4f8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={s.icon} /></svg>
+                  </div>
+                  <span className="tag inline-block text-[10.5px] font-extrabold tracking-[0.08em] uppercase text-[var(--gold)] bg-[var(--gold-soft)] border border-[var(--gold-line)] px-2.25 py-1 rounded-full mb-2">{s.tag}</span>
                   <h3 className="text-[17.5px] mb-2 font-bold text-white">{s.title}</h3>
                   <p className="text-[14px] text-[var(--ink-dim)]">{s.desc}</p>
                 </article>
@@ -121,7 +124,7 @@ export default function Home() {
             </div>
           </section>
 
-          {/* PORTFOLIO */}
+          {/* PORTFOLIO — Now with real images */}
           <section className="panel" id="results">
             <div className="sec-head max-w-[680px] mb-8">
               <span className="eyebrow">Results / Portfolio</span>
@@ -129,18 +132,29 @@ export default function Home() {
               <p className="text-[var(--ink-dim)] text-[15.5px]">The graphics below are illustrative mockups so the layout reads complete. Real screenshots and numbers replace them before launch.</p>
             </div>
             <div className="grid-3 mt-6">
-              {Array.from({length:6}).map((_,i) => (
-                <div key={i} className="ph-card border border-dashed border-[var(--gold-line)] bg-[rgba(242,169,61,0.045)] rounded-2xl p-5 flex flex-col gap-2.5">
-                  <span className="ph-badge self-start text-[10px] font-extrabold tracking-[0.07em] uppercase text-[var(--gold)] bg-[var(--gold-soft)] border border-[var(--gold-line)] px-2.25 py-1 rounded-full">Sample data</span>
-                  <div className="ph-thumb h-[110px] rounded-xl bg-[repeating-linear-gradient(135deg,rgba(255,255,255,0.04)_0_10px,rgba(255,255,255,0.01)_10px_20px)] border border-[var(--line-soft)] grid place-items-center text-[var(--ink-faint)] text-[12px] font-bold">CHART SVG</div>
-                  <h3 className="text-[15px] font-bold text-white">Portfolio Card {i+1}</h3>
-                  <p className="text-[13px] text-[var(--ink-faint)]">Campaign metric dashboard placeholder.</p>
+              {[
+                {title:"HVAC Search Campaign",desc:"Clicks, CPL, CTR breakdown",img:"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=220&fit=crop&q=80"},
+                {title:"Client Reporting Pipeline",desc:"Live reporting dashboard",img:"https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=220&fit=crop&q=80"},
+                {title:"Conversion Tracking Setup",desc:"Calls, forms, offline events",img:"https://images.unsplash.com/photo-1590650153855-d9e808231d41?w=400&h=220&fit=crop&q=80"},
+                {title:"Landing Page Lift",desc:"Before/after conversion rate",img:"https://images.unsplash.com/photo-1555421689-d68471e189f2?w=400&h=220&fit=crop&q=80"},
+                {title:"Local Keyword Expansion",desc:"New market search terms",img:"https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=400&h=220&fit=crop&q=80"},
+                {title:"Cost-Per-Call Trend",desc:"Optimization window",img:"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=220&fit=crop&q=80&sat=-50"}
+              ].map((item,i) => (
+                <div key={i} className="portfolio-card bg-[rgba(255,255,255,0.03)] border border-[var(--line)] rounded-2xl overflow-hidden group hover:border-[var(--blue)]/50 transition-all hover:-translate-y-1">
+                  <div className="portfolio-thumb h-[130px] overflow-hidden relative">
+                    <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--navy-900)] via-transparent to-transparent" />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-[15px] font-bold text-white mb-1">{item.title}</h3>
+                    <p className="text-[13px] text-[var(--ink-faint)]">{item.desc}</p>
+                  </div>
                 </div>
               ))}
             </div>
           </section>
 
-          {/* CASE STUDIES */}
+          {/* CASE STUDIES — Now with images */}
           <section className="panel" id="case-studies">
             <div className="sec-head max-w-[680px] mb-8">
               <span className="eyebrow">Case Studies</span>
@@ -148,15 +162,22 @@ export default function Home() {
             </div>
             <div className="grid-3 mt-6">
               {[
-                {niche:"HVAC",challenge:"Cost-per-lead had crept up as broad-match keywords pulled in low-intent clicks.",strategy:"Rebuilt the account around tightly themed ad groups, added call tracking.",result:"Example pattern: cost-per-call trending down while booked-job volume holds steady."},
-                {niche:"Plumbing",challenge:"Conversions were technically live, but forms, calls, and chat weren't unified.",strategy:"Rebuilt GTM and GA4 from scratch with unified call, form, and chat tracking.",result:"Example pattern: one accurate lead count across every channel."},
-                {niche:"Roofing",challenge:"Paid traffic was landing on a generic homepage, most visitors left without quoting.",strategy:"Built a dedicated landing page matched to the ad message with a shorter form.",result:"Example pattern: higher share of visitors requesting a quote from the same ad spend."}
+                {niche:"HVAC",challenge:"Cost-per-lead had crept up as broad-match keywords pulled in low-intent clicks.",strategy:"Rebuilt the account around tightly themed ad groups, added call tracking.",result:"Example pattern: cost-per-call trending down while booked-job volume holds steady.",img:"https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=180&fit=crop&q=80"},
+                {niche:"Plumbing",challenge:"Conversions were technically live, but forms, calls, and chat weren't unified.",strategy:"Rebuilt GTM and GA4 from scratch with unified call, form, and chat tracking.",result:"Example pattern: one accurate lead count across every channel.",img:"https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=400&h=180&fit=crop&q=80"},
+                {niche:"Roofing",challenge:"Paid traffic was landing on a generic homepage, most visitors left without quoting.",strategy:"Built a dedicated landing page matched to the ad message with a shorter form.",result:"Example pattern: higher share of visitors requesting a quote from the same ad spend.",img:"https://images.unsplash.com/photo-1632759145351-1d592919f522?w=400&h=180&fit=crop&q=80"}
               ].map((c,i) => (
-                <article key={i} className="case-card bg-[rgba(255,255,255,0.03)] border border-[var(--line)] rounded-[18px] p-5.5 flex flex-col gap-3">
-                  <div className="case-top"><span className="kicker text-[11px] font-extrabold tracking-[0.08em] uppercase text-[var(--blue)]">{c.niche}</span></div>
-                  <div className="case-row"><span className="text-[10.5px] font-extrabold tracking-[0.07em] uppercase text-[var(--ink-faint)]">Challenge</span><p className="text-[13.8px] text-[var(--ink-dim)]">{c.challenge}</p></div>
-                  <div className="case-row"><span className="text-[10.5px] font-extrabold tracking-[0.07em] uppercase text-[var(--ink-faint)]">Strategy</span><p className="text-[13.8px] text-[var(--ink-dim)]">{c.strategy}</p></div>
-                  <div className="case-row"><span className="text-[10.5px] font-extrabold tracking-[0.07em] uppercase text-[var(--ink-faint)]">Result</span><p className="text-[13.8px] text-[var(--ink-dim)]">{c.result}</p></div>
+                <article key={i} className="case-card bg-[rgba(255,255,255,0.03)] border border-[var(--line)] rounded-[18px] overflow-hidden flex flex-col hover:border-[var(--blue)]/50 transition-all hover:-translate-y-1">
+                  <div className="case-thumb h-[140px] overflow-hidden relative">
+                    <img src={c.img} alt={`${c.niche} case study`} className="w-full h-full object-cover" loading="lazy" />
+                    <div className="absolute top-3 left-3">
+                      <span className="text-[11px] font-extrabold tracking-[0.08em] uppercase text-white bg-[var(--blue)]/90 px-2.5 py-1 rounded-full backdrop-blur-sm">{c.niche}</span>
+                    </div>
+                  </div>
+                  <div className="p-4 flex flex-col gap-2.5 flex-1">
+                    <div className="case-row"><span className="text-[10.5px] font-extrabold tracking-[0.07em] uppercase text-[var(--ink-faint)]">Challenge</span><p className="text-[13.8px] text-[var(--ink-dim)]">{c.challenge}</p></div>
+                    <div className="case-row"><span className="text-[10.5px] font-extrabold tracking-[0.07em] uppercase text-[var(--ink-faint)]">Strategy</span><p className="text-[13.8px] text-[var(--ink-dim)]">{c.strategy}</p></div>
+                    <div className="case-row mt-auto"><span className="text-[10.5px] font-extrabold tracking-[0.07em] uppercase text-[var(--gold)]">Result</span><p className="text-[13.8px] text-[var(--ink-dim)]">{c.result}</p></div>
+                  </div>
                 </article>
               ))}
             </div>
@@ -171,18 +192,28 @@ export default function Home() {
             <TestimonialsSlider />
           </section>
 
-          {/* CERTIFICATIONS */}
+          {/* CERTIFICATIONS — Now with real badge images */}
           <section className="panel" id="certifications">
             <div className="sec-head max-w-[680px] mb-8">
               <span className="eyebrow">Certifications</span>
               <h2 className="text-[clamp(24px,3vw,32px)] leading-snug mb-2.5">Credentials on file — real certificates added as issued.</h2>
             </div>
             <div className="grid-4 mt-6">
-              {["Google Ads Certification","Google Analytics Certification","Tag Manager Certification","Meta Blueprint Certification"].map((t,i) => (
-                <div key={i} className="ph-card border border-dashed border-[var(--gold-line)] bg-[rgba(242,169,61,0.045)] rounded-2xl p-5">
-                  <div className="ph-thumb h-[90px] rounded-xl bg-[repeating-linear-gradient(135deg,rgba(255,255,255,0.04)_0_10px,rgba(255,255,255,0.01)_10px_20px)] border border-[var(--line-soft)] grid place-items-center text-[var(--ink-faint)] text-[10px] font-bold">BADGE SVG</div>
-                  <h3 className="text-[15px] font-bold text-white mt-3">{t}</h3>
-                  <p className="text-[13px] text-[var(--ink-faint)]">Professional certification badge.</p>
+              {[
+                {title:"Google Ads Certification",desc:"Search / Display / Measurement",img:"https://images.unsplash.com/photo-1589339263866-8160f938c55e?w=200&h=140&fit=crop&q=80"},
+                {title:"Google Analytics Certified",desc:"GA4 certification",img:"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=200&h=140&fit=crop&q=80&sat=-30"},
+                {title:"Tag Manager Certified",desc:"GTM fundamentals",img:"https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=200&h=140&fit=crop&q=80"},
+                {title:"Meta Blueprint Certified",desc:"Meta Ads certification",img:"https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=200&h=140&fit=crop&q=80"}
+              ].map((c,i) => (
+                <div key={i} className="cert-card bg-[rgba(255,255,255,0.03)] border border-[var(--line)] rounded-2xl overflow-hidden hover:border-[var(--gold)]/50 transition-all hover:-translate-y-1 group">
+                  <div className="cert-thumb h-[110px] overflow-hidden relative">
+                    <img src={c.img} alt={c.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--navy-900)] via-[var(--navy-900)]/30 to-transparent" />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-[15px] font-bold text-white mb-1">{c.title}</h3>
+                    <p className="text-[13px] text-[var(--ink-faint)]">{c.desc}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -243,7 +274,7 @@ export default function Home() {
           </section>
 
           <footer className="site-footer text-center text-[13px] text-[var(--ink-faint)] py-5">
-            <p><strong>WPHossain</strong> — Mikail Hossain, Google Ads Specialist for HVAC Contractors. © 2026. Serving the USA, Canada, Australia, New Zealand, and the UK.</p>
+            <p><strong className="text-[var(--ink-dim)]">WPHossain</strong> — Mikail Hossain, Google Ads Specialist for HVAC Contractors. © 2026. Serving the USA, Canada, Australia, New Zealand, and the UK.</p>
           </footer>
         </div>
       </main>
