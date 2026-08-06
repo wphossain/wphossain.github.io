@@ -14,20 +14,29 @@ interface SidebarProps {
 export function Sidebar({
   ownerName = "WP Hossain",
   jobTitle = "Google Ads Specialist",
-  avatarUrl = "https://wphossain.com/headshot.jpg",
+  avatarUrl = "/images/headshot.jpg",
   email = "Contact@wphossain.com",
   availabilityStatus = "Available for new projects"
 }: SidebarProps) {
+  const [imgError, setImgError] = React.useState(false);
+
   return (
     <aside className="sidebar fixed left-0 top-0 w-[var(--sidebar-w)] h-screen bg-[rgba(5,13,26,0.95)] border-r border-[var(--line)] p-7 pb-5.5 flex flex-col justify-between gap-4.5 backdrop-blur-[20px] z-40 overflow-y-auto hidden lg:flex">
       <div>
         <div className="profile flex flex-col items-center text-center gap-1 pb-1.5">
           <div className="avatar-ring w-24 h-24 rounded-full p-0.75 bg-[conic-gradient(from_220deg,var(--blue),var(--gold),var(--blue))] mb-3.5 transition-transform duration-500 hover:scale-105">
-            <img 
-              src={avatarUrl} 
-              alt={ownerName} 
-              className="w-full h-full rounded-full object-cover border-3 border-[var(--navy-900)]"
-            />
+            {imgError ? (
+              <div className="w-full h-full rounded-full bg-[var(--blue)] grid place-items-center border-3 border-[var(--navy-900)]">
+                <span className="text-white text-2xl font-bold">WH</span>
+              </div>
+            ) : (
+              <img 
+                src={avatarUrl} 
+                alt={ownerName} 
+                className="w-full h-full rounded-full object-cover border-3 border-[var(--navy-900)]"
+                onError={() => setImgError(true)}
+              />
+            )}
           </div>
           <span className="kicker inline-flex items-center gap-1.5 text-[10.5px] font-bold tracking-[0.14em] uppercase text-[var(--gold)] bg-[var(--gold-soft)] border border-[var(--gold-line)] px-2.5 py-1 rounded-full mb-2.5">
             ● {availabilityStatus}

@@ -12,13 +12,21 @@ interface MobileHeaderProps {
 export function MobileHeader({
   ownerName = "WP Hossain",
   jobTitle = "Google Ads Specialist",
-  avatarUrl = "https://wphossain.com/headshot.jpg"
+  avatarUrl = "/images/headshot.jpg"
 }: MobileHeaderProps) {
+  const [imgError, setImgError] = React.useState(false);
+
   return (
     <div className="mobile-bar sticky top-0 z-50 bg-[rgba(5,13,26,0.97)] border-b border-[var(--line)] backdrop-blur-md lg:hidden">
       <div className="mobile-bar-top flex items-center justify-between gap-2.5 p-3 px-4 pb-2">
         <div className="mobile-brand flex items-center gap-2.5">
-          <img src={avatarUrl} alt={ownerName} className="w-8.5 h-8.5 rounded-full object-cover border-2 border-[var(--navy-700)]" />
+          {imgError ? (
+            <div className="w-8.5 h-8.5 rounded-full bg-[var(--blue)] grid place-items-center border-2 border-[var(--navy-700)]">
+              <span className="text-white text-xs font-bold">WH</span>
+            </div>
+          ) : (
+            <img src={avatarUrl} alt={ownerName} className="w-8.5 h-8.5 rounded-full object-cover border-2 border-[var(--navy-700)]" onError={() => setImgError(true)} />
+          )}
           <div>
             <strong className="block text-[14.5px] font-display text-white">{ownerName}</strong>
             <span className="block text-[11px] text-[var(--ink-faint)]">{jobTitle}</span>
