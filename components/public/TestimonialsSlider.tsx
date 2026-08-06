@@ -7,14 +7,21 @@ interface TestimonialItem {
   client_role: string;
   quote: string;
   rating: number;
+  avatar_url?: string;
 }
 
 interface TestimonialsSliderProps {
   testimonials?: TestimonialItem[];
 }
 
+function getAvatarUrl(name: string): string {
+  const colors = ['1a73e8', '0b57b0', 'f2a93d', 'e67e22', '25D366', '8e44ad'];
+  const colorIndex = name.charCodeAt(0) % colors.length;
+  return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=${colors[colorIndex]}&color=fff&size=72&bold=true&font-size=0.4`;
+}
+
 export function TestimonialsSlider({ testimonials = [] }: TestimonialsSliderProps) {
-  const defaultTestimonials = [
+  const defaultTestimonials: TestimonialItem[] = [
     [
       { client_name: "M. Reyes", client_role: "HVAC Contractor", quote: "Since tightening up the campaigns we're getting more calls from people who are ready to book, not just browsing.", rating: 5 },
       { client_name: "D. Whitfield", client_role: "Local Service Business", quote: "Finally have one dashboard that shows exactly where every lead came from — no more guessing between forms and calls.", rating: 5 },
@@ -55,11 +62,12 @@ export function TestimonialsSlider({ testimonials = [] }: TestimonialsSliderProp
                   </p>
                   <div className="testi-who flex items-center gap-2.5 mt-auto">
                     <div className="testi-avatar w-[38px] h-[38px] rounded-full flex-none overflow-hidden grid place-items-center border border-[var(--line)]">
-                      <svg viewBox="0 0 36 36" width="38" height="38">
-                        <circle cx="18" cy="18" r="18" fill="#1a73e8"/>
-                        <circle cx="18" cy="14" r="6.2" fill="#fff" opacity=".95"/>
-                        <path d="M5 33c0-7.5 5.5-12 13-12s13 4.5 13 12" fill="#fff" opacity=".95"/>
-                      </svg>
+                      <img 
+                        src={item.avatar_url || getAvatarUrl(item.client_name)} 
+                        alt={item.client_name}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
                     </div>
                     <div>
                       <strong className="block text-[13.5px] font-bold text-white">{item.client_name}</strong>
