@@ -240,8 +240,8 @@ export default function Home() {
                   ))}
                 </ul>
               </div>
-              <div className="zcal-embed-wrap bg-[rgba(5,13,26,0.55)] border border-[var(--line-soft)] rounded-xl p-1.5 min-h-[70px]">
-                <div className="zcal-inline-widget">
+              <div className="zcal-embed-wrap bg-[rgba(5,13,26,0.55)] border border-[var(--line-soft)] rounded-xl p-1.5 min-h-[70px]" suppressHydrationWarning>
+                <div className="zcal-inline-widget" suppressHydrationWarning>
                   <a href="https://zcal.co/i/hJJ3Hx9l" className="flex items-center justify-center text-center min-h-[58px] p-3.5 rounded-lg text-white font-bold text-[13.5px]">
                     Audit Your Issue / Website / Tracking Problem - Free - Schedule a meeting
                   </a>
