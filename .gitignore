@@ -1,0 +1,5 @@
+.ideavo/project
+*.log
+.next/
+node_modules/
+*.tsbuildinfo

@@ -38,7 +38,7 @@ export default function LeadsAdminPage() {
                 : 'bg-[#0a1c34] text-[#aebcda] hover:bg-[#0e2340]'
             }`}
           >
-            {s} ({statusCount[s]})
+            {s} ({statusCounts[s]})
           </button>
         ))}
       </div>

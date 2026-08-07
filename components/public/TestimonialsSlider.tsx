@@ -21,7 +21,7 @@ function getAvatarUrl(name: string): string {
 }
 
 export function TestimonialsSlider({ testimonials = [] }: TestimonialsSliderProps) {
-  const defaultTestimonials: TestimonialItem[] = [
+  const defaultTestimonials: TestimonialItem[][] = [
     [
       { client_name: "M. Reyes", client_role: "HVAC Contractor", quote: "Since tightening up the campaigns we're getting more calls from people who are ready to book, not just browsing.", rating: 5 },
       { client_name: "D. Whitfield", client_role: "Local Service Business", quote: "Finally have one dashboard that shows exactly where every lead came from — no more guessing between forms and calls.", rating: 5 },

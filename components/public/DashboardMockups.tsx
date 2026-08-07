@@ -297,7 +297,7 @@ export function KeywordExpansionMockup() {
       {/* Stats */}
       <rect x="320" y="145" width="70" height="60" fill="#e8f5e9" rx="6"/>
       <text x="330" y="165" fill="#137333" fontSize="18" fontFamily="Arial, sans-serif" fontWeight="bold">+847%</text>
-      <text x="330" y="180" fill="#5f6368" fontSize="7" fontFamily="Arial, new market</text>
+      <text x="330" y="180" fill="#5f6368" fontSize="7" fontFamily="Arial, sans-serif">new market</text>
       <text x="330" y="195" fill="#5f6368" fontSize="7" fontFamily="Arial, sans-serif">search coverage</text>
     </svg>
   );
