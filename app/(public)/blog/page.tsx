@@ -2,33 +2,16 @@ import React from 'react';
 import Link from 'next/link';
 import { Sidebar } from '@/components/public/Sidebar';
 import { MobileHeader } from '@/components/public/MobileHeader';
+import { db } from '@/lib/db';
 
 export const metadata = {
   title: 'HVAC Google Ads & PPC Insights Blog | WPHossain',
   description: 'Actionable strategies, conversion tracking guides, and PPC optimization insights for HVAC contractors.',
 };
 
-export default function BlogIndexPage() {
-  const posts = [
-    {
-      id: "1",
-      title: "How to Lower HVAC Google Ads Cost Per Lead in 2026",
-      slug: "lower-hvac-google-ads-cost-per-lead",
-      excerpt: "Tightly themed ad groups, negative keyword lists for emergency vs repair intent, and conversion-focused landing pages.",
-      category: "HVAC PPC",
-      published_at: "2026-08-01",
-      reading_time_minutes: 6
-    },
-    {
-      id: "2",
-      title: "Setting Up Google Tag Manager for Call & Form Tracking",
-      slug: "gtm-setup-call-form-tracking-hvac",
-      excerpt: "Step-by-step container setup for tracking phone call extensions, form fills, and dynamic phone swaps in GA4.",
-      category: "Conversion Tracking",
-      published_at: "2026-07-28",
-      reading_time_minutes: 8
-    }
-  ];
+export default async function BlogIndexPage() {
+  // Fetch from our fallback-resilient db wrapper
+  const posts = await db.getBlogs(false); // Only fetch published posts for public site
 
   return (
     <>
@@ -46,15 +29,15 @@ export default function BlogIndexPage() {
           </section>
 
           <div className="grid grid-cols-2 gap-6 max-md:grid-cols-1">
-            {posts.map((post) => (
+            {posts.map((post: any) => (
               <article key={post.id} className="card flex flex-col justify-between p-6">
                 <div>
                   <div className="flex items-center gap-3 mb-3">
                     <span className="text-[11px] font-extrabold uppercase text-[var(--gold)] bg-[var(--gold-soft)] border border-[var(--gold-line)] px-2.5 py-1 rounded-full">
-                      {post.category}
+                      HVAC PPC Strategy
                     </span>
                     <span className="text-[12px] text-[var(--ink-faint)]">
-                      {post.published_at} · {post.reading_time_minutes} min read
+                      {post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Draft'} · {post.reading_time_minutes || 5} min read
                     </span>
                   </div>
                   <h2 className="text-xl font-bold text-white mb-2.5 leading-snug hover:text-[var(--blue-light)] transition-colors">

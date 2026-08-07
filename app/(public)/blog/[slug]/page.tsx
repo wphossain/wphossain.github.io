@@ -2,29 +2,53 @@ import React from 'react';
 import Link from 'next/link';
 import { Sidebar } from '@/components/public/Sidebar';
 import { MobileHeader } from '@/components/public/MobileHeader';
+import { db } from '@/lib/db';
+import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  const post = await db.getBlogBySlug(slug);
+  
+  if (!post) return { title: 'Post Not Found' };
+
   return {
-    title: `${slug.replace(/-/g, ' ')} | WPHossain Blog`,
-    description: 'Expert HVAC Google Ads insights and conversion tracking strategies.',
+    title: `${post.meta_title || post.title} | WPHossain Blog`,
+    description: post.meta_description || post.excerpt,
+    alternates: {
+      canonical: post.canonical_url
+    },
+    openGraph: {
+      images: post.og_image ? [{ url: post.og_image }] : []
+    }
   };
 }
 
 export default async function SingleBlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  const post = await db.getBlogBySlug(slug);
+
+  if (!post) {
+    notFound();
+  }
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": slug.replace(/-/g, ' '),
+    "headline": post.title,
+    "description": post.excerpt,
+    "image": post.og_image,
+    "datePublished": post.published_at || post.created_at,
     "author": {
       "@type": "Person",
       "name": "Mikail Hossain"
     },
     "publisher": {
       "@type": "Organization",
-      "name": "WPHossain"
+      "name": "WPHossain",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://wphossain.com/logo.png"
+      }
     }
   };
 
@@ -39,37 +63,38 @@ export default async function SingleBlogPostPage({ params }: { params: Promise<{
 
       <main className="content lg:ml-[var(--sidebar-w)] p-6.5 max-lg:p-4.5">
         <div className="content-inner max-w-4xl mx-auto w-full flex flex-col gap-6">
-          <Link href="/blog" className="text-[14px] text-[var(--ink-faint)] hover:text-[var(--gold)] font-bold">
-            ← Back to Blog
+          <Link href="/blog" className="text-[14px] text-[var(--ink-faint)] hover:text-[var(--gold)] font-bold flex items-center gap-2 transition-colors">
+            ← Back to Blog Index
           </Link>
 
-          <article className="panel p-8">
+          <article className="panel p-10 max-sm:p-6">
             <span className="eyebrow">HVAC PPC Strategy</span>
-            <h1 className="text-3xl font-display font-bold text-white mb-4 capitalize leading-tight">
-              {slug.replace(/-/g, ' ')}
+            <h1 className="text-4xl font-display font-bold text-white mb-4 leading-tight">
+              {post.title}
             </h1>
             
-            <div className="flex items-center gap-4 text-[13px] text-[var(--ink-faint)] pb-6 mb-6 border-b border-[var(--line)]">
+            <div className="flex items-center gap-4 text-[13px] text-[var(--ink-faint)] pb-6 mb-8 border-b border-[var(--line)]">
               <span>By Mikail Hossain</span>
               <span>•</span>
-              <span>August 1, 2026</span>
+              <span>{post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Draft'}</span>
               <span>•</span>
-              <span>6 min read</span>
+              <span>{post.reading_time_minutes || 5} min read</span>
             </div>
 
-            <div className="prose prose-invert text-[15.5px] text-[var(--ink-dim)] leading-relaxed space-y-4">
-              <p>
-                When running Google Ads for HVAC contractors, managing Cost Per Lead (CPL) requires a balanced approach between intent-driven keywords and robust conversion tracking.
-              </p>
-              <h2 className="text-xl font-bold text-white mt-6 mb-2">1. Eliminate Negative Keyword Leakage</h2>
-              <p>
-                Ensure terms like &quot;free&quot;, &quot;jobs&quot;, &quot;salary&quot;, and DIY troubleshooting keywords are blocked. Focus budget purely on high-intent terms like &quot;AC repair near me&quot; or &quot;emergency furnace installation&quot;.
-              </p>
-              <h2 className="text-xl font-bold text-white mt-6 mb-2">2. Match Landing Page Message to Ad Copy</h2>
-              <p>
-                Landing pages should reflect the exact service, trust badges, and local phone number promised in your search ad copy to maintain high Quality Scores and conversion rates.
-              </p>
-            </div>
+            {post.og_image && (
+              <div className="mb-8 rounded-2xl overflow-hidden border border-white/5">
+                <img src={post.og_image} alt={post.title} className="w-full h-auto object-cover" />
+              </div>
+            )}
+
+            <div 
+              className="blog-content prose prose-invert prose-lg max-w-none text-[var(--ink-dim)] leading-relaxed
+                prose-headings:text-white prose-headings:font-display prose-headings:font-bold
+                prose-a:text-[var(--blue-light)] prose-a:font-bold prose-a:no-underline hover:prose-a:underline
+                prose-strong:text-white prose-strong:font-bold
+                prose-img:rounded-2xl prose-img:border prose-img:border-white/10"
+              dangerouslySetInnerHTML={{ __html: post.content_html }}
+            />
           </article>
         </div>
       </main>
