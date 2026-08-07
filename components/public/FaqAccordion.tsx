@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import { Plus, Minus } from 'lucide-react';
 
 interface FaqItem {
   question: string;
@@ -24,16 +25,21 @@ export function FaqAccordion({ faqs = [] }: FaqAccordionProps) {
   const items = faqs.length > 0 ? faqs : defaultFaqs;
 
   return (
-    <div className="flex flex-col gap-2.5">
+    <div className="flex flex-col gap-3">
       {items.map((item, idx) => (
-        <details key={idx} className="faq-item border border-[var(--line)] rounded-[15px] bg-[rgba(255,255,255,0.02)] px-5 py-1" open={idx === 0}>
-          <summary className="cursor-pointer list-none pr-6.5 py-4 relative font-bold text-[15.5px] text-white select-none">
-            {item.question}
-            <span className="absolute right-0 top-3.5 text-[var(--blue)] text-[22px] font-light leading-none group-open:hidden" aria-hidden="true">+</span>
+        <details key={idx} className="group faq-item border border-white/5 rounded-2xl bg-[#050f1f]/40 px-6 py-1 transition-all duration-300 hover:border-white/10 hover:bg-[#050f1f]/60" open={idx === 0}>
+          <summary className="cursor-pointer list-none py-5 relative font-bold text-[16px] text-white select-none flex items-center justify-between gap-4">
+            <span className="flex-1">{item.question}</span>
+            <div className="w-6 h-6 rounded-lg bg-[#1a73e8]/10 text-[#1a73e8] flex items-center justify-center shrink-0 transition-transform duration-300 group-open:rotate-180">
+              <Plus size={16} className="group-open:hidden" />
+              <Minus size={16} className="hidden group-open:block" />
+            </div>
           </summary>
-          <p className="pb-4 text-[var(--ink-dim)] text-[14.5px] max-w-[680px]">
-            {item.answer}
-          </p>
+          <div className="overflow-hidden transition-all duration-300">
+            <p className="pb-5 text-[#aebcda] text-[14.5px] leading-relaxed max-w-3xl border-t border-white/5 pt-4 mt-1">
+              {item.answer}
+            </p>
+          </div>
         </details>
       ))}
     </div>

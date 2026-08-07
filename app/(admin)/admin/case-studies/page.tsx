@@ -8,13 +8,17 @@ import {
   Edit, 
   Trash2, 
   Briefcase,
-  GripVertical
+  ExternalLink,
+  ChevronRight,
+  TrendingUp,
+  Image as ImageIcon
 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function CaseStudiesAdminPage() {
   const [studies, setStudies] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     loadStudies();
@@ -28,101 +32,103 @@ export default function CaseStudiesAdminPage() {
   }
 
   const handleDelete = async (id: string) => {
-    if (confirm('Delete this case study?')) {
+    if (confirm('Permanently delete this case study? ROI data will be lost.')) {
       await db.deleteCaseStudy(id);
       loadStudies();
     }
   };
 
+  const filtered = studies.filter(s => 
+    s.title?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    s.client_niche?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="max-w-6xl mx-auto space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-8 pb-20">
+      {/* Header Area */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-display font-bold text-white mb-1">Case Studies</h1>
-          <p className="text-[#aebcda] text-[14.5px]">Manage HVAC success stories and client results.</p>
+          <h1 className="text-4xl font-display font-bold text-white mb-2 tracking-tight">Case Studies</h1>
+          <p className="text-[#aebcda] text-[15px]">Manage client success stories and ROI performance metrics.</p>
         </div>
         <Link 
           href="/admin/case-studies/editor" 
-          className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#1a73e8] text-white font-bold text-sm hover:bg-[#1a73e8]/80 transition-all shadow-lg shadow-blue-500/20"
+          className="flex items-center gap-2 px-8 py-4 rounded-2xl bg-[#1a73e8] text-white font-bold text-[15px] hover:shadow-xl hover:shadow-[#1a73e8]/20 transition-all active:scale-[0.98] shadow-lg"
         >
           <Plus size={18} />
-          New Case Study
+          Add Case Study
         </Link>
       </div>
 
-      <div className="bg-[#0a1c34] border border-[#0e2340] rounded-2xl overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="border-b border-[#0e2340] bg-[#050f1f]/30">
-                <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-[0.1em] text-[#7b8bad]">Success Story</th>
-                <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-[0.1em] text-[#7b8bad]">Niche</th>
-                <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-[0.1em] text-[#7b8bad]">Created At</th>
-                <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-[0.1em] text-[#7b8bad] text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <tr>
-                  <td colSpan={4} className="px-6 py-20 text-center">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1a73e8] mx-auto mb-4"></div>
-                  </td>
-                </tr>
-              ) : studies.length === 0 ? (
-                <tr>
-                  <td colSpan={4} className="px-6 py-20 text-center">
-                    <p className="text-[#aebcda] font-medium">No case studies added yet.</p>
-                  </td>
-                </tr>
-              ) : (
-                studies.map((study) => (
-                  <tr key={study.id} className="border-b border-[#0e2340] last:border-0 hover:bg-white/[0.02] transition-colors group">
-                    <td className="px-6 py-5">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-lg bg-[#050f1f] border border-[#0e2340] overflow-hidden flex items-center justify-center">
-                          {study.featured_image ? (
-                            <img src={study.featured_image} alt="" className="w-full h-full object-cover" />
-                          ) : (
-                            <Briefcase size={20} className="text-[#1a73e8]" />
-                          )}
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-[15px] text-white font-bold">{study.title}</span>
-                          <span className="text-[12px] text-[#7b8bad] truncate max-w-xs">{study.challenge}</span>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-5">
-                      <span className="text-[12px] font-black uppercase text-[var(--gold)]">{study.client_niche}</span>
-                    </td>
-                    <td className="px-6 py-5">
-                      <span className="text-[13px] text-[#aebcda]">
-                        {new Date(study.created_at).toLocaleDateString()}
-                      </span>
-                    </td>
-                    <td className="px-6 py-5 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <Link 
-                          href={`/admin/case-studies/editor?id=${study.id}`}
-                          className="p-2 bg-[#1a73e8]/10 text-[#1a73e8] hover:bg-[#1a73e8] hover:text-white rounded-lg transition-all"
-                        >
-                          <Edit size={16} />
-                        </Link>
-                        <button 
-                          onClick={() => handleDelete(study.id)}
-                          className="p-2 bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white rounded-lg transition-all"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+      {/* Filters Bar */}
+      <div className="w-full relative group">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#7b8bad] group-focus-within:text-[#1a73e8] transition-colors" size={20} />
+        <input 
+          type="text" 
+          placeholder="Filter by niche, client name or campaign type..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full bg-[#0a1c34]/30 border border-white/5 rounded-2xl pl-12 pr-4 py-4 text-white text-[14px] focus:border-[#1a73e8] outline-none transition-all shadow-inner placeholder:text-white/10"
+        />
       </div>
+
+      {loading ? (
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1a73e8]"></div>
+        </div>
+      ) : filtered.length === 0 ? (
+        <div className="bg-[#0a1c34]/20 border border-white/5 rounded-[40px] p-24 text-center">
+          <Briefcase size={48} className="text-[#7b8bad] opacity-20 mx-auto mb-6" />
+          <h3 className="text-white font-display font-bold text-2xl">No cases documented</h3>
+          <p className="text-[#7b8bad] text-[15px] mt-2">Document your first client success to build trust with prospects.</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in duration-500">
+          {filtered.map((study) => (
+            <div key={study.id} className="group bg-[#0a1c34]/30 border border-white/5 rounded-[32px] overflow-hidden flex flex-col hover:border-[#1a73e8]/30 transition-all duration-300 backdrop-blur-sm shadow-xl relative">
+              
+              <div className="p-8 flex-1 space-y-6">
+                <div className="flex justify-between items-start">
+                  <span className="inline-block px-3 py-1 rounded-full bg-[#f2a93d]/10 text-[#f2a93d] border border-[#f2a93d]/20 text-[10px] font-black uppercase tracking-widest">
+                    {study.client_niche}
+                  </span>
+                  <button onClick={() => handleDelete(study.id)} className="p-2 text-[#7b8bad] hover:text-red-400 transition-colors">
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+
+                <div>
+                   <h3 className="text-2xl font-display font-bold text-white mb-3 group-hover:text-[#4c9bff] transition-colors">{study.title || 'Untitled Case Study'}</h3>
+                   <p className="text-[14.5px] text-[#aebcda] line-clamp-2 leading-relaxed italic opacity-80">&ldquo;{study.result_summary}&rdquo;</p>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4 pt-2">
+                   <div className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#1a73e8] mt-2 shrink-0" />
+                      <p className="text-[13px] text-[#7b8bad] line-clamp-2"><span className="text-white font-bold">Challenge:</span> {study.challenge}</p>
+                   </div>
+                   <div className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0" />
+                      <p className="text-[13px] text-[#7b8bad] line-clamp-2"><span className="text-white font-bold">Strategy:</span> {study.strategy}</p>
+                   </div>
+                </div>
+              </div>
+
+              <div className="px-8 py-5 bg-white/5 border-t border-white/5 flex items-center justify-between">
+                <span className="text-[11px] text-[#7b8bad] font-bold uppercase tracking-widest">Client Success documented</span>
+                <div className="flex gap-2">
+                  <Link 
+                    href={`/admin/case-studies/editor?id=${study.id}`}
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1a73e8] text-white font-bold text-xs hover:bg-[#1a73e8]/80 transition-all shadow-lg shadow-[#1a73e8]/10"
+                  >
+                    <Edit size={14} /> Edit Case
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

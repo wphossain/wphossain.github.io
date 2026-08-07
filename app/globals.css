@@ -21,8 +21,8 @@
     --gold: #f2a93d;
     --gold-soft: rgba(242, 169, 61, 0.14);
     --gold-line: rgba(242, 169, 61, 0.35);
-    --font-display: 'Space Grotesk', Inter, Arial, sans-serif;
-    --font-body: 'Inter', Arial, Helvetica, sans-serif;
+    --font-display: var(--font-display, 'Space Grotesk', Inter, sans-serif);
+    --font-body: var(--font-body, 'Inter', Arial, sans-serif);
     --sidebar-w: 296px;
     --container: 1900px;
     --radius-lg: 26px;
@@ -59,6 +59,28 @@
 
   /* ---- Utility: Tabular numbers for animations ---- */
   .tabular-nums { font-variant-numeric: tabular-nums; }
+  .font-display { font-family: var(--font-display); }
+  .font-body { font-family: var(--font-body); }
+
+  /* ---- Prose / Typography helper styles ---- */
+  .prose { font-size: 1.125rem; line-height: 1.8; }
+  .prose p { margin-bottom: 1.5em; }
+  .prose h1, .prose h2, .prose h3, .prose h4 { margin-top: 1.5em; margin-bottom: 0.5em; font-family: var(--font-display); color: #fff; }
+  .prose h1 { font-size: 2.25rem; }
+  .prose h2 { font-size: 1.75rem; border-bottom: 1px solid var(--line-soft); padding-bottom: 0.3em; }
+  .prose h3 { font-size: 1.4rem; }
+  .prose a { color: var(--blue-light); font-weight: 700; text-decoration: underline; text-underline-offset: 4px; transition: color 0.2s; }
+  .prose a:hover { color: var(--blue); }
+  .prose strong { color: #fff; font-weight: 700; }
+  .prose ul, .prose ol { margin-bottom: 1.5em; padding-left: 1.5rem; }
+  .prose ul { list-style-type: disc; }
+  .prose ol { list-style-type: decimal; }
+  .prose li { margin-bottom: 0.5em; }
+  .prose blockquote { border-left: 4px solid var(--blue); padding-left: 1.5rem; font-style: italic; color: var(--ink-dim); margin: 1.5em 0; }
+  .prose img { border-radius: var(--radius-md); border: 1px solid var(--line); margin: 2em auto; }
+  .prose code { background: rgba(255, 255, 255, 0.08); padding: 0.2em 0.4em; border-radius: 6px; font-size: 0.9em; font-family: monospace; }
+  .prose pre { background: var(--navy-800); border: 1px solid var(--line); padding: 1.25rem; border-radius: var(--radius-sm); overflow-x: auto; margin: 1.5em 0; }
+  .prose pre code { background: none; padding: 0; font-size: 0.875rem; }
 }
 
 /* ---------------- Animations ---------------- */

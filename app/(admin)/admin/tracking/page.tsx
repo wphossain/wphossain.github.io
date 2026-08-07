@@ -7,9 +7,11 @@ import {
   Code, 
   ShieldCheck, 
   Info, 
-  ExternalLink,
-  ChevronRight,
-  Terminal
+  Terminal,
+  Activity,
+  Zap,
+  Lock,
+  Globe
 } from 'lucide-react';
 
 export default function TrackingPage() {
@@ -37,143 +39,167 @@ export default function TrackingPage() {
 
   const handleSave = async () => {
     setSaving(true);
-    await db.updateTracking(tracking);
-    setSaving(false);
-    alert('Tracking settings published! Scripts will be injected into the public site immediately.');
+    try {
+      await db.updateTracking(tracking);
+      alert('Tracking settings published successfully!');
+    } catch (err) {
+      alert('Failed to update tracking settings.');
+    } finally {
+      setSaving(false);
+    }
   };
 
-  if (loading) return <div className="flex items-center justify-center min-h-[400px]"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1a73e8]"></div></div>;
+  if (loading) return (
+    <div className="flex items-center justify-center min-h-[400px]">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1a73e8]"></div>
+    </div>
+  );
+
+  const TrackingCard = ({ title, subtitle, icon: Icon, color, idKey, enabledKey, placeholder }: any) => (
+    <div className="bg-[#0a1c34]/30 border border-white/5 rounded-[32px] p-8 space-y-6 hover:border-white/10 transition-all backdrop-blur-sm shadow-xl">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg ${
+            color === 'blue' ? 'bg-[#1a73e8]/10 text-[#4c9bff]' :
+            color === 'gold' ? 'bg-[#f2a93d]/10 text-[#f2a93d]' :
+            'bg-purple-500/10 text-purple-400'
+          }`}>
+            <Icon size={28} />
+          </div>
+          <div>
+            <h3 className="text-xl font-display font-bold text-white">{title}</h3>
+            <span className="text-[10px] text-[#7b8bad] uppercase font-black tracking-widest block mt-0.5">{subtitle}</span>
+          </div>
+        </div>
+        <button 
+          onClick={() => setTracking({...tracking, [enabledKey]: !tracking[enabledKey as keyof typeof tracking]})}
+          className={`relative inline-flex h-7 w-14 items-center rounded-full transition-colors focus:outline-none ${
+            tracking[enabledKey as keyof typeof tracking] ? 'bg-[#1a73e8]' : 'bg-white/5 border border-white/10'
+          }`}
+        >
+          <span className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${
+            tracking[enabledKey as keyof typeof tracking] ? 'translate-x-8 shadow-md' : 'translate-x-1'
+          }`} />
+        </button>
+      </div>
+      
+      <div className="space-y-2">
+        <label className="text-[11px] font-bold text-[#7b8bad] uppercase tracking-widest ml-1">Account ID / ID String</label>
+        <div className="relative group">
+          <input 
+            type="text" 
+            value={tracking[idKey as keyof typeof tracking] as string}
+            onChange={e => setTracking({...tracking, [idKey]: e.target.value})}
+            placeholder={placeholder}
+            className="w-full bg-[#050f1f]/80 border border-white/5 rounded-2xl px-6 py-4 text-white text-[15px] focus:border-[#1a73e8] outline-none transition-all shadow-inner placeholder:text-white/5"
+          />
+          <Lock className="absolute right-5 top-1/2 -translate-y-1/2 text-white/5 group-focus-within:opacity-0 transition-opacity" size={18} />
+        </div>
+      </div>
+      
+      <div className="flex items-center gap-2 text-[12px] text-[#7b8bad] bg-white/5 p-3 rounded-xl border border-white/5">
+        <Info size={14} className="text-[#1a73e8]" />
+        <span>Used for client-side event tracking and conversion signals.</span>
+      </div>
+    </div>
+  );
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-10 pb-20">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-display font-bold text-white mb-1">Tracking & Pixels</h1>
-          <p className="text-[#aebcda] text-[14.5px]">Manage GTM, GA4, Meta Pixel, and custom code injections.</p>
+          <h1 className="text-4xl font-display font-bold text-white mb-2 tracking-tight">Tracking & Pixels</h1>
+          <p className="text-[#aebcda] text-[15px]">Synchronize marketing signals and conversion tracking containers.</p>
         </div>
         <button
           onClick={handleSave}
           disabled={saving}
-          className="flex items-center gap-2 px-8 py-3 rounded-xl bg-[#1a73e8] text-white font-bold text-sm hover:shadow-lg hover:shadow-blue-500/20 transition-all disabled:opacity-50"
+          className="flex items-center gap-2 px-8 py-4 rounded-2xl bg-[#1a73e8] text-white font-bold text-[15px] hover:shadow-xl hover:shadow-[#1a73e8]/20 transition-all active:scale-[0.98] disabled:opacity-50 shadow-lg"
         >
           <Save size={18} />
-          {saving ? 'Saving...' : 'Publish Tracking'}
+          {saving ? 'Publishing...' : 'Deploy Tracking'}
         </button>
       </div>
 
-      <div className="grid grid-cols-2 gap-6 max-xl:grid-cols-1">
-        <div className="space-y-6">
-          {/* GTM */}
-          <div className="bg-[#0a1c34] border border-[#0e2340] rounded-2xl p-6 space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 border border-blue-500/20">
-                  <ShieldCheck size={20} />
-                </div>
-                <div>
-                  <h3 className="font-bold text-white">Google Tag Manager</h3>
-                  <span className="text-[11px] text-[#7b8bad] uppercase font-bold tracking-wider">Header & Body Injection</span>
-                </div>
-              </div>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" checked={tracking.gtm_enabled} onChange={e => setTracking({...tracking, gtm_enabled: e.target.checked})} className="sr-only peer" />
-                <div className="w-11 h-6 bg-[#050f1f] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-[#7b8bad] after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1a73e8] peer-checked:after:bg-white"></div>
-              </label>
-            </div>
-            <input 
-              type="text" 
-              value={tracking.gtm_id}
-              onChange={e => setTracking({...tracking, gtm_id: e.target.value})}
-              placeholder="GTM-XXXXXXX"
-              className="w-full bg-[#050f1f] border border-[#0e2340] rounded-xl px-4 py-3 text-white text-sm focus:border-[#1a73e8] outline-none"
-            />
-          </div>
-
-          {/* GA4 */}
-          <div className="bg-[#0a1c34] border border-[#0e2340] rounded-2xl p-6 space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-yellow-500/10 flex items-center justify-center text-yellow-400 border border-yellow-500/20">
-                  <Code size={20} />
-                </div>
-                <div>
-                  <h3 className="font-bold text-white">Google Analytics 4</h3>
-                  <span className="text-[11px] text-[#7b8bad] uppercase font-bold tracking-wider">Measurement ID</span>
-                </div>
-              </div>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" checked={tracking.ga4_enabled} onChange={e => setTracking({...tracking, ga4_enabled: e.target.checked})} className="sr-only peer" />
-                <div className="w-11 h-6 bg-[#050f1f] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-[#7b8bad] after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1a73e8] peer-checked:after:bg-white"></div>
-              </label>
-            </div>
-            <input 
-              type="text" 
-              value={tracking.ga4_measurement_id}
-              onChange={e => setTracking({...tracking, ga4_measurement_id: e.target.value})}
-              placeholder="G-XXXXXXXXXX"
-              className="w-full bg-[#050f1f] border border-[#0e2340] rounded-xl px-4 py-3 text-white text-sm focus:border-[#1a73e8] outline-none"
-            />
-          </div>
-
-          {/* Meta */}
-          <div className="bg-[#0a1c34] border border-[#0e2340] rounded-2xl p-6 space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-500 border border-blue-600/20">
-                  <Terminal size={20} />
-                </div>
-                <div>
-                  <h3 className="font-bold text-white">Meta Pixel</h3>
-                  <span className="text-[11px] text-[#7b8bad] uppercase font-bold tracking-wider">Facebook Pixel ID</span>
-                </div>
-              </div>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" checked={tracking.meta_pixel_enabled} onChange={e => setTracking({...tracking, meta_pixel_enabled: e.target.checked})} className="sr-only peer" />
-                <div className="w-11 h-6 bg-[#050f1f] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-[#7b8bad] after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1a73e8] peer-checked:after:bg-white"></div>
-              </label>
-            </div>
-            <input 
-              type="text" 
-              value={tracking.meta_pixel_id}
-              onChange={e => setTracking({...tracking, meta_pixel_id: e.target.value})}
-              placeholder="1234567890"
-              className="w-full bg-[#050f1f] border border-[#0e2340] rounded-xl px-4 py-3 text-white text-sm focus:border-[#1a73e8] outline-none"
-            />
-          </div>
+      <div className="grid grid-cols-12 gap-8 items-start">
+        <div className="col-span-12 lg:col-span-7 space-y-6">
+          <TrackingCard 
+            title="Google Tag Manager"
+            subtitle="GTM Container"
+            icon={ShieldCheck}
+            color="blue"
+            idKey="gtm_id"
+            enabledKey="gtm_enabled"
+            placeholder="GTM-XXXXXXX"
+          />
+          
+          <TrackingCard 
+            title="Google Analytics 4"
+            subtitle="GA4 Property"
+            icon={Globe}
+            color="gold"
+            idKey="ga4_measurement_id"
+            enabledKey="ga4_enabled"
+            placeholder="G-XXXXXXXXXX"
+          />
+          
+          <TrackingCard 
+            title="Meta Pixel"
+            subtitle="Ads Measurement"
+            icon={Activity}
+            color="purple"
+            idKey="meta_pixel_id"
+            enabledKey="meta_pixel_enabled"
+            placeholder="123456789012345"
+          />
         </div>
 
-        {/* Custom Scripts */}
-        <div className="bg-[#0a1c34] border border-[#0e2340] rounded-2xl p-8 space-y-6">
-          <h3 className="text-xl font-bold text-white flex items-center gap-2">
-            <Terminal size={20} className="text-[#1a73e8]" />
-            Custom Code Injection
-          </h3>
-          <div className="space-y-6">
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#aebcda] mb-2 flex items-center justify-between">
-                Head Scripts (Inside &lt;head&gt;)
-                <span className="text-[10px] text-[#7b8bad]">HTML Tags Supported</span>
-              </label>
-              <textarea 
-                rows={8}
-                value={tracking.custom_head_scripts}
-                onChange={e => setTracking({...tracking, custom_head_scripts: e.target.value})}
-                placeholder="<!-- Example: <script>...</script> -->"
-                className="w-full bg-[#050f1f] border border-[#0e2340] rounded-xl p-4 text-[#aebcda] text-xs font-mono focus:border-[#1a73e8] outline-none transition-all"
-              />
+        <div className="col-span-12 lg:col-span-5 space-y-6">
+          {/* Custom Injection Area */}
+          <div className="bg-[#0a1c34]/30 border border-white/5 rounded-[32px] p-8 space-y-8 backdrop-blur-xl shadow-2xl relative overflow-hidden">
+            <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#1a73e8]/5 blur-3xl rounded-full" />
+            
+            <div className="relative">
+              <h3 className="text-xl font-display font-bold text-white flex items-center gap-3 mb-6">
+                <Terminal size={22} className="text-[#1a73e8]" />
+                Advanced Code Injection
+              </h3>
+              
+              <div className="space-y-8">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between ml-1">
+                    <label className="text-[11px] font-bold text-[#7b8bad] uppercase tracking-widest">Global Head Code</label>
+                    <span className="text-[9px] font-bold text-[#1a73e8] bg-[#1a73e8]/10 px-2 py-0.5 rounded border border-[#1a73e8]/20">BEFORE &lt;/HEAD&gt;</span>
+                  </div>
+                  <textarea 
+                    rows={8}
+                    value={tracking.custom_head_scripts}
+                    onChange={e => setTracking({...tracking, custom_head_scripts: e.target.value})}
+                    placeholder="<!-- Add GSC, Pinterest, or Clarity scripts -->"
+                    className="w-full bg-[#050f1f]/80 border border-white/5 rounded-2xl p-5 text-[#aebcda] text-[12px] font-mono focus:border-[#1a73e8] outline-none transition-all shadow-inner leading-relaxed"
+                  />
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between ml-1">
+                    <label className="text-[11px] font-bold text-[#7b8bad] uppercase tracking-widest">Global Body Code</label>
+                    <span className="text-[9px] font-bold text-[#1a73e8] bg-[#1a73e8]/10 px-2 py-0.5 rounded border border-[#1a73e8]/20">AFTER &lt;BODY&gt;</span>
+                  </div>
+                  <textarea 
+                    rows={8}
+                    value={tracking.custom_body_scripts}
+                    onChange={e => setTracking({...tracking, custom_body_scripts: e.target.value})}
+                    placeholder="<!-- Add Noscript tags or chat widgets -->"
+                    className="w-full bg-[#050f1f]/80 border border-white/5 rounded-2xl p-5 text-[#aebcda] text-[12px] font-mono focus:border-[#1a73e8] outline-none transition-all shadow-inner leading-relaxed"
+                  />
+                </div>
+              </div>
             </div>
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#aebcda] mb-2 flex items-center justify-between">
-                Body Scripts (After &lt;body&gt;)
-                <span className="text-[10px] text-[#7b8bad]">HTML Tags Supported</span>
-              </label>
-              <textarea 
-                rows={8}
-                value={tracking.custom_body_scripts}
-                onChange={e => setTracking({...tracking, custom_body_scripts: e.target.value})}
-                placeholder="<!-- Example: Noscript tags or chat widgets -->"
-                className="w-full bg-[#050f1f] border border-[#0e2340] rounded-xl p-4 text-[#aebcda] text-xs font-mono focus:border-[#1a73e8] outline-none transition-all"
-              />
+            
+            <div className="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/10 text-amber-500/80 text-xs leading-relaxed flex gap-3">
+              <Zap size={16} className="shrink-0 mt-0.5" />
+              <p>Exercise caution: Malformed script tags or unclosed scripts in these fields can break the public site rendering completely.</p>
             </div>
           </div>
         </div>

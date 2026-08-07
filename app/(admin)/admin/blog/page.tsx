@@ -5,21 +5,21 @@ import { db } from '@/lib/db';
 import { 
   Plus, 
   Search, 
-  Filter, 
-  MoreVertical, 
   Edit, 
   Trash2, 
   ExternalLink,
-  Eye
+  Eye,
+  FileText,
+  Calendar,
+  MoreVertical,
+  ChevronRight
 } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 export default function BlogAdminPage() {
   const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const router = useRouter();
 
   useEffect(() => {
     loadPosts();
@@ -45,138 +45,119 @@ export default function BlogAdminPage() {
   );
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6">
+    <div className="space-y-8 pb-20">
       {/* Header Area */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-display font-bold text-white mb-1">Blog Manager</h1>
-          <p className="text-[#aebcda] text-[14.5px]">Create, edit, and publish high-converting HVAC PPC articles.</p>
+          <h1 className="text-4xl font-display font-bold text-white mb-2 tracking-tight">Blog Manager</h1>
+          <p className="text-[#aebcda] text-[15px]">Create and optimize long-form PPC strategy guides.</p>
         </div>
         <Link 
           href="/admin/blog/editor" 
-          className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#1a73e8] text-white font-bold text-sm hover:bg-[#1a73e8]/80 transition-all shadow-lg shadow-blue-500/20"
+          className="flex items-center gap-2 px-8 py-4 rounded-2xl bg-[#1a73e8] text-white font-bold text-[15px] hover:shadow-xl hover:shadow-[#1a73e8]/20 transition-all active:scale-[0.98] shadow-lg"
         >
           <Plus size={18} />
-          Write New Article
+          Write New Post
         </Link>
       </div>
 
-      {/* Filters & Search */}
-      <div className="flex gap-4 items-center">
-        <div className="flex-1 relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#7b8bad]" size={18} />
+      {/* Search & Stats Bar */}
+      <div className="flex flex-col xl:flex-row gap-6 items-center">
+        <div className="flex-1 w-full relative group">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#7b8bad] group-focus-within:text-[#1a73e8] transition-colors" size={20} />
           <input 
             type="text" 
-            placeholder="Search articles by title or slug..."
+            placeholder="Filter articles by title, keywords or slug..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-[#0a1c34] border border-[#0e2340] rounded-xl pl-12 pr-4 py-3 text-white text-sm focus:outline-none focus:border-[#1a73e8] transition-all"
+            className="w-full bg-[#0a1c34]/30 border border-white/5 rounded-2xl pl-12 pr-4 py-4 text-white text-[14px] focus:border-[#1a73e8] outline-none transition-all shadow-inner placeholder:text-white/10"
           />
         </div>
-        <button className="flex items-center gap-2 px-4 py-3 rounded-xl bg-[#0a1c34] border border-[#0e2340] text-[#aebcda] hover:text-white transition-all text-sm font-bold">
-          <Filter size={18} />
-          Filters
-        </button>
-      </div>
-
-      {/* Table Container */}
-      <div className="bg-[#0a1c34] border border-[#0e2340] rounded-2xl overflow-hidden shadow-xl">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="border-b border-[#0e2340] bg-[#050f1f]/30">
-                <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-[0.1em] text-[#7b8bad]">Article Details</th>
-                <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-[0.1em] text-[#7b8bad]">Status</th>
-                <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-[0.1em] text-[#7b8bad]">Analytics</th>
-                <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-[0.1em] text-[#7b8bad]">Published</th>
-                <th className="px-6 py-5 text-[11px] font-bold uppercase tracking-[0.1em] text-[#7b8bad] text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <tr>
-                  <td colSpan={5} className="px-6 py-20 text-center">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1a73e8] mx-auto mb-4"></div>
-                    <span className="text-[#7b8bad] text-sm">Loading articles...</span>
-                  </td>
-                </tr>
-              ) : filteredPosts.length === 0 ? (
-                <tr>
-                  <td colSpan={5} className="px-6 py-20 text-center">
-                    <p className="text-[#aebcda] font-medium">No articles found matching your criteria.</p>
-                  </td>
-                </tr>
-              ) : (
-                filteredPosts.map((post) => (
-                  <tr key={post.id} className="border-b border-[#0e2340] last:border-0 hover:bg-white/[0.02] transition-colors group">
-                    <td className="px-6 py-5">
-                      <div className="flex flex-col">
-                        <span className="text-[15px] text-white font-bold mb-0.5 group-hover:text-[#1a73e8] transition-colors">
-                          {post.title}
-                        </span>
-                        <span className="text-[12px] text-[#7b8bad] font-mono">
-                          /{post.slug}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-5">
-                      <span className={`inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border ${
-                        post.status === 'published' 
-                          ? 'bg-green-500/10 text-green-400 border-green-500/20' 
-                          : 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'
-                      }`}>
-                        {post.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-5">
-                      <div className="flex items-center gap-2 text-[#aebcda]">
-                        <Eye size={14} className="text-[#7b8bad]" />
-                        <span className="text-[13px] font-bold">{post.views_count || 0}</span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-5">
-                      <span className="text-[13px] text-[#aebcda]">
-                        {post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—'}
-                      </span>
-                    </td>
-                    <td className="px-6 py-5 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <Link 
-                          href={`/admin/blog/editor?id=${post.id}`}
-                          className="p-2 bg-[#1a73e8]/10 text-[#1a73e8] hover:bg-[#1a73e8] hover:text-white rounded-lg transition-all"
-                          title="Edit"
-                        >
-                          <Edit size={16} />
-                        </Link>
-                        <Link 
-                          href={`/blog/${post.slug}`}
-                          target="_blank"
-                          className="p-2 bg-white/5 text-[#7b8bad] hover:text-white rounded-lg transition-all"
-                          title="View on Site"
-                        >
-                          <ExternalLink size={16} />
-                        </Link>
-                        <button 
-                          onClick={() => handleDelete(post.id)}
-                          className="p-2 bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white rounded-lg transition-all"
-                          title="Delete"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+        <div className="flex gap-4 w-full xl:w-auto">
+          <div className="bg-[#0a1c34]/30 border border-white/5 px-6 py-4 rounded-2xl flex items-center gap-3">
+             <span className="text-[10px] font-bold text-[#7b8bad] uppercase tracking-widest">Total</span>
+             <span className="text-white font-display font-bold">{posts.length}</span>
+          </div>
+          <div className="bg-[#0a1c34]/30 border border-white/5 px-6 py-4 rounded-2xl flex items-center gap-3">
+             <span className="text-[10px] font-bold text-[#7b8bad] uppercase tracking-widest">Live</span>
+             <span className="text-emerald-400 font-display font-bold">{posts.filter(p => p.status === 'published').length}</span>
+          </div>
         </div>
       </div>
 
-      {/* Database Context Note */}
-      <div className="p-4 bg-[#0a1c34]/50 border border-[#0e2340] rounded-xl text-center text-xs text-[#7b8bad]">
-        All blog data is synchronized with your Supabase <code className="bg-[#050f1f] px-1.5 py-0.5 rounded text-[#aebcda]">blog_posts</code> table.
-      </div>
+      {loading ? (
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1a73e8]"></div>
+        </div>
+      ) : filteredPosts.length === 0 ? (
+        <div className="bg-[#0a1c34]/20 border border-white/5 rounded-[40px] p-24 text-center">
+          <FileText size={48} className="text-[#7b8bad] opacity-20 mx-auto mb-6" />
+          <h3 className="text-white font-display font-bold text-2xl">No matching articles</h3>
+          <p className="text-[#7b8bad] text-[15px] mt-2">Start growing your organic reach by writing your first guide.</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 animate-in fade-in duration-500">
+          {filteredPosts.map((post) => (
+            <div key={post.id} className="group bg-[#0a1c34]/30 border border-white/5 rounded-[32px] p-8 flex flex-col hover:border-[#1a73e8]/30 transition-all duration-300 backdrop-blur-sm shadow-xl relative overflow-hidden">
+              <div className="flex justify-between items-start mb-6">
+                <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${
+                  post.status === 'published' 
+                    ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                    : 'bg-white/5 text-[#7b8bad] border-white/10'
+                }`}>
+                  <span className={`w-1.5 h-1.5 rounded-full ${post.status === 'published' ? 'bg-emerald-400 animate-pulse' : 'bg-[#7b8bad]'}`} />
+                  {post.status}
+                </span>
+                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                   <button onClick={() => handleDelete(post.id)} className="p-2 text-[#7b8bad] hover:text-red-400 transition-colors">
+                     <Trash2 size={16} />
+                   </button>
+                </div>
+              </div>
+
+              <div className="flex-1 space-y-3">
+                <h3 className="text-xl font-display font-bold text-white leading-tight group-hover:text-[#4c9bff] transition-colors line-clamp-2">
+                   {post.title}
+                </h3>
+                <p className="text-[14px] text-[#7b8bad] line-clamp-2 leading-relaxed">
+                   {post.excerpt || 'No excerpt provided for this article.'}
+                </p>
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-white/5 grid grid-cols-2 gap-4">
+                <div className="flex flex-col gap-1">
+                   <span className="text-[9px] font-bold text-[#7b8bad] uppercase tracking-widest">Views</span>
+                   <div className="flex items-center gap-2 text-white font-bold text-[14px]">
+                      <Eye size={14} className="text-[#1a73e8]" /> {post.views_count || 0}
+                   </div>
+                </div>
+                <div className="flex flex-col gap-1">
+                   <span className="text-[9px] font-bold text-[#7b8bad] uppercase tracking-widest">Released</span>
+                   <div className="flex items-center gap-2 text-[#aebcda] text-[13px] font-medium">
+                      <Calendar size={14} /> {post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'Draft'}
+                   </div>
+                </div>
+              </div>
+
+              <div className="mt-6 grid grid-cols-2 gap-3">
+                <Link 
+                  href={`/admin/blog/editor?id=${post.id}`}
+                  className="flex items-center justify-center gap-2 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-xs hover:bg-[#1a73e8] hover:border-[#1a73e8] transition-all group/btn"
+                >
+                  <Edit size={14} className="opacity-50 group-hover/btn:opacity-100" /> Edit Post
+                </Link>
+                <Link 
+                  href={`/blog/${post.slug}`}
+                  target="_blank"
+                  className="flex items-center justify-center gap-2 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-xs hover:bg-white/10 transition-all group/btn"
+                >
+                  <ExternalLink size={14} className="opacity-50" /> Preview
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

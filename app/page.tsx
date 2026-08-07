@@ -7,7 +7,6 @@ import { TestimonialsSlider } from '@/components/public/TestimonialsSlider';
 import { FaqAccordion } from '@/components/public/FaqAccordion';
 import { ZcalEmbed } from '@/components/public/ZcalEmbed';
 import { StructuredData } from '@/components/public/StructuredData';
-import { GoogleAdsDashboardMockup, GA4DashboardMockup, ConversionTrackingMockup, CostPerCallTrendMockup, LandingPageConversionMockup, KeywordExpansionMockup } from '@/components/public/DashboardMockups';
 import { GoogleAdsCertBadge, GoogleAnalyticsCertBadge, GTMCertBadge, MetaCertBadge } from '@/components/public/CertBadges';
 import { db } from '@/lib/db';
 import { LeadForm } from '@/components/public/LeadForm';
@@ -41,21 +40,19 @@ export default async function Home() {
 
   return (
     <>
-      <StructuredData faqs={faq.content_json.faqs || []} />
+      <StructuredData faqs={faq.content_json?.faqs || []} />
       <Sidebar />
       <MobileHeader />
 
       {/* Inject Tracking Codes */}
       {tracking.gtm_enabled && tracking.gtm_id && (
-        <>
-          <Script id="gtm" strategy="afterInteractive">
-            {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','${tracking.gtm_id}');`}
-          </Script>
-        </>
+        <Script id="gtm" strategy="afterInteractive">
+          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','${tracking.gtm_id}');`}
+        </Script>
       )}
       {tracking.ga4_enabled && tracking.ga4_measurement_id && (
         <>
@@ -72,114 +69,101 @@ export default async function Home() {
         <div dangerouslySetInnerHTML={{ __html: tracking.custom_head_scripts }} />
       )}
 
-      <main className="content lg:ml-[var(--sidebar-w)] min-h-screen bg-[#050f1f]">
+      <main className="content lg:ml-[270px] min-h-screen bg-[#050f1f]">
         <div className="content-inner w-full flex flex-col">
 
-          {/* HERO */}
+          {/* HERO SECTION */}
           <section 
-            className="w-full bg-[#050f1f] min-h-[calc(100vh-80px)] lg:min-h-screen flex items-center border-b border-[var(--line)] relative" 
+            className="w-full bg-[#050f1f] min-h-[calc(100vh-80px)] lg:min-h-screen flex items-center border-b border-white/5 relative overflow-hidden" 
             id="home"
             style={{ 
               backgroundImage: 'linear-gradient(rgba(26,115,232,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(26,115,232,0.03) 1px, transparent 1px)', 
-              backgroundSize: '32px 32px' 
+              backgroundSize: '40px 40px' 
             }}
           >
-            <div className="absolute top-0 right-0 w-[45%] h-[40%] bg-[radial-gradient(circle,rgba(26,115,232,0.07),transparent_70%)] pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-[radial-gradient(circle,rgba(242,169,61,0.04),transparent_70%)] pointer-events-none" />
+            {/* Ambient Background Glows */}
+            <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-[radial-gradient(circle,rgba(26,115,232,0.08),transparent_70%)] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-[radial-gradient(circle,rgba(242,169,61,0.05),transparent_70%)] pointer-events-none" />
 
             <div className="max-w-[var(--container)] mx-auto w-full px-10 py-16 max-lg:px-6">
-              <div className="hero-grid grid grid-cols-[1.15fr_0.85fr] max-xl:grid-cols-1 gap-10 items-center">
-                <div className="hero-copy">
-                  <span className="eyebrow">{settings.job_title}</span>
-                  <h2 className="text-[clamp(32px,4.5vw,52px)] leading-[1.1] mb-5 text-white font-bold tracking-tight">
+              <div className="hero-grid grid grid-cols-[1.1fr_0.9fr] max-xl:grid-cols-1 gap-12 items-center">
+                <div className="hero-copy animate-in fade-in slide-in-from-left-8 duration-700">
+                  <span className="eyebrow inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#f2a93d]/10 border border-[#f2a93d]/20 text-[#f2a93d] text-[11px] font-bold uppercase tracking-wider mb-6">
+                    <span className="w-2 h-2 rounded-full bg-[#f2a93d] animate-pulse" />
+                    {settings.job_title}
+                  </span>
+                  <h1 className="text-[clamp(36px,5vw,60px)] font-display leading-[1.05] mb-6 text-white font-bold tracking-tight">
                     {hero.title}
-                  </h2>
-                  <p className="lead text-[17px] text-[var(--ink-dim)] max-w-[580px] leading-relaxed mb-6.5">
+                  </h1>
+                  <p className="text-[18px] text-[#aebcda] max-w-[620px] leading-relaxed mb-8">
                     {hero.subtitle}
                   </p>
-                  <div className="hero-actions flex flex-wrap gap-3.5 my-7 max-sm:flex-col">
-                    <a className="btn btn-primary px-7 py-3.5" href="#contact">
-                      Book Free Consultation
-                      <svg className="btn-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  <div className="hero-actions flex flex-wrap gap-4 my-8 max-sm:flex-col">
+                    <a className="btn btn-primary px-8 py-4 text-[15px] font-bold rounded-xl shadow-xl shadow-[#1a73e8]/25 hover:scale-[1.02] transition-all" href="#contact">
+                      Book Free Audit
+                      <svg className="btn-arrow ml-2" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                     </a>
-                    <a className="btn btn-ghost px-7 py-3.5" href={`https://wa.me/${settings.whatsapp_number}`} target="_blank" rel="noopener">
-                      Chat on WhatsApp
+                    <a className="btn btn-ghost px-8 py-4 text-[15px] font-bold rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all backdrop-blur-sm" href={`https://wa.me/${settings.whatsapp_number}`} target="_blank" rel="noopener">
+                      WhatsApp Chat
                     </a>
                   </div>
-                  <div className="trust-pills flex flex-wrap gap-2.5">
-                    {(hero.content_json.certificates || []).map((c: any, i: number) => (
-                      <span key={i} className="pill"><span className="dot" />{c.name}</span>
+                  <div className="trust-pills flex flex-wrap gap-3">
+                    {(hero.content_json?.certificates || []).map((c: any, i: number) => (
+                      <span key={i} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-[12.5px] font-semibold text-[#aebcda] hover:border-[#1a73e8]/30 transition-all">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#1a73e8]" />
+                        {c.name}
+                      </span>
                     ))}
                   </div>
                 </div>
-                <div className="w-full">
+                <div className="w-full animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
                   <PulseCard />
                 </div>
               </div>
 
-              <div className="hero-certs mt-12 pt-8 border-t border-[var(--line)]">
-                <span className="hero-certs-label block text-[10.5px] font-extrabold tracking-[0.12em] uppercase text-[var(--ink-faint)] mb-4">Certified & trained on</span>
-                <div className="cert-row flex flex-wrap gap-3.5">
-                  <span className="cert-badge"><span className="ico"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M12,12 L12,3 A9,9 0 0,1 21,12 Z" fill="#4285F4"/><path d="M12,12 L12,3 A9,9 0 0,1 21,12 Z" fill="#EA4335" transform="rotate(90 12 12)"/><path d="M12,12 L12,3 A9,9 0 0,1 21,12 Z" fill="#FBBC05" transform="rotate(180 12 12)"/><path d="M12,12 L12,3 A9,9 0 0,1 21,12 Z" fill="#34A853" transform="rotate(270 12 12)"/></svg></span>Google Ads</span>
-                  <span className="cert-badge"><span className="ico" style={{background:"#F9AB00"}}><svg viewBox="0 0 24 24" width="14" height="14"><rect x="4" y="13" width="4" height="7" rx="1" fill="#fff"/><rect x="10" y="8" width="4" height="12" rx="1" fill="#fff"/><rect x="16" y="3" width="4" height="17" rx="1" fill="#fff"/></svg></span>Google Analytics</span>
-                  <span className="cert-badge"><span className="ico" style={{background:"#4285F4"}}><svg viewBox="0 0 24 24" width="14" height="14"><path d="M12.5 3H6a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .586 1.414l7.5 7.5a2 2 0 0 0 2.828 0l6.5-6.5a2 2 0 0 0 0-2.828l-7.5-7.5A2 2 0 0 0 12.5 3z" fill="#fff"/><circle cx="8" cy="8" r="1.6" fill="#4285F4"/></svg></span>Tag Manager</span>
-                  <span className="cert-badge"><span className="ico" style={{background:"#21759B"}}><svg viewBox="0 0 24 24" width="14" height="14"><path d="M3 5l3.2 14h2.1l2.2-9 2.2 9h2.1L18 5h-2.3l-1.9 9-2-9h-1.9l-2 9-1.9-9H3z" fill="#fff"/></svg></span>WordPress</span>
+              <div className="hero-certs mt-16 pt-10 border-t border-white/5">
+                <span className="block text-[11px] font-extrabold tracking-[0.15em] uppercase text-[#7b8bad] mb-6">Certified &amp; Partnered with</span>
+                <div className="cert-row flex flex-wrap gap-5">
+                  {[
+                    { label: "Google Ads", icon: <svg viewBox="0 0 24 24" width="26" height="26"><path d="M12,12 L12,3 A9,9 0 0,1 21,12 Z" fill="#4285F4"/><path d="M12,12 L12,3 A9,9 0 0,1 21,12 Z" fill="#EA4335" transform="rotate(90 12 12)"/><path d="M12,12 L12,3 A9,9 0 0,1 21,12 Z" fill="#FBBC05" transform="rotate(180 12 12)"/><path d="M12,12 L12,3 A9,9 0 0,1 21,12 Z" fill="#34A853" transform="rotate(270 12 12)"/></svg> },
+                    { label: "Google Analytics", color: "#F9AB00", svg: <svg viewBox="0 0 24 24" width="14" height="14"><rect x="4" y="13" width="4" height="7" rx="1" fill="#fff"/><rect x="10" y="8" width="4" height="12" rx="1" fill="#fff"/><rect x="16" y="3" width="4" height="17" rx="1" fill="#fff"/></svg> },
+                    { label: "Tag Manager", color: "#4285F4", svg: <svg viewBox="0 0 24 24" width="14" height="14"><path d="M12.5 3H6a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .586 1.414l7.5 7.5a2 2 0 0 0 2.828 0l6.5-6.5a2 2 0 0 0 0-2.828l-7.5-7.5A2 2 0 0 0 12.5 3z" fill="#fff"/><circle cx="8" cy="8" r="1.6" fill="#4285F4"/></svg> },
+                    { label: "WordPress", color: "#21759B", svg: <svg viewBox="0 0 24 24" width="14" height="14"><path d="M3 5l3.2 14h2.1l2.2-9 2.2 9h2.1L18 5h-2.3l-1.9 9-2-9h-1.9l-2 9-1.9-9H3z" fill="#fff"/></svg> }
+                  ].map((item, idx) => (
+                    <span key={idx} className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 font-bold text-[13.5px] text-[#aebcda] hover:border-white/20 transition-all">
+                      <span className="flex items-center justify-center w-6 h-6 rounded-md" style={{ background: item.color || 'transparent' }}>
+                        {item.icon || item.svg}
+                      </span>
+                      {item.label}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
           </section>
 
-          {/* SERVICES */}
-          <section className="w-full bg-[#0a1c34] border-b border-[var(--line)]" id="services">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-22 max-lg:px-6">
-              <div className="sec-head max-w-[680px] mb-10">
+          {/* SERVICES SECTION */}
+          <section className="w-full bg-[#0a1c34] border-b border-white/5" id="services">
+            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+              <div className="sec-head max-w-[720px] mb-12">
                 <span className="eyebrow">Services</span>
-                <h2 className="text-[clamp(26px,3.5vw,36px)] leading-tight mb-3 text-white font-bold">
+                <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
                   {services.title}
                 </h2>
-                <p className="text-[var(--ink-dim)] text-[16px] leading-relaxed">
+                <p className="text-[#aebcda] text-[17px] leading-relaxed">
                   {services.subtitle}
                 </p>
               </div>
-              <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-4 mt-8">
-                {(services.content_json.services_list || []).map((s: any, i: number) => (
-                  <article key={i} className="card service-card p-6 bg-[#050f1f]/50 border border-white/5 rounded-2xl hover:border-[var(--blue-light)]/30 hover:bg-[#050f1f]/80 transition-all duration-300">
-                    <div className="service-icon w-10 h-10 rounded-xl bg-[rgba(26,115,232,0.12)] border border-[rgba(26,115,232,0.25)] grid place-items-center mb-4">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8ab4f8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={s.icon} /></svg>
+              <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-5">
+                {(services.content_json?.services_list || []).map((s: any, i: number) => (
+                  <article key={i} className="group p-7 bg-[#050f1f]/50 border border-white/5 rounded-[28px] hover:border-[#1a73e8]/30 hover:bg-[#050f1f] transition-all duration-300 flex flex-col gap-5">
+                    <div className="w-12 h-12 rounded-2xl bg-[#1a73e8]/10 border border-[#1a73e8]/20 grid place-items-center text-[#4c9bff] group-hover:scale-110 transition-transform">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={s.icon} /></svg>
                     </div>
-                    <span className="tag inline-block text-[10px] font-extrabold tracking-[0.08em] uppercase text-[var(--gold)] bg-[var(--gold-soft)] border border-[var(--gold-line)] px-2.25 py-1 rounded-full mb-3">{s.tag}</span>
-                    <h3 className="text-[17px] mb-2 font-bold text-white">{s.title}</h3>
-                    <p className="text-[13.5px] text-[var(--ink-dim)] leading-relaxed">{s.desc}</p>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* CASE STUDIES */}
-          <section className="w-full bg-[#050f1f] border-b border-[var(--line)]" id="case-studies">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-22 max-lg:px-6">
-              <div className="sec-head max-w-[680px] mb-10">
-                <span className="eyebrow">Case Studies</span>
-                <h2 className="text-[clamp(26px,3.5vw,36px)] leading-tight mb-3 text-white font-bold">
-                  Real accounts, real fixes — client results.
-                </h2>
-              </div>
-              <div className="grid-3 mt-8">
-                {caseStudies.map((c: any, i: number) => (
-                  <article key={i} className="case-card bg-[#0a1c34]/50 border border-white/5 rounded-[18px] p-6.5 flex flex-col gap-4.5 hover:border-[var(--blue-light)]/30 hover:bg-[#0a1c34]/80 transition-all duration-300 hover:-translate-y-1">
-                    <span className="text-[11.5px] font-extrabold tracking-[0.1em] uppercase text-[var(--blue-light)]">{c.client_niche}</span>
-                    <div className="case-row flex flex-col gap-1">
-                      <span className="text-[10px] font-extrabold tracking-[0.08em] uppercase text-[var(--ink-faint)]">Challenge</span>
-                      <p className="text-[13.8px] text-[var(--ink-dim)] leading-relaxed">{c.challenge}</p>
-                    </div>
-                    <div className="case-row flex flex-col gap-1">
-                      <span className="text-[10px] font-extrabold tracking-[0.08em] uppercase text-[var(--ink-faint)]">Strategy</span>
-                      <p className="text-[13.8px] text-[var(--ink-dim)] leading-relaxed">{c.strategy}</p>
-                    </div>
-                    <div className="case-row mt-auto pt-3 border-t border-white/5 flex flex-col gap-1">
-                      <span className="text-[10px] font-extrabold tracking-[0.08em] uppercase text-[var(--gold)]">Result</span>
-                      <p className="text-[13.8px] text-[var(--ink-dim)] leading-relaxed">{c.result_summary}</p>
+                    <div>
+                      <span className="inline-block text-[10px] font-extrabold tracking-widest uppercase text-[#f2a93d] bg-[#f2a93d]/10 border border-[#f2a93d]/20 px-2.5 py-1 rounded-full mb-3">{s.tag}</span>
+                      <h3 className="text-[19px] mb-2 font-bold text-white font-display group-hover:text-[#4c9bff] transition-colors">{s.title}</h3>
+                      <p className="text-[14px] text-[#aebcda] leading-relaxed">{s.desc}</p>
                     </div>
                   </article>
                 ))}
@@ -187,142 +171,136 @@ export default async function Home() {
             </div>
           </section>
 
-          {/* PROCESS */}
-          <section className="w-full bg-[#0a1c34] border-b border-[var(--line)]" id="process">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-22 max-lg:px-6">
-              <div className="sec-head max-w-[680px] mb-10">
-                <span className="eyebrow">Process</span>
-                <h2 className="text-[clamp(26px,3.5vw,36px)] leading-tight mb-3 text-white font-bold">
-                  {process.title}
+          {/* WHY ME SECTION */}
+          <section className="w-full bg-[#050f1f] border-b border-white/5" id="why-me">
+            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+              <div className="sec-head max-w-[720px] mb-12">
+                <span className="eyebrow">Why Me</span>
+                <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
+                  {why.title || "A specialist who also understands the page the click lands on."}
                 </h2>
+                {why.subtitle && <p className="text-[#aebcda] text-[17px] leading-relaxed">{why.subtitle}</p>}
               </div>
-              <div className="process-track grid grid-cols-5 gap-4.5 max-xl:grid-cols-2 max-md:grid-cols-1">
-                {(process.content_json.steps || []).map((p: any, i: number) => (
-                  <article key={i} className="process-step bg-[#050f1f]/50 border border-white/5 rounded-2xl p-5.5 transition-all hover:border-[var(--blue-light)]/25 hover:bg-[#050f1f]/80 duration-300">
-                    <div className="num font-display text-[12px] font-bold text-[var(--navy-900)] bg-[var(--blue-light)] w-6.5 h-6.5 rounded-lg grid place-items-center mb-4">{p.num}</div>
-                    <h3 className="text-[16px] font-bold text-white mb-2">{p.title}</h3>
-                    <p className="text-[13.5px] text-[var(--ink-dim)] leading-relaxed">{p.desc}</p>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* BLOG FEED */}
-          <section className="w-full bg-[#050f1f] border-b border-[var(--line)]" id="blog">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-22 max-lg:px-6">
-              <div className="sec-head max-w-[680px] mb-10 flex justify-between items-end gap-4 max-sm:flex-col max-sm:items-start">
-                <div>
-                  <span className="eyebrow">Insights</span>
-                  <h2 className="text-[clamp(26px,3.5vw,36px)] leading-tight text-white font-bold">
-                    Latest HVAC PPC Articles
-                  </h2>
-                </div>
-                <Link href="/blog" className="text-[14px] font-bold text-[var(--blue-light)] hover:underline">
-                  View All Articles →
-                </Link>
-              </div>
-              <div className="grid grid-cols-2 gap-6 max-md:grid-cols-1">
-                {blogs.slice(0, 2).map((post: any) => (
-                  <article key={post.id} className="card p-6 bg-[#0a1c34]/50 border border-white/5 rounded-2xl hover:border-[var(--blue-light)]/30 transition-all">
-                    <span className="text-[10px] font-extrabold uppercase text-[var(--gold)] bg-[var(--gold-soft)] px-2 py-1 rounded-full mb-3 inline-block">Article</span>
-                    <h3 className="text-xl font-bold text-white mb-2 leading-tight">
-                      <Link href={`/blog/${post.slug}`} className="hover:text-[var(--blue-light)] transition-colors">{post.title}</Link>
-                    </h3>
-                    <p className="text-[14px] text-[var(--ink-dim)] line-clamp-2 mb-4">{post.excerpt}</p>
-                    <Link href={`/blog/${post.slug}`} className="text-sm font-bold text-[var(--blue-light)] flex items-center gap-1 group">
-                      Read More <span className="group-hover:translate-x-1 transition-transform">→</span>
-                    </Link>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* TESTIMONIALS */}
-          <section className="w-full bg-[#0a1c34] border-b border-[var(--line)]" id="testimonials">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-22 max-lg:px-6">
-              <div className="sec-head max-w-[680px] mb-10">
-                <span className="eyebrow">Testimonials</span>
-                <h2 className="text-[clamp(26px,3.5vw,36px)] leading-tight mb-3 text-white font-bold">
-                  What clients say — once the calls start coming in.
-                </h2>
-              </div>
-              <TestimonialsSlider />
-            </div>
-          </section>
-
-          {/* CERTIFICATIONS */}
-          <section className="w-full bg-[#050f1f] border-b border-[var(--line)]" id="certifications">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-22 max-lg:px-6">
-              <div className="sec-head max-w-[680px] mb-10">
-                <span className="eyebrow">Certifications</span>
-                <h2 className="text-[clamp(26px,3.5vw,36px)] leading-tight mb-3 text-white font-bold">
-                  {certsSection.title}
-                </h2>
-              </div>
-              <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-4 mt-8">
-                {(certsSection.content_json.certs || []).map((cert: any, i: number) => (
-                  <div key={i} className="cert-card bg-[#0a1c34]/50 border border-white/5 rounded-2xl overflow-hidden hover:border-[var(--gold)]/30 transition-all">
-                    <div className="cert-thumb p-4 bg-white">
-                      {cert.badge_type === 'google-ads' && <GoogleAdsCertBadge />}
-                      {cert.badge_type === 'google-analytics' && <GoogleAnalyticsCertBadge />}
-                      {cert.badge_type === 'tag-manager' && <GTMCertBadge />}
-                      {cert.badge_type === 'meta' && <MetaCertBadge />}
-                      {!['google-ads', 'google-analytics', 'tag-manager', 'meta'].includes(cert.badge_type) && (
-                        <div className="h-[100px] flex items-center justify-center text-[#050f1f] font-bold text-lg">
-                          {cert.title}
+              <div className="grid grid-cols-2 max-lg:grid-cols-1 gap-10">
+                <div className="space-y-6">
+                  {(why.content_json?.bullets_col1 || []).map((bullet: string, i: number) => {
+                    const [title, ...rest] = bullet.split('. ');
+                    return (
+                      <div key={i} className="flex gap-5 p-6 rounded-3xl border border-white/5 bg-[#0a1c34]/30 hover:border-[#1a73e8]/20 transition-all duration-300">
+                        <div className="w-12 h-12 rounded-2xl bg-[#1a73e8]/10 text-[#4c9bff] flex items-center justify-center font-bold flex-none shadow-inner">✓</div>
+                        <div>
+                          <h3 className="text-[18px] font-bold text-white mb-2 font-display">{title}</h3>
+                          <p className="text-[14.5px] text-[#aebcda] leading-relaxed">{rest.join('. ')}</p>
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="space-y-6">
+                  {(why.content_json?.bullets_col2 || []).map((bullet: string, i: number) => {
+                    const [title, ...rest] = bullet.split('. ');
+                    return (
+                      <div key={i} className="flex gap-5 p-6 rounded-3xl border border-white/5 bg-[#0a1c34]/30 hover:border-[#f2a93d]/20 transition-all duration-300">
+                        <div className="w-12 h-12 rounded-2xl bg-[#f2a93d]/10 text-[#f2a93d] flex items-center justify-center font-bold flex-none shadow-inner">✓</div>
+                        <div>
+                          <h3 className="text-[18px] font-bold text-white mb-2 font-display">{title}</h3>
+                          <p className="text-[14.5px] text-[#aebcda] leading-relaxed">{rest.join('. ')}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* RESULTS SECTION */}
+          <section className="w-full bg-[#0a1c34] border-b border-white/5" id="results">
+            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+              <div className="sec-head max-w-[720px] mb-12">
+                <span className="eyebrow">Performance</span>
+                <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
+                  Measurable metrics that impact the bottom line.
+                </h2>
+                <p className="text-[#aebcda] text-[17px] leading-relaxed">
+                  We don&apos;t just optimize for clicks. We measure phone calls, booked service jobs, and customer acquisition cost.
+                </p>
+              </div>
+              <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-6">
+                {[
+                  { value: "$28.50", label: "Average HVAC CPL", desc: "Industry average is often over $65.00 for local search.", color: "#1a73e8" },
+                  { value: "+310%", label: "Inbound Call Volume", desc: "Increase in emergency repair calls within first 90 days.", color: "#f2a93d" },
+                  { value: "18.4%", label: "Average CTR", desc: "Highly relevant ad copies matched to exact search intent.", color: "#10b981" },
+                  { value: "100%", label: "Lead Attribution", desc: "Form-fills, calls, and booking widget clicks fully verified.", color: "#a855f7" }
+                ].map((stat, i) => (
+                  <div key={i} className="p-8 rounded-[32px] border border-white/5 bg-[#050f1f]/60 hover:border-white/10 transition-all group overflow-hidden relative">
+                    <div className="absolute top-0 right-0 w-24 h-24 blur-3xl opacity-10 transition-opacity group-hover:opacity-20" style={{ background: stat.color }} />
+                    <strong className="block text-5xl font-display font-bold text-white mb-2 tracking-tight">{stat.value}</strong>
+                    <span className="text-[13px] font-bold uppercase tracking-widest block mb-3" style={{ color: stat.color }}>{stat.label}</span>
+                    <p className="text-[14px] text-[#aebcda] leading-relaxed">{stat.desc}</p>
                   </div>
                 ))}
               </div>
             </div>
           </section>
 
-          {/* FAQ */}
-          <section className="w-full bg-[#0a1c34] border-b border-[var(--line)]" id="faq">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-22 max-lg:px-6">
-              <div className="sec-head max-w-[680px] mb-10">
-                <span className="eyebrow">FAQ</span>
-                <h2 className="text-[clamp(26px,3.5vw,36px)] leading-tight mb-3 text-white font-bold">
-                  {faq.title}
-                </h2>
+          {/* CASE STUDIES SECTION */}
+          <section className="w-full bg-[#050f1f] border-b border-white/5" id="case-studies">
+            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+              <div className="sec-head max-w-[720px] mb-12 flex justify-between items-end gap-6 max-sm:flex-col max-sm:items-start">
+                <div>
+                  <span className="eyebrow">Case Studies</span>
+                  <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight text-white font-bold">
+                    Real accounts, real fixes — client results.
+                  </h2>
+                </div>
               </div>
-              <FaqAccordion />
+              <div className="grid grid-cols-3 max-xl:grid-cols-2 max-md:grid-cols-1 gap-7">
+                {caseStudies.map((c: any, i: number) => (
+                  <article key={i} className="group flex flex-col bg-[#0a1c34]/50 border border-white/5 rounded-[32px] p-8 hover:border-[#1a73e8]/30 transition-all hover:-translate-y-1 duration-300">
+                    <div className="flex justify-between items-start mb-6">
+                      <span className="text-[11px] font-extrabold tracking-widest uppercase text-[#4c9bff] bg-[#1a73e8]/10 px-3 py-1 rounded-full">{c.client_niche}</span>
+                    </div>
+                    <div className="space-y-6 flex-1">
+                      <div className="space-y-2">
+                        <span className="text-[10px] font-extrabold tracking-wider uppercase text-[#7b8bad]">The Challenge</span>
+                        <p className="text-[14.5px] text-[#aebcda] leading-relaxed line-clamp-3">{c.challenge}</p>
+                      </div>
+                      <div className="space-y-2">
+                        <span className="text-[10px] font-extrabold tracking-wider uppercase text-[#7b8bad]">The Strategy</span>
+                        <p className="text-[14.5px] text-[#aebcda] leading-relaxed line-clamp-3">{c.strategy}</p>
+                      </div>
+                    </div>
+                    <div className="mt-8 pt-6 border-t border-white/5">
+                      <span className="text-[10px] font-extrabold tracking-wider uppercase text-[#f2a93d] block mb-2">Final Result</span>
+                      <p className="text-[16px] font-display font-bold text-white leading-tight">{c.result_summary}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
             </div>
           </section>
 
-          {/* ZCAL & WHAT TO EXPECT - 80/20 Layout */}
-          <section className="w-full bg-[#050f1f] border-b border-[var(--line)]" id="contact">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-22 max-lg:px-6">
-              <div className="sec-head max-w-[680px] mb-12">
-                <span className="eyebrow">Book a Call</span>
-                <h2 className="text-[clamp(26px,3.5vw,36px)] leading-tight mb-3 text-white font-bold">
-                  Book a free Google Ads audit.
+          {/* PROCESS SECTION */}
+          <section className="w-full bg-[#0a1c34] border-b border-white/5" id="process">
+            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+              <div className="sec-head max-w-[720px] mb-16">
+                <span className="eyebrow">Process</span>
+                <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
+                  {process.title}
                 </h2>
               </div>
-
-              <div className="flex gap-8 max-xl:flex-col">
-                {/* Zcal Embed - 80% */}
-                <div className="flex-[0.8] w-full rounded-2xl overflow-hidden border border-white/5 shadow-2xl">
-                  <ZcalEmbed />
-                </div>
-                
-                {/* What to Expect - 20% */}
-                <div className="flex-[0.2] min-w-[280px] flex flex-col gap-4">
-                  <span className="eyebrow block text-[11px] mb-2">What to expect on the call</span>
-                  {[
-                    { title: "Campaign Audit", desc: "A focused review of what's helping lead flow." },
-                    { title: "Structure Check", desc: "Feedback on campaign and search intent." },
-                    { title: "Tracking Review", desc: "Check on calls and form tracking quality." },
-                    { title: "Landing Page CRO", desc: "CRO observations for better results." },
-                    { title: "Next Steps Plan", desc: "Clear action steps you can act on." }
-                  ].map((item, i) => (
-                    <div key={i} className="p-4 rounded-xl border border-white/5 bg-[#0a1c34]/40 flex flex-col gap-1.5 transition-all hover:bg-[#0a1c34]/80 duration-300">
-                      <span className="text-[10px] font-extrabold text-[var(--gold)] uppercase tracking-wider">0{i+1}. {item.title}</span>
-                      <p className="text-[12.5px] text-[var(--ink-dim)] leading-snug">{item.desc}</p>
+              <div className="relative">
+                {/* Visual Connection Line */}
+                <div className="absolute top-7 left-0 right-0 h-0.5 bg-gradient-to-r from-[#1a73e8] to-transparent max-md:hidden opacity-20" />
+                <div className="grid grid-cols-5 gap-8 max-xl:grid-cols-2 max-md:grid-cols-1 relative z-10">
+                  {(process.content_json?.steps || []).map((p: any, i: number) => (
+                    <div key={i} className="group">
+                      <div className="w-14 h-14 rounded-2xl bg-[#050f1f] border-2 border-[#1a73e8]/30 text-white font-display font-bold text-xl grid place-items-center mb-6 group-hover:bg-[#1a73e8] group-hover:border-[#1a73e8] transition-all duration-300 shadow-xl">
+                        {p.num}
+                      </div>
+                      <h3 className="text-[19px] font-bold text-white mb-3 font-display group-hover:text-[#4c9bff] transition-colors">{p.title}</h3>
+                      <p className="text-[14.5px] text-[#aebcda] leading-relaxed">{p.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -330,56 +308,174 @@ export default async function Home() {
             </div>
           </section>
 
-          {/* SOCIAL CONNECT & LEAD FORM - Footer Section */}
-          <section className="w-full bg-[#0a1c34] border-b border-[var(--line)]">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-22 max-lg:px-6">
-              <div className="grid grid-cols-[0.4fr_0.6fr] max-xl:grid-cols-1 gap-12 items-start">
+          {/* BLOG FEED SECTION */}
+          <section className="w-full bg-[#050f1f] border-b border-white/5" id="blog">
+            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+              <div className="sec-head max-w-[720px] mb-12 flex justify-between items-end gap-6 max-sm:flex-col max-sm:items-start">
+                <div>
+                  <span className="eyebrow">Insights</span>
+                  <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight text-white font-bold">
+                    Latest HVAC PPC Articles
+                  </h2>
+                </div>
+                <Link href="/blog" className="text-[14px] font-bold text-[#4c9bff] hover:underline flex items-center gap-1">
+                  View All Insights <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </Link>
+              </div>
+              <div className="grid grid-cols-2 gap-8 max-md:grid-cols-1">
+                {blogs.slice(0, 2).map((post: any) => (
+                  <article key={post.id} className="group bg-[#0a1c34]/40 border border-white/5 rounded-[32px] p-8 hover:border-[#1a73e8]/20 transition-all flex flex-col gap-6">
+                    <div>
+                      <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest text-[#f2a93d] bg-[#f2a93d]/10 border border-[#f2a93d]/20 px-3 py-1 rounded-full mb-5">Strategy Guide</span>
+                      <h3 className="text-2xl font-display font-bold text-white mb-3 leading-tight group-hover:text-[#4c9bff] transition-colors">
+                        <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                      </h3>
+                      <p className="text-[15px] text-[#aebcda] line-clamp-2 leading-relaxed">{post.excerpt}</p>
+                    </div>
+                    <Link href={`/blog/${post.slug}`} className="text-[14px] font-bold text-[#4c9bff] flex items-center gap-2 group/btn mt-auto">
+                      Read Full Article <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
+                    </Link>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* TESTIMONIALS SECTION */}
+          <section className="w-full bg-[#0a1c34] border-b border-white/5" id="testimonials">
+            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+              <div className="sec-head max-w-[720px] mb-16 text-center mx-auto">
+                <span className="eyebrow mx-auto">Testimonials</span>
+                <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
+                  What clients say — once the calls start coming in.
+                </h2>
+              </div>
+              <TestimonialsSlider />
+            </div>
+          </section>
+
+          {/* CERTIFICATIONS SECTION */}
+          <section className="w-full bg-[#050f1f] border-b border-white/5" id="certifications">
+            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+              <div className="sec-head max-w-[720px] mb-12">
+                <span className="eyebrow">Certifications</span>
+                <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
+                  {certsSection.title}
+                </h2>
+              </div>
+              <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-5">
+                {(certsSection.content_json?.certs || []).map((cert: any, i: number) => (
+                  <div key={i} className="group relative bg-white rounded-3xl p-8 h-40 flex items-center justify-center overflow-hidden border border-white/5 shadow-xl transition-all hover:scale-[1.02]">
+                    {cert.badge_type === 'google-ads' && <GoogleAdsCertBadge />}
+                    {cert.badge_type === 'google-analytics' && <GoogleAnalyticsCertBadge />}
+                    {cert.badge_type === 'tag-manager' && <GTMCertBadge />}
+                    {cert.badge_type === 'meta' && <MetaCertBadge />}
+                    {!['google-ads', 'google-analytics', 'tag-manager', 'meta'].includes(cert.badge_type) && (
+                      <div className="text-[#050f1f] font-display font-bold text-xl">{cert.title}</div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* FAQ SECTION */}
+          <section className="w-full bg-[#0a1c34] border-b border-white/5" id="faq">
+            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+              <div className="sec-head max-w-[720px] mb-12">
+                <span className="eyebrow">FAQ</span>
+                <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
+                  {faq.title}
+                </h2>
+              </div>
+              <FaqAccordion />
+            </div>
+          </section>
+
+          {/* CONTACT & BOOKING SECTION */}
+          <section className="w-full bg-[#050f1f] border-b border-white/5" id="contact">
+            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+              <div className="sec-head max-w-[720px] mb-16">
+                <span className="eyebrow">Book a Call</span>
+                <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
+                  Book a free Google Ads audit.
+                </h2>
+                <p className="text-[#aebcda] text-[17px]">Select a time that works for you. I&apos;ll prepare a custom review of your current setup before we talk.</p>
+              </div>
+
+              <div className="flex gap-10 max-xl:flex-col items-start">
+                {/* Zcal Embed */}
+                <div className="flex-[0.65] w-full rounded-[32px] overflow-hidden border border-white/5 shadow-2xl bg-[#0a1c34]/30 p-2">
+                  <ZcalEmbed />
+                </div>
                 
-                {/* Left: Social Connect */}
-                <div className="space-y-8">
+                {/* What to Expect */}
+                <div className="flex-[0.35] w-full space-y-4">
+                  <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#7b8bad] block mb-6">What to expect on the call</span>
+                  {[
+                    { title: "Campaign Audit", desc: "A focused review of your actual search term quality and lead flow." },
+                    { title: "Structure Check", desc: "Feedback on campaign segmentation and search intent mapping." },
+                    { title: "Tracking Review", desc: "Detailed check on call-swap and form tracking attribution quality." },
+                    { title: "Landing Page CRO", desc: "Actionable observations for better conversion rate optimization." },
+                    { title: "Next Steps Plan", desc: "A clear, no-fluff action plan for account growth and better ROI." }
+                  ].map((item, i) => (
+                    <div key={i} className="p-5 rounded-2xl border border-white/5 bg-[#0a1c34]/40 flex flex-col gap-2 hover:bg-[#0a1c34]/60 transition-all group">
+                      <span className="text-[10px] font-extrabold text-[#f2a93d] uppercase tracking-[0.1em] group-hover:translate-x-1 transition-transform inline-block">0{i+1}. {item.title}</span>
+                      <p className="text-[13px] text-[#aebcda] leading-relaxed">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* SOCIAL & FOOTER FORM SECTION */}
+          <section className="w-full bg-[#0a1c34] border-b border-white/5">
+            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+              <div className="grid grid-cols-[0.4fr_0.6fr] max-xl:grid-cols-1 gap-16 items-start">
+                
+                <div className="space-y-10">
                   <div>
-                    <h2 className="text-3xl font-display font-bold text-white mb-2">Connect on Social Media</h2>
-                    <p className="text-[var(--ink-dim)] text-[15px]">Reach out via your preferred platform for quick questions or networking.</p>
+                    <h2 className="text-4xl font-display font-bold text-white mb-4 leading-tight">Let&apos;s Connect</h2>
+                    <p className="text-[#aebcda] text-[16px] leading-relaxed">Reach out via email or LinkedIn for networking, questions, or custom project requests.</p>
                   </div>
                   <div className="grid grid-cols-1 gap-4">
                     {[
-                      {label:"Email",sub:settings.email,href:`mailto:${settings.email}`, icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"},
-                      {label:"WhatsApp",sub:"Quick chat",href:`https://wa.me/${settings.whatsapp_number}`, icon: "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.05-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-2.078l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.87 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.135-1.61a11.783 11.783 0 005.912 1.61h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"},
+                      {label:"Work Email",sub:settings.email,href:`mailto:${settings.email}`, icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"},
+                      {label:"WhatsApp",sub:"Message directly",href:`https://wa.me/${settings.whatsapp_number}`, icon: "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.05-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-2.078l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.87 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.135-1.61a11.783 11.783 0 005.912 1.61h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"},
                       {label:"LinkedIn",sub:"/in/wphossain",href:settings.linkedin_url, icon: "M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"},
-                      {label:"Website",sub:"wphossain.com",href:"https://wphossain.com", icon: "M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9"}
                     ].map((l,i) => (
-                      <a key={i} className="flex items-center gap-4 p-4 rounded-2xl border border-white/5 bg-[#050f1f]/50 hover:border-[var(--blue-light)]/30 hover:bg-[#050f1f] transition-all group" href={l.href} target="_blank" rel="noopener">
-                        <div className="w-12 h-12 rounded-xl grid place-items-center bg-[rgba(26,115,232,0.1)] border border-[rgba(26,115,232,0.2)] text-[var(--blue-light)] group-hover:scale-110 transition-transform">
-                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={l.icon} /></svg>
+                      <a key={i} className="flex items-center gap-5 p-5 rounded-[24px] border border-white/5 bg-[#050f1f]/60 hover:border-[#1a73e8]/30 hover:bg-[#050f1f] transition-all group" href={l.href} target="_blank" rel="noopener">
+                        <div className="w-12 h-12 rounded-2xl grid place-items-center bg-[#1a73e8]/10 border border-[#1a73e8]/20 text-[#4c9bff] group-hover:scale-110 transition-transform">
+                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={l.icon} /></svg>
                         </div>
                         <div className="flex flex-col">
-                          <span className="text-[14px] text-white font-bold">{l.label}</span>
-                          <span className="text-[12px] text-[var(--ink-faint)]">{l.sub}</span>
+                          <span className="text-[15px] text-white font-bold">{l.label}</span>
+                          <span className="text-[13px] text-[#7b8bad]">{l.sub}</span>
                         </div>
                       </a>
                     ))}
                   </div>
                 </div>
 
-                {/* Right: Lead Form */}
                 <LeadForm />
               </div>
             </div>
           </section>
 
-          <footer className="site-footer bg-[#050f1f] text-center text-[13px] text-[var(--ink-faint)] py-10">
+          <footer className="site-footer bg-[#050f1f] text-center text-[13px] text-[#7b8bad] py-12 border-t border-white/5">
             <div className="max-w-[var(--container)] mx-auto px-10">
-              <p><strong className="text-[var(--ink-dim)]">{settings.business_name}</strong> — {settings.owner_name}, {settings.job_title}. © 2026. Serving global HVAC contractors.</p>
+              <p><strong className="text-[#aebcda]">{settings.business_name}</strong> — {settings.owner_name}, {settings.job_title}. © 2026. Specialized for local service businesses.</p>
             </div>
           </footer>
 
         </div>
       </main>
 
-      {/* Floating WhatsApp Button (Synced with settings) */}
-      <a className="floating-wa fixed right-6 bottom-6 z-50 w-15 h-15 rounded-full grid place-items-center bg-[linear-gradient(160deg,#25D366,#128C7E)] text-white shadow-2xl hover:scale-110 transition-all active:scale-95" href={`https://wa.me/${settings.whatsapp_number}`} target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-        <span className="floating-wa-ring absolute inset-0 rounded-full border-[2px] border-[#25D366] animate-[wa-pulse_2s_ease-out_infinite]" />
-        <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor">
+      {/* Floating WhatsApp Button */}
+      <a className="floating-wa fixed right-6 bottom-6 z-50 w-15 h-15 rounded-full grid place-items-center bg-gradient-to-br from-[#25D366] to-[#128C7E] text-white shadow-2xl hover:scale-110 transition-all active:scale-95 group" href={`https://wa.me/${settings.whatsapp_number}`} target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+        <span className="floating-wa-ring absolute inset-0 rounded-full border-2 border-[#25D366] animate-[wa-pulse_2s_ease-out_infinite]" />
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor" className="relative z-10">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.05-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-2.078l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.87 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.135-1.61a11.783 11.783 0 005.912 1.61h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
         </svg>
       </a>

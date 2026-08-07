@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 
 interface TestimonialItem {
   client_name: string;
@@ -42,36 +43,41 @@ export function TestimonialsSlider({ testimonials = [] }: TestimonialsSliderProp
   };
 
   return (
-    <div className="testi-slider overflow-hidden">
+    <div className="testi-slider relative overflow-hidden group/slider">
       <div 
-        className="testi-track flex transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
+        className="testi-track flex transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]"
         style={{ transform: `translateX(-${currentIdx * 100}%)` }}
       >
         {slides.map((slide, sIdx) => (
           <div key={sIdx} className="testi-slide flex-none w-full min-w-full">
-            <div className="grid-3 gap-[18px]">
+            <div className="grid grid-cols-3 max-xl:grid-cols-2 max-md:grid-cols-1 gap-6">
               {slide.map((item, idx) => (
-                <article key={idx} className="testi-card bg-[rgba(255,255,255,0.03)] border border-[var(--line)] rounded-[18px] p-5.5 flex flex-col gap-3.5">
-                  <div className="testi-top flex items-center justify-between gap-2.5">
-                    <span className="stars text-[var(--gold)] text-[13px] tracking-[2px]" aria-label={`${item.rating} out of 5 stars`}>
-                      {"★".repeat(item.rating)}
-                    </span>
+                <article key={idx} className="testi-card bg-[#050f1f]/40 border border-white/5 rounded-2xl p-6 flex flex-col gap-5 hover:border-[#1a73e8]/20 transition-all duration-300">
+                  <div className="testi-top flex items-center justify-between">
+                    <div className="flex gap-0.5 text-[#f2a93d]">
+                      {[...Array(item.rating)].map((_, i) => (
+                        <Star key={i} size={14} fill="currentColor" />
+                      ))}
+                    </div>
+                    <div className="opacity-10">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V12M5.017 21L5.017 18C5.017 16.8954 5.91243 16 7.017 16H10.017C10.5693 16 11.017 15.5523 11.017 15V9C11.017 8.44772 10.5693 8 10.017 8H6.017C5.46472 8 5.017 8.44772 5.017 9V12"/></svg>
+                    </div>
                   </div>
-                  <p className="testi-quote text-[14.5px] text-[#e6ecfa] italic">
+                  <p className="testi-quote text-[15px] text-[#eef3fb] italic leading-relaxed">
                     &quot;{item.quote}&quot;
                   </p>
-                  <div className="testi-who flex items-center gap-2.5 mt-auto">
-                    <div className="testi-avatar w-[38px] h-[38px] rounded-full flex-none overflow-hidden grid place-items-center border border-[var(--line)]">
+                  <div className="testi-who flex items-center gap-3 mt-auto pt-4 border-t border-white/5">
+                    <div className="testi-avatar w-11 h-11 rounded-full flex-none overflow-hidden border border-white/10 p-0.5 bg-gradient-to-tr from-white/5 to-white/10">
                       <img 
                         src={item.avatar_url || getAvatarUrl(item.client_name)} 
                         alt={item.client_name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover rounded-full"
                         loading="lazy"
                       />
                     </div>
                     <div>
-                      <strong className="block text-[13.5px] font-bold text-white">{item.client_name}</strong>
-                      <span className="text-[12px] text-[var(--ink-faint)]">{item.client_role}</span>
+                      <strong className="block text-[14px] font-bold text-white">{item.client_name}</strong>
+                      <span className="text-[12px] text-[#7b8bad] font-medium">{item.client_role}</span>
                     </div>
                   </div>
                 </article>
@@ -80,19 +86,20 @@ export function TestimonialsSlider({ testimonials = [] }: TestimonialsSliderProp
           </div>
         ))}
       </div>
-      <div className="slider-controls flex items-center justify-center gap-4 mt-5.5">
-        <button className="slider-arrow w-9 h-9 rounded-full border border-[var(--line)] bg-[rgba(255,255,255,0.03)] text-white text-[18px] cursor-pointer grid place-items-center hover:border-[var(--blue)] hover:text-[var(--blue)] transition-all" onClick={() => handleSlide(-1)} aria-label="Previous testimonials">‹</button>
-        <div className="slider-dots flex items-center gap-2">
-          {slides.map((_, idx) => (
-            <button 
-              key={idx} 
-              className={`dot h-2 rounded-full border-none cursor-pointer p-0 transition-all ${idx === currentIdx ? "bg-[var(--blue)] w-5.5" : "bg-[var(--line-soft)] w-2"}`} 
-              onClick={() => setCurrentIdx(idx)} 
-              aria-label={`Show testimonials, slide ${idx + 1}`}
-            />
-          ))}
-        </div>
-        <button className="slider-arrow w-9 h-9 rounded-full border border-[var(--line)] bg-[rgba(255,255,255,0.03)] text-white text-[18px] cursor-pointer grid place-items-center hover:border-[var(--blue)] hover:text-[var(--blue)] transition-all" onClick={() => handleSlide(1)} aria-label="Next testimonials">›</button>
+
+      <div className="slider-nav flex items-center justify-between absolute inset-x-0 top-1/2 -translate-y-1/2 px-4 pointer-events-none opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300 max-lg:hidden">
+        <button className="slider-arrow w-10 h-10 rounded-full border border-white/10 bg-[#050f1f]/80 text-white cursor-pointer grid place-items-center hover:border-[#1a73e8] hover:text-[#1a73e8] transition-all pointer-events-auto" onClick={() => handleSlide(-1)}><ChevronLeft size={20} /></button>
+        <button className="slider-arrow w-10 h-10 rounded-full border border-white/10 bg-[#050f1f]/80 text-white cursor-pointer grid place-items-center hover:border-[#1a73e8] hover:text-[#1a73e8] transition-all pointer-events-auto" onClick={() => handleSlide(1)}><ChevronRight size={20} /></button>
+      </div>
+
+      <div className="slider-dots flex items-center justify-center gap-2.5 mt-8">
+        {slides.map((_, idx) => (
+          <button 
+            key={idx} 
+            className={`dot h-1.5 rounded-full border-none cursor-pointer p-0 transition-all duration-300 ${idx === currentIdx ? "bg-[#1a73e8] w-8" : "bg-white/10 w-2 hover:bg-white/20"}`} 
+            onClick={() => setCurrentIdx(idx)} 
+          />
+        ))}
       </div>
     </div>
   );
