@@ -55,25 +55,21 @@ export function Sidebar({
 
         <nav className="side-nav flex flex-col gap-0.5 mt-2" aria-label="Section navigation">
           {[
-            {label:'Home',href:'#home'},{label:'Services',href:'#services'},{label:'Why Me',href:'#why-me'},
-            {label:'Process',href:'#process'},{label:'Results',href:'#results'},{label:'Case Studies',href:'#case-studies'},
-            {label:'Testimonials',href:'#testimonials'},{label:'Certifications',href:'#certifications'},{label:'FAQ',href:'#faq'},
-            {label:'Blog',href:'/blog'},{label:'Contact',href:'#contact'}
+            {label:'Home',href:'/#home'},{label:'Services',href:'/#services'},{label:'Why Me',href:'/#why-me'},
+            {label:'Process',href:'/#process'},{label:'Results',href:'/#results'},{label:'Case Studies',href:'/#case-studies'},
+            {label:'Testimonials',href:'/#testimonials'},{label:'Certifications',href:'/#certifications'},{label:'FAQ',href:'/#faq'},
+            {label:'Blog',href:'/blog'},{label:'Contact',href:'/#contact'}
           ].map((item) => (
-            item.href.startsWith('/') ? (
-              <Link key={item.label} href={item.href} className="nav-link">{item.label}</Link>
-            ) : (
-              <a key={item.label} href={item.href} className="nav-link">{item.label}</a>
-            )
+            <Link key={item.label} href={item.href} className="nav-link">{item.label}</Link>
           ))}
         </nav>
       </div>
 
       <div className="side-bottom flex flex-col gap-3">
-        <a className="btn btn-primary btn-block" href="#contact">
+        <Link className="btn btn-primary btn-block" href="/#contact">
           Book Free Consultation
           <svg className="btn-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
+        </Link>
 
         <div className="mini-social flex justify-center gap-2" aria-label="Social links">
           <a href="https://www.linkedin.com/in/wphossain/" target="_blank" rel="noopener" className="w-9 h-9 rounded-lg grid place-items-center bg-[rgba(255,255,255,0.03)] border border-[var(--line)] text-[var(--ink-dim)] hover:text-white hover:border-[var(--gold-line)] hover:bg-[var(--gold-soft)] hover:-translate-y-0.5 transition-all">

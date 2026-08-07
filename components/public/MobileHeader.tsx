@@ -32,20 +32,20 @@ export function MobileHeader({
             <span className="block text-[11px] text-[var(--ink-faint)]">{jobTitle}</span>
           </div>
         </div>
-        <a className="btn btn-primary btn-sm text-[12.5px] py-1.5 px-3" href="#contact">
+        <Link className="btn btn-primary btn-sm text-[12.5px] py-1.5 px-3" href="/#contact">
           Book Consultation
-        </a>
+        </Link>
       </div>
       <div className="mobile-links flex gap-1.5 overflow-x-auto px-4 pb-3 no-scrollbar">
-        <a href="#home" className="whitespace-nowrap px-3 py-1.5 rounded-full bg-[rgba(255,255,255,0.04)] border border-[var(--line)] text-[var(--ink-dim)] text-[12.5px] font-semibold">Home</a>
-        <a href="#services" className="whitespace-nowrap px-3 py-1.5 rounded-full bg-[rgba(255,255,255,0.04)] border border-[var(--line)] text-[var(--ink-dim)] text-[12.5px] font-semibold">Services</a>
-        <a href="#why-me" className="whitespace-nowrap px-3 py-1.5 rounded-full bg-[rgba(255,255,255,0.04)] border border-[var(--line)] text-[var(--ink-dim)] text-[12.5px] font-semibold">Why Me</a>
-        <a href="#process" className="whitespace-nowrap px-3 py-1.5 rounded-full bg-[rgba(255,255,255,0.04)] border border-[var(--line)] text-[var(--ink-dim)] text-[12.5px] font-semibold">Process</a>
-        <a href="#results" className="whitespace-nowrap px-3 py-1.5 rounded-full bg-[rgba(255,255,255,0.04)] border border-[var(--line)] text-[var(--ink-dim)] text-[12.5px] font-semibold">Results</a>
-        <a href="#case-studies" className="whitespace-nowrap px-3 py-1.5 rounded-full bg-[rgba(255,255,255,0.04)] border border-[var(--line)] text-[var(--ink-dim)] text-[12.5px] font-semibold">Case Studies</a>
-        <a href="#testimonials" className="whitespace-nowrap px-3 py-1.5 rounded-full bg-[rgba(255,255,255,0.04)] border border-[var(--line)] text-[var(--ink-dim)] text-[12.5px] font-semibold">Testimonials</a>
+        <Link href="/#home" className="whitespace-nowrap px-3 py-1.5 rounded-full bg-[rgba(255,255,255,0.04)] border border-[var(--line)] text-[var(--ink-dim)] text-[12.5px] font-semibold">Home</Link>
+        <Link href="/#services" className="whitespace-nowrap px-3 py-1.5 rounded-full bg-[rgba(255,255,255,0.04)] border border-[var(--line)] text-[var(--ink-dim)] text-[12.5px] font-semibold">Services</Link>
+        <Link href="/#why-me" className="whitespace-nowrap px-3 py-1.5 rounded-full bg-[rgba(255,255,255,0.04)] border border-[var(--line)] text-[var(--ink-dim)] text-[12.5px] font-semibold">Why Me</Link>
+        <Link href="/#process" className="whitespace-nowrap px-3 py-1.5 rounded-full bg-[rgba(255,255,255,0.04)] border border-[var(--line)] text-[var(--ink-dim)] text-[12.5px] font-semibold">Process</Link>
+        <Link href="/#results" className="whitespace-nowrap px-3 py-1.5 rounded-full bg-[rgba(255,255,255,0.04)] border border-[var(--line)] text-[var(--ink-dim)] text-[12.5px] font-semibold">Results</Link>
+        <Link href="/#case-studies" className="whitespace-nowrap px-3 py-1.5 rounded-full bg-[rgba(255,255,255,0.04)] border border-[var(--line)] text-[var(--ink-dim)] text-[12.5px] font-semibold">Case Studies</Link>
+        <Link href="/#testimonials" className="whitespace-nowrap px-3 py-1.5 rounded-full bg-[rgba(255,255,255,0.04)] border border-[var(--line)] text-[var(--ink-dim)] text-[12.5px] font-semibold">Testimonials</Link>
         <Link href="/blog" className="whitespace-nowrap px-3 py-1.5 rounded-full bg-[rgba(255,255,255,0.04)] border border-[var(--line)] text-[var(--ink-dim)] text-[12.5px] font-semibold">Blog</Link>
-        <a href="#contact" className="whitespace-nowrap px-3 py-1.5 rounded-full bg-[rgba(255,255,255,0.04)] border border-[var(--line)] text-[var(--ink-dim)] text-[12.5px] font-semibold">Contact</a>
+        <Link href="/#contact" className="whitespace-nowrap px-3 py-1.5 rounded-full bg-[rgba(255,255,255,0.04)] border border-[var(--line)] text-[var(--ink-dim)] text-[12.5px] font-semibold">Contact</Link>
       </div>
     </div>
   );
