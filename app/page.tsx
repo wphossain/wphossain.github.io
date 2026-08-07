@@ -4,6 +4,7 @@ import { MobileHeader } from '@/components/public/MobileHeader';
 import { PulseCard } from '@/components/public/PulseCard';
 import { TestimonialsSlider } from '@/components/public/TestimonialsSlider';
 import { FaqAccordion } from '@/components/public/FaqAccordion';
+import { ZcalEmbed } from '@/components/public/ZcalEmbed';
 import { StructuredData } from '@/components/public/StructuredData';
 import { GoogleAdsDashboardMockup, GA4DashboardMockup, ConversionTrackingMockup, CostPerCallTrendMockup, LandingPageConversionMockup, KeywordExpansionMockup } from '@/components/public/DashboardMockups';
 import { GoogleAdsCertBadge, GoogleAnalyticsCertBadge, GTMCertBadge, MetaCertBadge } from '@/components/public/CertBadges';
@@ -240,13 +241,7 @@ export default function Home() {
                   ))}
                 </ul>
               </div>
-              <div className="zcal-embed-wrap bg-[rgba(5,13,26,0.55)] border border-[var(--line-soft)] rounded-xl p-1.5 min-h-[70px]" suppressHydrationWarning>
-                <div className="zcal-inline-widget" suppressHydrationWarning>
-                  <a href="https://zcal.co/i/hJJ3Hx9l" className="flex items-center justify-center text-center min-h-[58px] p-3.5 rounded-lg text-white font-bold text-[13.5px]">
-                    Audit Your Issue / Website / Tracking Problem - Free - Schedule a meeting
-                  </a>
-                </div>
-              </div>
+              <ZcalEmbed />
             </div>
             <div className="icon-link-grid grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-3.5 mt-4">
               {[
