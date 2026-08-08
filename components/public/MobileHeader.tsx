@@ -7,78 +7,228 @@ interface MobileHeaderProps {
   ownerName?: string;
   jobTitle?: string;
   avatarUrl?: string;
+  email?: string;
+  availabilityStatus?: string;
 }
 
 export function MobileHeader({
   ownerName = "WP Hossain",
   jobTitle = "Google Ads Specialist",
-  avatarUrl = "/images/headshot.jpg"
+  avatarUrl = "/images/headshot.jpg",
+  email = "Contact@wphossain.com",
+  availabilityStatus = "Available for new projects"
 }: MobileHeaderProps) {
-  const [imgError, setImgError] = React.useState(false);
+  const [imgError, setImgError] = useState(false);
   const [activeHash, setActiveHash] = useState('#home');
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleHashChange = () => {
-      setActiveHash(window.location.hash || '#home');
+      if (window.location.hash) {
+        setActiveHash(window.location.hash);
+      } else if (window.location.pathname.startsWith('/blog')) {
+        setActiveHash('/blog');
+      } else {
+        setActiveHash('#home');
+      }
     };
     handleHashChange();
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
+  // Lock background scroll when drawer is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  // Close drawer on ESC key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const menuItems = [
+    { label: 'Home', href: '/#home', key: '#home' },
+    { label: 'Services', href: '/#services', key: '#services' },
+    { label: 'Why Me', href: '/#why-me', key: '#why-me' },
+    { label: 'Process', href: '/#process', key: '#process' },
+    { label: 'Results', href: '/#results', key: '#results' },
+    { label: 'Case Studies', href: '/#case-studies', key: '#case-studies' },
+    { label: 'Testimonials', href: '/#testimonials', key: '#testimonials' },
+    { label: 'Certifications', href: '/#certifications', key: '#certifications' },
+    { label: 'FAQ', href: '/#faq', key: '#faq' },
+    { label: 'Blog', href: '/blog', key: '/blog' },
+    { label: 'Contact', href: '/#contact', key: '#contact' }
+  ];
+
+  const handleNavClick = (key: string) => {
+    setActiveHash(key);
+    setIsOpen(false);
+  };
+
   return (
-    <div className="mobile-bar sticky top-0 z-50 bg-[#050d1a]/95 border-b border-white/5 backdrop-blur-md lg:hidden shadow-lg">
-      <div className="mobile-bar-top flex items-center justify-between gap-2.5 p-4 pb-3">
-        <div className="mobile-brand flex items-center gap-2.5">
-          {imgError ? (
-            <div className="w-9 h-9 rounded-full bg-[#1a73e8] grid place-items-center border-2 border-[#0e2340]">
-              <span className="text-white text-xs font-bold">WH</span>
+    <>
+      {/* Top Header Bar for Mobile & Tablet */}
+      <header className="mobile-bar sticky top-0 z-50 bg-[#050f1f]/85 border-b border-white/10 backdrop-blur-xl lg:hidden shadow-lg">
+        <div className="flex items-center justify-between gap-3 px-4 py-3">
+          <Link href="/#home" className="mobile-brand flex items-center gap-2.5 group">
+            {imgError ? (
+              <div className="w-9 h-9 rounded-full bg-[#1a73e8] grid place-items-center border-2 border-[#050f1f] text-white text-xs font-bold shrink-0">
+                WH
+              </div>
+            ) : (
+              <img 
+                src={avatarUrl} 
+                alt={ownerName} 
+                className="w-9 h-9 rounded-full object-cover border-2 border-[#050f1f] shrink-0" 
+                onError={() => setImgError(true)} 
+              />
+            )}
+            <div>
+              <strong className="block text-[14px] font-display text-white font-bold leading-tight group-hover:text-[#4c9bff] transition-colors">{ownerName}</strong>
+              <span className="block text-[11px] text-[#aebcda] font-medium">{jobTitle}</span>
             </div>
-          ) : (
-            <img 
-              src={avatarUrl} 
-              alt={ownerName} 
-              className="w-9 h-9 rounded-full object-cover border-2 border-[#0e2340]" 
-              onError={() => setImgError(true)} 
-            />
-          )}
-          <div>
-            <strong className="block text-[14px] font-display text-white font-bold leading-tight">{ownerName}</strong>
-            <span className="block text-[11px] text-[#7b8bad]">{jobTitle}</span>
+          </Link>
+
+          <div className="flex items-center gap-2.5">
+            <Link 
+              className="btn btn-primary text-[12px] font-bold py-1.5 px-3.5 rounded-xl shadow-md" 
+              href="/#contact"
+            >
+              Free Audit
+            </Link>
+
+            {/* Hamburger Button */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="w-9 h-9 rounded-xl border border-white/10 bg-white/5 flex flex-col items-center justify-center gap-1.5 text-white hover:bg-white/10 hover:border-white/20 transition-all focus:outline-none"
+              aria-label={isOpen ? "Close Navigation Menu" : "Open Navigation Menu"}
+              aria-expanded={isOpen}
+            >
+              <span className={`w-4 h-0.5 bg-current rounded-full transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-2' : ''}`} />
+              <span className={`w-4 h-0.5 bg-current rounded-full transition-all duration-300 ${isOpen ? 'opacity-0' : ''}`} />
+              <span className={`w-4 h-0.5 bg-current rounded-full transition-all duration-300 ${isOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+            </button>
           </div>
         </div>
-        <Link className="btn btn-primary btn-sm text-[12px] font-bold py-2 px-3.5 rounded-xl shadow-md" href="/#contact">
-          Free Audit
-        </Link>
-      </div>
-      <div className="mobile-links flex gap-2 overflow-x-auto px-4 pb-3 no-scrollbar scroll-smooth">
-        {[
-          { label: 'Home', href: '/#home' },
-          { label: 'Services', href: '/#services' },
-          { label: 'Why Me', href: '/#why-me' },
-          { label: 'Process', href: '/#process' },
-          { label: 'Results', href: '/#results' },
-          { label: 'Case Studies', href: '/#case-studies' },
-          { label: 'Testimonials', href: '/#testimonials' },
-          { label: 'Blog', href: '/blog' },
-          { label: 'Contact', href: '/#contact' }
-        ].map((link) => {
-          const isActive = activeHash === link.href || (link.href === '/#home' && activeHash === '');
-          return (
-            <Link 
-              key={link.label}
-              href={link.href} 
-              className={`whitespace-nowrap px-3.5 py-1.5 rounded-full text-[12px] font-semibold transition-all border ${
-                isActive 
-                  ? 'bg-[#1a73e8] border-[#1a73e8] text-white' 
-                  : 'bg-white/5 border-white/10 text-[#aebcda] hover:text-white hover:bg-white/10'
-              }`}
-            >
-              {link.label}
-            </Link>
-          );
-        })}
-      </div>
-    </div>
+      </header>
+
+      {/* Slide-out Drawer & Overlay */}
+      {isOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          {/* Backdrop Blur Overlay */}
+          <div 
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm animate-in fade-in duration-300"
+            onClick={() => setIsOpen(false)}
+            aria-hidden="true"
+          />
+
+          {/* Drawer Panel */}
+          <aside 
+            className="fixed top-0 right-0 w-[300px] max-w-[85vw] h-full bg-[#050f1f]/95 border-l border-white/10 p-6 z-50 flex flex-col justify-between backdrop-blur-2xl shadow-2xl overflow-y-auto animate-in slide-in-from-right duration-300"
+            aria-label="Mobile Drawer Navigation"
+          >
+            <div className="flex flex-col gap-5">
+              {/* Drawer Top Header with Close Button */}
+              <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-[11px] font-bold text-[#f2a93d] uppercase tracking-wider">{availabilityStatus}</span>
+                </div>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="w-8 h-8 rounded-xl border border-white/10 bg-white/5 grid place-items-center text-[#aebcda] hover:text-white hover:bg-white/10 transition-colors"
+                  aria-label="Close menu"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+              </div>
+
+              {/* Profile Card in Drawer */}
+              <div className="flex items-center gap-3">
+                {imgError ? (
+                  <div className="w-12 h-12 rounded-full bg-[#1a73e8] grid place-items-center border-2 border-[#050f1f] text-white text-sm font-bold shrink-0">
+                    WH
+                  </div>
+                ) : (
+                  <img 
+                    src={avatarUrl} 
+                    alt={ownerName} 
+                    className="w-12 h-12 rounded-full object-cover border-2 border-[#050f1f] shrink-0" 
+                    onError={() => setImgError(true)} 
+                  />
+                )}
+                <div>
+                  <h2 className="text-[16px] font-bold text-white font-display leading-tight">{ownerName}</h2>
+                  <p className="text-[12px] text-[#aebcda] font-medium">{jobTitle}</p>
+                </div>
+              </div>
+
+              {/* Menu Items List */}
+              <nav className="flex flex-col gap-1 py-2">
+                {menuItems.map((item) => {
+                  const isActive = activeHash === item.key || (item.key === '#home' && activeHash === '');
+                  return (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      onClick={() => handleNavClick(item.key)}
+                      className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-[14px] font-medium transition-all duration-200 ${
+                        isActive
+                          ? 'text-white font-bold bg-[#1a73e8]/20 border-l-2 border-[#1a73e8]'
+                          : 'text-[#aebcda] hover:text-white hover:bg-white/5'
+                      }`}
+                    >
+                      <span>{item.label}</span>
+                      {isActive && (
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#4c9bff] shadow-[0_0_8px_#4c9bff]" />
+                      )}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
+
+            {/* Bottom Actions & Socials */}
+            <div className="flex flex-col gap-4 border-t border-white/10 pt-4 mt-auto">
+              <Link 
+                className="btn btn-primary w-full text-[13.5px] font-bold py-3 rounded-xl text-center shadow-lg" 
+                href="/#contact"
+                onClick={() => setIsOpen(false)}
+              >
+                Book Free Audit
+              </Link>
+
+              <div className="flex justify-center gap-3">
+                <a href="https://www.linkedin.com/in/wphossain/" target="_blank" rel="noopener" aria-label="LinkedIn" className="w-9 h-9 rounded-xl grid place-items-center bg-white/5 border border-white/10 text-[#aebcda] hover:text-white hover:border-[#f2a93d]/30 hover:bg-[#f2a93d]/10 transition-all">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V23h-4V8zm7.5 0h3.8v2.05h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V23h-4v-6.6c0-1.57-.03-3.6-2.2-3.6-2.2 0-2.53 1.72-2.53 3.49V23h-4V8z"/></svg>
+                </a>
+                <a href="https://facebook.com/wphossain374" target="_blank" rel="noopener" aria-label="Facebook" className="w-9 h-9 rounded-xl grid place-items-center bg-white/5 border border-white/10 text-[#aebcda] hover:text-white hover:border-[#f2a93d]/30 hover:bg-[#f2a93d]/10 transition-all">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.16 8.44 9.94v-7.03H7.9v-2.91h2.54V9.86c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.46H15.2c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.91h-2.34V22c4.78-.78 8.43-4.94 8.43-9.94z"/></svg>
+                </a>
+                <a href="https://youtube.com/@wphossain" target="_blank" rel="noopener" aria-label="YouTube" className="w-9 h-9 rounded-xl grid place-items-center bg-white/5 border border-white/10 text-[#aebcda] hover:text-white hover:border-[#f2a93d]/30 hover:bg-[#f2a93d]/10 transition-all">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.56A3.02 3.02 0 0 0 .5 6.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.12 2.14C4.5 20.5 12 20.5 12 20.5s7.5 0 9.38-.56a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.8zM9.6 15.6V8.4l6.4 3.6-6.4 3.6z"/></svg>
+                </a>
+              </div>
+
+              <p className="text-[11.5px] text-[#7b8bad] text-center">
+                <a href={`mailto:${email}`} className="hover:text-[#f2a93d] transition-colors">{email}</a>
+              </p>
+            </div>
+          </aside>
+        </div>
+      )}
+    </>
   );
 }

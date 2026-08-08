@@ -23,8 +23,8 @@
     --gold-line: rgba(242, 169, 61, 0.35);
     --font-display: var(--font-display, 'Space Grotesk', Inter, sans-serif);
     --font-body: var(--font-body, 'Inter', Arial, sans-serif);
-    --sidebar-w: 296px;
-    --container: 1900px;
+    --sidebar-w: 235px;
+    --container: 1440px;
     --radius-lg: 26px;
     --radius-md: 18px;
     --radius-sm: 12px;

@@ -69,7 +69,7 @@ export default async function Home() {
         <div dangerouslySetInnerHTML={{ __html: tracking.custom_head_scripts }} />
       )}
 
-      <main className="content lg:ml-[270px] min-h-screen bg-[#050f1f]">
+      <main className="content lg:ml-[var(--sidebar-w)] min-h-screen bg-[#050f1f]">
         <div className="content-inner w-full flex flex-col">
 
           {/* HERO SECTION */}
@@ -85,8 +85,8 @@ export default async function Home() {
             <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-[radial-gradient(circle,rgba(26,115,232,0.08),transparent_70%)] pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-[radial-gradient(circle,rgba(242,169,61,0.05),transparent_70%)] pointer-events-none" />
 
-            <div className="max-w-[var(--container)] mx-auto w-full px-10 py-16 max-lg:px-6">
-              <div className="hero-grid grid grid-cols-[1.1fr_0.9fr] max-xl:grid-cols-1 gap-12 items-center">
+            <div className="max-w-[var(--container)] mx-auto w-full px-6 lg:px-10 py-16">
+              <div className="hero-grid grid grid-cols-[1.1fr_0.9fr] max-xl:grid-cols-1 gap-10 items-center">
                 <div className="hero-copy animate-in fade-in slide-in-from-left-8 duration-700">
                   <span className="eyebrow inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#f2a93d]/10 border border-[#f2a93d]/20 text-[#f2a93d] text-[11px] font-bold uppercase tracking-wider mb-6">
                     <span className="w-2 h-2 rounded-full bg-[#f2a93d] animate-pulse" />
@@ -144,7 +144,7 @@ export default async function Home() {
 
           {/* SERVICES SECTION */}
           <section className="w-full bg-[#0a1c34] border-b border-white/5" id="services">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+            <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
               <div className="sec-head max-w-[720px] mb-12">
                 <span className="eyebrow">Services</span>
                 <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
@@ -173,7 +173,7 @@ export default async function Home() {
 
           {/* WHY ME SECTION */}
           <section className="w-full bg-[#050f1f] border-b border-white/5" id="why-me">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+            <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
               <div className="sec-head max-w-[720px] mb-12">
                 <span className="eyebrow">Why Me</span>
                 <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
@@ -216,7 +216,7 @@ export default async function Home() {
 
           {/* RESULTS SECTION */}
           <section className="w-full bg-[#0a1c34] border-b border-white/5" id="results">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+            <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
               <div className="sec-head max-w-[720px] mb-12">
                 <span className="eyebrow">Performance</span>
                 <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
@@ -246,7 +246,7 @@ export default async function Home() {
 
           {/* CASE STUDIES SECTION */}
           <section className="w-full bg-[#050f1f] border-b border-white/5" id="case-studies">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+            <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
               <div className="sec-head max-w-[720px] mb-12 flex justify-between items-end gap-6 max-sm:flex-col max-sm:items-start">
                 <div>
                   <span className="eyebrow">Case Studies</span>
@@ -283,7 +283,7 @@ export default async function Home() {
 
           {/* PROCESS SECTION */}
           <section className="w-full bg-[#0a1c34] border-b border-white/5" id="process">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+            <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
               <div className="sec-head max-w-[720px] mb-16">
                 <span className="eyebrow">Process</span>
                 <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
@@ -310,7 +310,7 @@ export default async function Home() {
 
           {/* BLOG FEED SECTION */}
           <section className="w-full bg-[#050f1f] border-b border-white/5" id="blog">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+            <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
               <div className="sec-head max-w-[720px] mb-12 flex justify-between items-end gap-6 max-sm:flex-col max-sm:items-start">
                 <div>
                   <span className="eyebrow">Insights</span>
@@ -343,7 +343,7 @@ export default async function Home() {
 
           {/* TESTIMONIALS SECTION */}
           <section className="w-full bg-[#0a1c34] border-b border-white/5" id="testimonials">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+            <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
               <div className="sec-head max-w-[720px] mb-16 text-center mx-auto">
                 <span className="eyebrow mx-auto">Testimonials</span>
                 <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
@@ -356,7 +356,7 @@ export default async function Home() {
 
           {/* CERTIFICATIONS SECTION */}
           <section className="w-full bg-[#050f1f] border-b border-white/5" id="certifications">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+            <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
               <div className="sec-head max-w-[720px] mb-12">
                 <span className="eyebrow">Certifications</span>
                 <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
@@ -381,7 +381,7 @@ export default async function Home() {
 
           {/* FAQ SECTION */}
           <section className="w-full bg-[#0a1c34] border-b border-white/5" id="faq">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+            <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
               <div className="sec-head max-w-[720px] mb-12">
                 <span className="eyebrow">FAQ</span>
                 <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
@@ -394,7 +394,7 @@ export default async function Home() {
 
           {/* CONTACT & BOOKING SECTION */}
           <section className="w-full bg-[#050f1f] border-b border-white/5" id="contact">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+            <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
               <div className="sec-head max-w-[720px] mb-16">
                 <span className="eyebrow">Book a Call</span>
                 <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
@@ -431,7 +431,7 @@ export default async function Home() {
 
           {/* SOCIAL & FOOTER FORM SECTION */}
           <section className="w-full bg-[#0a1c34] border-b border-white/5">
-            <div className="max-w-[var(--container)] mx-auto px-10 py-24 max-lg:px-6">
+            <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
               <div className="grid grid-cols-[0.4fr_0.6fr] max-xl:grid-cols-1 gap-16 items-start">
                 
                 <div className="space-y-10">
@@ -464,7 +464,7 @@ export default async function Home() {
           </section>
 
           <footer className="site-footer bg-[#050f1f] text-center text-[13px] text-[#7b8bad] py-12 border-t border-white/5">
-            <div className="max-w-[var(--container)] mx-auto px-10">
+            <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10">
               <p><strong className="text-[#aebcda]">{settings.business_name}</strong> — {settings.owner_name}, {settings.job_title}. © 2026. Specialized for local service businesses.</p>
             </div>
           </footer>
