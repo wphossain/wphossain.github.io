@@ -61,7 +61,7 @@ export default async function SingleBlogPostPage({ params }: { params: Promise<{
       <Sidebar />
       <MobileHeader />
 
-      <main className="content lg:ml-[var(--sidebar-w)] p-6.5 max-lg:p-4.5">
+      <main className="content p-6.5 max-lg:p-4.5 min-h-screen bg-[#050f1f]">
         <div className="content-inner max-w-4xl mx-auto w-full flex flex-col gap-6">
           <Link href="/blog" className="text-[14px] text-[var(--ink-faint)] hover:text-[var(--gold)] font-bold flex items-center gap-2 transition-colors">
             ← Back to Blog Index

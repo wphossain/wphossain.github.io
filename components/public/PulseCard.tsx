@@ -116,7 +116,7 @@ export function PulseCard() {
           <span className="px-2 py-1 text-[9.5px] font-semibold bg-[#1a73e8]/10 text-[#4c9bff] rounded border border-[#1a73e8]/20">
             ✓ Dynamic Call Swap
           </span>
-          <span className="px-2 py-1 text-[9.5px] font-semibold bg-[#f2a93d]/10 text-[#f2a93d] rounded border border-[#f2a93d]/20">
+          <span className="px-2 py-1 text-[9.5px] font-semibold bg-[#25D366]/10 text-[#25D366] rounded border border-[#25D366]/20">
             ✓ GA4 Conversion Active
           </span>
         </div>

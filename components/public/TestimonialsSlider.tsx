@@ -54,7 +54,7 @@ export function TestimonialsSlider({ testimonials = [] }: TestimonialsSliderProp
               {slide.map((item, idx) => (
                 <article key={idx} className="testi-card bg-[#050f1f]/40 border border-white/5 rounded-2xl p-6 flex flex-col gap-5 hover:border-[#1a73e8]/20 transition-all duration-300">
                   <div className="testi-top flex items-center justify-between">
-                    <div className="flex gap-0.5 text-[#f2a93d]">
+                    <div className="flex gap-0.5 text-[#25D366]">
                       {[...Array(item.rating)].map((_, i) => (
                         <Star key={i} size={14} fill="currentColor" />
                       ))}

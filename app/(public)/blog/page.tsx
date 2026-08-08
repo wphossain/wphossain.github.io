@@ -18,7 +18,7 @@ export default async function BlogIndexPage() {
       <Sidebar />
       <MobileHeader />
 
-      <main className="content lg:ml-[var(--sidebar-w)] p-6.5 max-lg:p-4.5">
+      <main className="content p-6.5 max-lg:p-4.5 min-h-screen bg-[#050f1f]">
         <div className="content-inner max-w-[var(--container)] mx-auto w-full flex flex-col gap-6">
           <section className="panel">
             <span className="eyebrow">PPC &amp; Tracking Insights</span>

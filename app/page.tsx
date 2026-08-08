@@ -69,7 +69,7 @@ export default async function Home() {
         <div dangerouslySetInnerHTML={{ __html: tracking.custom_head_scripts }} />
       )}
 
-      <main className="content lg:ml-[var(--sidebar-w)] min-h-screen bg-[#050f1f]">
+      <main className="content min-h-screen bg-[#050f1f]">
         <div className="content-inner w-full flex flex-col">
 
           {/* HERO SECTION */}
@@ -83,14 +83,14 @@ export default async function Home() {
           >
             {/* Ambient Background Glows */}
             <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-[radial-gradient(circle,rgba(26,115,232,0.08),transparent_70%)] pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-[radial-gradient(circle,rgba(242,169,61,0.05),transparent_70%)] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-[radial-gradient(circle,rgba(37,211,102,0.05),transparent_70%)] pointer-events-none" />
 
             <div className="max-w-[var(--container)] mx-auto w-full px-6 lg:px-10 py-16">
               <div className="hero-grid grid grid-cols-[1.1fr_0.9fr] max-xl:grid-cols-1 gap-10 items-center">
                 <div className="hero-copy animate-in fade-in slide-in-from-left-8 duration-700">
-                  <span className="eyebrow inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#f2a93d]/10 border border-[#f2a93d]/20 text-[#f2a93d] text-[11px] font-bold uppercase tracking-wider mb-6">
-                    <span className="w-2 h-2 rounded-full bg-[#f2a93d] animate-pulse" />
-                    {settings.job_title}
+                  <span className="eyebrow inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#25D366]/10 border border-[#25D366]/30 text-[#25D366] text-[11px] font-extrabold uppercase tracking-widest mb-6 shadow-[0_0_15px_rgba(37,211,102,0.15)]">
+                    <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
+                    FOR HVAC CONTRACTORS
                   </span>
                   <h1 className="text-[clamp(36px,5vw,60px)] font-display leading-[1.05] mb-6 text-white font-bold tracking-tight">
                     {hero.title}
@@ -161,7 +161,7 @@ export default async function Home() {
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={s.icon} /></svg>
                     </div>
                     <div>
-                      <span className="inline-block text-[10px] font-extrabold tracking-widest uppercase text-[#f2a93d] bg-[#f2a93d]/10 border border-[#f2a93d]/20 px-2.5 py-1 rounded-full mb-3">{s.tag}</span>
+                      <span className="inline-block text-[10px] font-extrabold tracking-widest uppercase text-[#25D366] bg-[#25D366]/10 border border-[#25D366]/20 px-2.5 py-1 rounded-full mb-3">{s.tag}</span>
                       <h3 className="text-[19px] mb-2 font-bold text-white font-display group-hover:text-[#4c9bff] transition-colors">{s.title}</h3>
                       <p className="text-[14px] text-[#aebcda] leading-relaxed">{s.desc}</p>
                     </div>
@@ -200,8 +200,8 @@ export default async function Home() {
                   {(why.content_json?.bullets_col2 || []).map((bullet: string, i: number) => {
                     const [title, ...rest] = bullet.split('. ');
                     return (
-                      <div key={i} className="flex gap-5 p-6 rounded-3xl border border-white/5 bg-[#0a1c34]/30 hover:border-[#f2a93d]/20 transition-all duration-300">
-                        <div className="w-12 h-12 rounded-2xl bg-[#f2a93d]/10 text-[#f2a93d] flex items-center justify-center font-bold flex-none shadow-inner">✓</div>
+                      <div key={i} className="flex gap-5 p-6 rounded-3xl border border-white/5 bg-[#0a1c34]/30 hover:border-[#25D366]/20 transition-all duration-300">
+                        <div className="w-12 h-12 rounded-2xl bg-[#25D366]/10 text-[#25D366] flex items-center justify-center font-bold flex-none shadow-inner">✓</div>
                         <div>
                           <h3 className="text-[18px] font-bold text-white mb-2 font-display">{title}</h3>
                           <p className="text-[14.5px] text-[#aebcda] leading-relaxed">{rest.join('. ')}</p>
@@ -229,7 +229,7 @@ export default async function Home() {
               <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-6">
                 {[
                   { value: "$28.50", label: "Average HVAC CPL", desc: "Industry average is often over $65.00 for local search.", color: "#1a73e8" },
-                  { value: "+310%", label: "Inbound Call Volume", desc: "Increase in emergency repair calls within first 90 days.", color: "#f2a93d" },
+                  { value: "+310%", label: "Inbound Call Volume", desc: "Increase in emergency repair calls within first 90 days.", color: "#25D366" },
                   { value: "18.4%", label: "Average CTR", desc: "Highly relevant ad copies matched to exact search intent.", color: "#10b981" },
                   { value: "100%", label: "Lead Attribution", desc: "Form-fills, calls, and booking widget clicks fully verified.", color: "#a855f7" }
                 ].map((stat, i) => (
@@ -272,7 +272,7 @@ export default async function Home() {
                       </div>
                     </div>
                     <div className="mt-8 pt-6 border-t border-white/5">
-                      <span className="text-[10px] font-extrabold tracking-wider uppercase text-[#f2a93d] block mb-2">Final Result</span>
+                      <span className="text-[10px] font-extrabold tracking-wider uppercase text-[#25D366] block mb-2">Final Result</span>
                       <p className="text-[16px] font-display font-bold text-white leading-tight">{c.result_summary}</p>
                     </div>
                   </article>
@@ -326,7 +326,7 @@ export default async function Home() {
                 {blogs.slice(0, 2).map((post: any) => (
                   <article key={post.id} className="group bg-[#0a1c34]/40 border border-white/5 rounded-[32px] p-8 hover:border-[#1a73e8]/20 transition-all flex flex-col gap-6">
                     <div>
-                      <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest text-[#f2a93d] bg-[#f2a93d]/10 border border-[#f2a93d]/20 px-3 py-1 rounded-full mb-5">Strategy Guide</span>
+                      <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest text-[#25D366] bg-[#25D366]/10 border border-[#25D366]/20 px-3 py-1 rounded-full mb-5">Strategy Guide</span>
                       <h3 className="text-2xl font-display font-bold text-white mb-3 leading-tight group-hover:text-[#4c9bff] transition-colors">
                         <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                       </h3>
@@ -420,7 +420,7 @@ export default async function Home() {
                     { title: "Next Steps Plan", desc: "A clear, no-fluff action plan for account growth and better ROI." }
                   ].map((item, i) => (
                     <div key={i} className="p-5 rounded-2xl border border-white/5 bg-[#0a1c34]/40 flex flex-col gap-2 hover:bg-[#0a1c34]/60 transition-all group">
-                      <span className="text-[10px] font-extrabold text-[#f2a93d] uppercase tracking-[0.1em] group-hover:translate-x-1 transition-transform inline-block">0{i+1}. {item.title}</span>
+                      <span className="text-[10px] font-extrabold text-[#25D366] uppercase tracking-[0.1em] group-hover:translate-x-1 transition-transform inline-block">0{i+1}. {item.title}</span>
                       <p className="text-[13px] text-[#aebcda] leading-relaxed">{item.desc}</p>
                     </div>
                   ))}
@@ -444,9 +444,11 @@ export default async function Home() {
                       {label:"Work Email",sub:settings.email,href:`mailto:${settings.email}`, icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"},
                       {label:"WhatsApp",sub:"Message directly",href:`https://wa.me/${settings.whatsapp_number}`, icon: "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.05-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-2.078l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.87 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.135-1.61a11.783 11.783 0 005.912 1.61h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"},
                       {label:"LinkedIn",sub:"/in/wphossain",href:settings.linkedin_url, icon: "M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"},
+                      {label:"Facebook",sub:"/wphossain374",href:"https://facebook.com/wphossain374", icon: "M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.16 8.44 9.94v-7.03H7.9v-2.91h2.54V9.86c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.46H15.2c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.91h-2.34V22c4.78-.78 8.43-4.94 8.43-9.94z"},
+                      {label:"YouTube",sub:"@wphossain",href:"https://youtube.com/@wphossain", icon: "M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.56A3.02 3.02 0 0 0 .5 6.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.12 2.14C4.5 20.5 12 20.5 12 20.5s7.5 0 9.38-.56a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.8zM9.6 15.6V8.4l6.4 3.6-6.4 3.6z"}
                     ].map((l,i) => (
-                      <a key={i} className="flex items-center gap-5 p-5 rounded-[24px] border border-white/5 bg-[#050f1f]/60 hover:border-[#1a73e8]/30 hover:bg-[#050f1f] transition-all group" href={l.href} target="_blank" rel="noopener">
-                        <div className="w-12 h-12 rounded-2xl grid place-items-center bg-[#1a73e8]/10 border border-[#1a73e8]/20 text-[#4c9bff] group-hover:scale-110 transition-transform">
+                      <a key={i} className="flex items-center gap-5 p-5 rounded-[24px] border border-white/5 bg-[#050f1f]/60 hover:border-[#25D366]/30 hover:bg-[#050f1f] transition-all group" href={l.href} target="_blank" rel="noopener">
+                        <div className="w-12 h-12 rounded-2xl grid place-items-center bg-[#25D366]/10 border border-[#25D366]/20 text-[#25D366] group-hover:scale-110 transition-transform">
                           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={l.icon} /></svg>
                         </div>
                         <div className="flex flex-col">
