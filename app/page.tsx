@@ -11,6 +11,9 @@ import { GoogleAdsCertBadge, GoogleAnalyticsCertBadge, GTMCertBadge, MetaCertBad
 import { db } from '@/lib/db';
 import { LeadForm } from '@/components/public/LeadForm';
 import Link from 'next/link';
+import { GrowthEcosystemHero } from '@/components/public/GrowthEcosystemHero';
+
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata() {
   const settings = await db.getSettings();
@@ -141,6 +144,9 @@ export default async function Home() {
               </div>
             </div>
           </section>
+
+          {/* NEW TSX HERO SECTION */}
+          <GrowthEcosystemHero />
 
           {/* SERVICES SECTION */}
           <section className="w-full bg-[#0a1c34] border-b border-white/5" id="services">
