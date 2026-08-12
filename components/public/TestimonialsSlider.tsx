@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 
 interface TestimonialItem {
@@ -37,20 +38,47 @@ export function TestimonialsSlider({ testimonials = [] }: TestimonialsSliderProp
 
   const slides = testimonials.length > 0 ? [testimonials.slice(0, 3), testimonials.slice(3, 6)] : defaultTestimonials;
   const [currentIdx, setCurrentIdx] = useState(0);
+  const touchStartX = useRef<number | null>(null);
 
   const handleSlide = (dir: number) => {
     setCurrentIdx((prev) => (prev + dir + slides.length) % slides.length);
   };
 
+  // Auto-advance with pause on hover
+  useEffect(() => {
+    if (slides.length <= 1) return;
+    const id = setInterval(() => {
+      setCurrentIdx((prev) => (prev + 1) % slides.length);
+    }, 6000);
+    return () => clearInterval(id);
+  }, [slides.length]);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(dx) > 40) {
+      handleSlide(dx < 0 ? 1 : -1);
+    }
+    touchStartX.current = null;
+  };
+
   return (
-    <div className="testi-slider relative overflow-hidden group/slider">
+    <div
+      className="testi-slider relative overflow-hidden group/slider"
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
       <div 
         className="testi-track flex transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]"
         style={{ transform: `translateX(-${currentIdx * 100}%)` }}
       >
         {slides.map((slide, sIdx) => (
           <div key={sIdx} className="testi-slide flex-none w-full min-w-full">
-            <div className="grid grid-cols-3 max-xl:grid-cols-2 max-md:grid-cols-1 gap-6">
+            <div className="grid grid-cols-3 max-xl:grid-cols-2 max-md:grid-cols-1 gap-6 px-14 max-md:px-12">
               {slide.map((item, idx) => (
                 <article key={idx} className="testi-card bg-[#050f1f]/40 border border-white/5 rounded-2xl p-6 flex flex-col gap-5 hover:border-[#1a73e8]/20 transition-all duration-300">
                   <div className="testi-top flex items-center justify-between">
@@ -68,9 +96,11 @@ export function TestimonialsSlider({ testimonials = [] }: TestimonialsSliderProp
                   </p>
                   <div className="testi-who flex items-center gap-3 mt-auto pt-4 border-t border-white/5">
                     <div className="testi-avatar w-11 h-11 rounded-full flex-none overflow-hidden border border-white/10 p-0.5 bg-gradient-to-tr from-white/5 to-white/10">
-                      <img 
+                      <Image 
                         src={item.avatar_url || getAvatarUrl(item.client_name)} 
                         alt={item.client_name}
+                        width={44}
+                        height={44}
                         className="w-full h-full object-cover rounded-full"
                         loading="lazy"
                       />
@@ -87,9 +117,9 @@ export function TestimonialsSlider({ testimonials = [] }: TestimonialsSliderProp
         ))}
       </div>
 
-      <div className="slider-nav flex items-center justify-between absolute inset-x-0 top-1/2 -translate-y-1/2 px-4 pointer-events-none opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300 max-lg:hidden">
-        <button className="slider-arrow w-10 h-10 rounded-full border border-white/10 bg-[#050f1f]/80 text-white cursor-pointer grid place-items-center hover:border-[#1a73e8] hover:text-[#1a73e8] transition-all pointer-events-auto" onClick={() => handleSlide(-1)}><ChevronLeft size={20} /></button>
-        <button className="slider-arrow w-10 h-10 rounded-full border border-white/10 bg-[#050f1f]/80 text-white cursor-pointer grid place-items-center hover:border-[#1a73e8] hover:text-[#1a73e8] transition-all pointer-events-auto" onClick={() => handleSlide(1)}><ChevronRight size={20} /></button>
+      <div className="slider-nav flex items-center justify-between absolute inset-x-0 top-1/2 -translate-y-1/2 px-4 pointer-events-none">
+        <button className="slider-arrow w-10 h-10 rounded-full border border-white/10 bg-[#050f1f]/80 text-white cursor-pointer grid place-items-center hover:border-[#1a73e8] hover:text-[#1a73e8] transition-all pointer-events-auto" onClick={() => handleSlide(-1)} aria-label="Previous testimonials"><ChevronLeft size={20} /></button>
+        <button className="slider-arrow w-10 h-10 rounded-full border border-white/10 bg-[#050f1f]/80 text-white cursor-pointer grid place-items-center hover:border-[#1a73e8] hover:text-[#1a73e8] transition-all pointer-events-auto" onClick={() => handleSlide(1)} aria-label="Next testimonials"><ChevronRight size={20} /></button>
       </div>
 
       <div className="slider-dots flex items-center justify-center gap-2.5 mt-8">

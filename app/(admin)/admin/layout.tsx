@@ -15,7 +15,8 @@ import {
   Menu,
   X,
   ExternalLink,
-  ChevronRight
+  ChevronRight,
+  Image as ImageIcon
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 
@@ -37,6 +38,8 @@ export default function AdminLayout({
     { name: 'Page Editor', href: '/admin/content', icon: FolderOpen },
     { name: 'Blog Manager', href: '/admin/blog', icon: FileText },
     { name: 'Case Studies', href: '/admin/case-studies', icon: Briefcase },
+    { name: 'Testimonials', href: '/admin/testimonials', icon: MessageSquare },
+    { name: 'Media Library', href: '/admin/media', icon: ImageIcon },
     { name: 'Leads & Audits', href: '/admin/leads', icon: MessageSquare },
     { name: 'Tracking & Pixels', href: '/admin/tracking', icon: Code },
     { name: 'System Settings', href: '/admin/settings', icon: Settings },

@@ -77,7 +77,7 @@ export default async function SingleCaseStudyPage({ params }: { params: Promise<
 
             {study.featured_image && (
               <div className="mb-8 rounded-2xl overflow-hidden border border-white/5">
-                <img src={study.featured_image} alt={study.featured_image_alt || study.title} className="w-full h-auto object-cover" />
+                <img src={study.featured_image} alt={study.featured_image_alt || study.title} className="w-full h-auto object-cover" loading="lazy" />
               </div>
             )}
 

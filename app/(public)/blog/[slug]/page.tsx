@@ -95,7 +95,7 @@ export default async function SingleBlogPostPage({ params }: { params: Promise<{
 
             {post.og_image && (
               <div className="mb-8 rounded-2xl overflow-hidden border border-white/5">
-                <img src={post.og_image} alt={post.title} className="w-full h-auto object-cover" />
+                <img src={post.og_image} alt={post.title} className="w-full h-auto object-cover" loading="lazy" />
               </div>
             )}
 

@@ -34,6 +34,7 @@ export function ZcalEmbed() {
           style={{ width: '100%', height: '100%', border: 'none' }}
           title="Schedule a meeting"
           allow="calendar-import"
+          loading="lazy"
         />
       </div>
     </div>

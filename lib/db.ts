@@ -42,7 +42,13 @@ const INITIAL_SETTINGS = {
   zcal_link: 'https://zcal.co/i/hJJ3Hx9l',
   linkedin_url: 'https://www.linkedin.com/in/wphossain/',
   facebook_url: '',
-  twitter_url: ''
+  twitter_url: '',
+  logo_url: '',
+  avatar_url: '',
+  primary_color: '#1a73e8',
+  gold_accent_color: '#f2a93d',
+  bg_navy_color: '#050f1f',
+  accent_enabled: false
 };
 
 const INITIAL_TRACKING = {
@@ -632,6 +638,87 @@ export const db = {
     const studies = getLocalItem('case_studies', INITIAL_CASE_STUDIES);
     const filtered = studies.filter(s => s.id !== id);
     setLocalItem('case_studies', filtered);
+    return true;
+  },
+
+  // --- TESTIMONIALS ---
+  getTestimonials: async () => {
+    if (isSupabaseConnected()) {
+      try {
+        const supabase = await getSupabase();
+        if (supabase) {
+          const { data, error } = await supabase
+            .from('testimonials')
+            .select('*')
+            .eq('is_published', true)
+            .order('display_order', { ascending: true });
+          if (!error && Array.isArray(data)) return data;
+        }
+      } catch (e) {
+        console.error("Supabase testimonials load error", e);
+      }
+    }
+    const list = getLocalItem('testimonials', []);
+    return Array.isArray(list) ? list.filter((t: any) => t.is_published !== false) : [];
+  },
+
+  getAllTestimonials: async () => {
+    if (isSupabaseConnected()) {
+      try {
+        const supabase = await getSupabase();
+        if (supabase) {
+          const { data, error } = await supabase.from('testimonials').select('*').order('display_order', { ascending: true });
+          if (!error && Array.isArray(data)) return data;
+        }
+      } catch (e) {
+        console.error("Supabase testimonials load error", e);
+      }
+    }
+    const list = getLocalItem('testimonials', []);
+    return Array.isArray(list) ? list : [];
+  },
+
+  saveTestimonial: async (testimonial: any) => {
+    const final = {
+      ...testimonial,
+      id: testimonial.id || Math.random().toString(36).substring(2, 9),
+      created_at: testimonial.created_at || new Date().toISOString(),
+    };
+    if (await adminWrite({ action: 'upsert', table: 'testimonials', payload: final })) return true;
+    if (isSupabaseConnected()) {
+      try {
+        const supabase = await getSupabase();
+        if (supabase) {
+          const { error } = await supabase.from('testimonials').upsert(final as any);
+          if (!error) return true;
+        }
+      } catch (e) {
+        console.error("Supabase testimonial save error", e);
+      }
+    }
+    const list: any[] = getLocalItem('testimonials', []);
+    const idx = list.findIndex((t: any) => t.id === final.id);
+    if (idx > -1) list[idx] = { ...list[idx], ...final };
+    else list.push(final);
+    setLocalItem('testimonials', list);
+    return true;
+  },
+
+  deleteTestimonial: async (id: string) => {
+    if (await adminWrite({ action: 'delete', table: 'testimonials', where: { id } })) return true;
+    if (isSupabaseConnected()) {
+      try {
+        const supabase = await getSupabase();
+        if (supabase) {
+          const { error } = await supabase.from('testimonials').delete().eq('id', id);
+          if (!error) return true;
+        }
+      } catch (e) {
+        console.error("Supabase testimonial delete error", e);
+      }
+    }
+    const list = getLocalItem('testimonials', []);
+    setLocalItem('testimonials', list.filter((t: any) => t.id !== id));
     return true;
   },
 

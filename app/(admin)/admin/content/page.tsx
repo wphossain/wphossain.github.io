@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { db } from '@/lib/db';
 import { 
   Save, 
@@ -15,7 +15,8 @@ import {
   Eye,
   EyeOff,
   MoveUp,
-  MoveDown
+  MoveDown,
+  TrendingUp
 } from 'lucide-react';
 
 export default function PageContentEditorPage() {
@@ -23,21 +24,36 @@ export default function PageContentEditorPage() {
   const [activeTab, setActiveTab] = useState('hero');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const dirtyRef = useRef(false);
 
   useEffect(() => {
     loadSections();
+  }, []);
+
+  // Warn before leaving with unsaved changes
+  useEffect(() => {
+    const handler = (e: BeforeUnloadEvent) => {
+      if (dirtyRef.current) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
   }, []);
 
   async function loadSections() {
     setLoading(true);
     const data = await db.getAllSections();
     setSections(data);
+    dirtyRef.current = false;
     setLoading(false);
   }
 
   const findSection = (key: string) => sections.find(s => s.section_key === key);
 
   const updateSection = (key: string, data: any) => {
+    dirtyRef.current = true;
     setSections(prev => prev.map(s => s.section_key === key ? { ...s, ...data } : s));
   };
 
@@ -53,6 +69,7 @@ export default function PageContentEditorPage() {
         await db.saveSection(sec.section_key, sec.title, sec.subtitle, sec.content_json, sec.is_visible);
       }
       alert('All changes saved successfully!');
+      dirtyRef.current = false;
     } catch (err) {
       alert('Failed to save changes.');
     } finally {
@@ -70,9 +87,11 @@ export default function PageContentEditorPage() {
 
   const tabs = [
     { key: 'hero', label: 'Hero Section', icon: Layout },
+    { key: 'growth_hero', label: 'Ecosystem Hero', icon: Layout },
     { key: 'services', label: 'Services', icon: Settings2 },
     { key: 'why', label: 'Why Me', icon: CheckCircle2 },
     { key: 'process', label: 'Process', icon: Activity },
+    { key: 'results', label: 'Results / KPIs', icon: TrendingUp },
     { key: 'faq', label: 'FAQ', icon: HelpCircle },
     { key: 'certifications', label: 'Certifications', icon: Trophy }
   ];
@@ -344,7 +363,7 @@ export default function PageContentEditorPage() {
 
                   {activeTab === 'process' && (
                     <div className="space-y-4">
-                      {(currentSection.content_json.steps || []).map((p: any, i: number) => (
+                      {(currentSection.content_json?.steps || []).map((p: any, i: number) => (
                         <div key={i} className="flex gap-4 items-start bg-[#050f1f]/80 border border-white/5 rounded-[20px] p-6">
                            <div className="w-10 h-10 rounded-xl bg-[#1a73e8]/10 text-[#1a73e8] flex items-center justify-center font-bold font-display shrink-0 border border-[#1a73e8]/20">{p.num}</div>
                            <div className="flex-1 grid grid-cols-1 gap-4">
@@ -376,7 +395,105 @@ export default function PageContentEditorPage() {
                     </div>
                   )}
 
-                  {(activeTab !== 'hero' && activeTab !== 'services' && activeTab !== 'faq' && activeTab !== 'process') && (
+                  {activeTab === 'results' && (
+                    <div className="space-y-4">
+                      <p className="text-[12px] text-[#7b8bad] leading-relaxed">
+                        Edit the headline performance stats shown in the <strong className="text-white">Results / Performance</strong> section. Each stat animates on the public site and updates live.
+                      </p>
+                      {(currentSection.content_json?.stats || []).map((s: any, i: number) => (
+                        <div key={i} className="bg-[#050f1f]/80 border border-white/5 rounded-[24px] p-6 space-y-4 hover:border-white/10 transition-all">
+                          <div className="flex items-start gap-3">
+                            <div className="flex-1 grid grid-cols-2 gap-4 max-sm:grid-cols-1">
+                              <div className="space-y-1">
+                                <label className="text-[10px] font-bold text-[#7b8bad] uppercase tracking-widest">Value</label>
+                                <input 
+                                  value={s.value}
+                                  onChange={(e) => {
+                                    const stats = [...(currentSection.content_json?.stats || [])];
+                                    stats[i] = { ...stats[i], value: e.target.value };
+                                    updateContentJson('results', { stats });
+                                  }}
+                                  className="w-full bg-transparent border-b border-white/5 pb-1 font-display font-bold text-white text-lg outline-none focus:border-[#1a73e8]"
+                                  placeholder="$28.50"
+                                />
+                              </div>
+                              <div className="space-y-1">
+                                <label className="text-[10px] font-bold text-[#7b8bad] uppercase tracking-widest">Label</label>
+                                <input 
+                                  value={s.label}
+                                  onChange={(e) => {
+                                    const stats = [...(currentSection.content_json?.stats || [])];
+                                    stats[i] = { ...stats[i], label: e.target.value };
+                                    updateContentJson('results', { stats });
+                                  }}
+                                  className="w-full bg-transparent border-b border-white/5 pb-1 text-white text-sm outline-none focus:border-[#1a73e8]"
+                                  placeholder="Average HVAC CPL"
+                                />
+                              </div>
+                              <div className="space-y-1 col-span-2">
+                                <label className="text-[10px] font-bold text-[#7b8bad] uppercase tracking-widest">Description</label>
+                                <textarea 
+                                  rows={2}
+                                  value={s.desc}
+                                  onChange={(e) => {
+                                    const stats = [...(currentSection.content_json?.stats || [])];
+                                    stats[i] = { ...stats[i], desc: e.target.value };
+                                    updateContentJson('results', { stats });
+                                  }}
+                                  className="w-full bg-transparent text-[#aebcda] text-sm outline-none resize-none border-b border-white/5 pb-2 focus:border-[#1a73e8]"
+                                />
+                              </div>
+                              <div className="space-y-1">
+                                <label className="text-[10px] font-bold text-[#7b8bad] uppercase tracking-widest">Accent Color</label>
+                                <div className="flex items-center gap-2">
+                                  <input 
+                                    type="color"
+                                    value={s.color || '#1a73e8'}
+                                    onChange={(e) => {
+                                      const stats = [...(currentSection.content_json?.stats || [])];
+                                      stats[i] = { ...stats[i], color: e.target.value };
+                                      updateContentJson('results', { stats });
+                                    }}
+                                    className="w-10 h-10 rounded-lg border border-white/10 bg-transparent cursor-pointer"
+                                  />
+                                  <input 
+                                    value={s.color || ''}
+                                    onChange={(e) => {
+                                      const stats = [...(currentSection.content_json?.stats || [])];
+                                      stats[i] = { ...stats[i], color: e.target.value };
+                                      updateContentJson('results', { stats });
+                                    }}
+                                    className="flex-1 bg-transparent text-white text-sm outline-none border-b border-white/5 pb-1"
+                                    placeholder="#1a73e8"
+                                  />
+                                </div>
+                              </div>
+                              <div className="flex items-end justify-end">
+                                <button 
+                                  onClick={() => {
+                                    const stats = (currentSection.content_json?.stats || []).filter((_: any, idx: number) => idx !== i);
+                                    updateContentJson('results', { stats });
+                                  }}
+                                  className="p-2.5 self-end bg-red-400/10 text-red-400 rounded-xl hover:bg-red-400 hover:text-white transition-all border border-red-400/20"
+                                ><Trash2 size={16} /></button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                      <button 
+                        onClick={() => {
+                          const stats = [...(currentSection.content_json?.stats || []), { value: '0%', label: 'New Metric', desc: '', color: '#1a73e8' }];
+                          updateContentJson('results', { stats });
+                        }}
+                        className="w-full py-5 border-2 border-dashed border-white/5 rounded-[24px] text-[#7b8bad] hover:text-white hover:border-[#1a73e8]/30 transition-all text-sm font-bold flex items-center justify-center gap-2 mt-4"
+                      >
+                        <Plus size={18} /> Add New Metric
+                      </button>
+                    </div>
+                  )}
+
+                  {(activeTab !== 'hero' && activeTab !== 'services' && activeTab !== 'faq' && activeTab !== 'process' && activeTab !== 'results') && (
                     <div className="bg-[#050f1f]/60 p-12 rounded-3xl text-center border border-dashed border-white/5">
                       <p className="text-[#7b8bad] text-sm">Rich data fields for <span className="text-white font-bold">{activeTab}</span> are coming soon. Use Global Title/Subtitle fields for now.</p>
                     </div>

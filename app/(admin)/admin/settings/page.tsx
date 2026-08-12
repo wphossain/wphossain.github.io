@@ -28,7 +28,13 @@ export default function SettingsAdminPage() {
     zcal_link: '',
     linkedin_url: '',
     facebook_url: '',
-    twitter_url: ''
+    twitter_url: '',
+    logo_url: '',
+    avatar_url: '',
+    primary_color: '#1a73e8',
+    gold_accent_color: '#f2a93d',
+    bg_navy_color: '#050f1f',
+    accent_enabled: false
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -133,6 +139,20 @@ export default function SettingsAdminPage() {
               onChange={(e: any) => setSettings({...settings, job_title: e.target.value})}
               placeholder="Google Ads Specialist..."
             />
+            <div className="grid grid-cols-2 gap-6 max-sm:grid-cols-1">
+              <InputField 
+                label="Logo URL"
+                value={settings.logo_url || ''}
+                onChange={(e: any) => setSettings({...settings, logo_url: e.target.value})}
+                placeholder="https://.../logo.png"
+              />
+              <InputField 
+                label="Avatar / Profile Image URL"
+                value={settings.avatar_url || ''}
+                onChange={(e: any) => setSettings({...settings, avatar_url: e.target.value})}
+                placeholder="https://.../avatar.jpg"
+              />
+            </div>
           </SettingGroup>
 
           <SettingGroup title="Social Media Connect" icon={Globe}>
@@ -194,6 +214,14 @@ export default function SettingsAdminPage() {
                 value={settings.email}
                 onChange={(e: any) => setSettings({...settings, email: e.target.value})}
               />
+              <InputField 
+                label="Display Phone Number"
+                icon={Phone}
+                type="text"
+                value={settings.phone || ''}
+                onChange={(e: any) => setSettings({...settings, phone: e.target.value})}
+                placeholder="+1 (555) 000-0000"
+              />
               <div className="space-y-2 group">
                 <label className="text-[11px] font-bold text-[#7b8bad] uppercase tracking-widest ml-1 flex items-center gap-2 group-focus-within:text-emerald-500 transition-colors">
                   <Phone size={12} /> WhatsApp (Numeric Only)
@@ -226,6 +254,48 @@ export default function SettingsAdminPage() {
             <div className="p-4 rounded-2xl bg-[#1a73e8]/5 border border-[#1a73e8]/10 flex gap-3">
               <Zap size={16} className="text-[#4c9bff] shrink-0 mt-0.5" />
               <p className="text-[12px] text-[#aebcda] leading-relaxed">Changes to this link will update all &ldquo;Book Consultation&rdquo; buttons and the embedded calendar widget globally.</p>
+            </div>
+          </SettingGroup>
+
+          <SettingGroup title="Brand & Accent Colors" icon={Zap}>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-[14px] font-bold text-white">Enable custom accent colors</p>
+                <p className="text-[12px] text-[#7b8bad] leading-relaxed max-w-xs">Off by default so the current theme stays exactly as-is. Toggle on to apply the colors below.</p>
+              </div>
+              <button 
+                onClick={() => setSettings({...settings, accent_enabled: !settings.accent_enabled})}
+                className={`relative inline-flex h-7 w-14 items-center rounded-full transition-colors ${settings.accent_enabled ? 'bg-[#1a73e8]' : 'bg-white/5 border border-white/10'}`}
+                aria-pressed={!!settings.accent_enabled}
+              >
+                <span className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${settings.accent_enabled ? 'translate-x-8' : 'translate-x-1'}`} />
+              </button>
+            </div>
+            <div className="grid grid-cols-1 gap-5">
+              {[
+                { key: 'primary_color', label: 'Primary Blue', def: '#1a73e8' },
+                { key: 'gold_accent_color', label: 'Gold Accent', def: '#f2a93d' },
+                { key: 'bg_navy_color', label: 'Background Navy', def: '#050f1f' },
+              ].map((c) => (
+                <div key={c.key} className="space-y-2">
+                  <label className="text-[11px] font-bold text-[#7b8bad] uppercase tracking-widest">{c.label}</label>
+                  <div className="flex items-center gap-3">
+                    <input 
+                      type="color"
+                      value={(settings as any)[c.key] || c.def}
+                      onChange={(e) => setSettings({...settings, [c.key]: e.target.value})}
+                      className="w-10 h-10 rounded-lg border border-white/10 bg-transparent cursor-pointer"
+                    />
+                    <input 
+                      type="text"
+                      value={(settings as any)[c.key] || ''}
+                      onChange={(e) => setSettings({...settings, [c.key]: e.target.value})}
+                      className="flex-1 bg-[#050f1f]/80 border border-white/5 rounded-xl px-4 py-2.5 text-white text-sm focus:border-[#1a73e8] outline-none"
+                      placeholder={c.def}
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
           </SettingGroup>
         </div>

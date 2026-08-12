@@ -12,10 +12,11 @@ import { db } from '@/lib/db';
 import { LeadForm } from '@/components/public/LeadForm';
 import { MobileCtaBar } from '@/components/public/MobileCtaBar';
 import { CountUp } from '@/components/public/CountUp';
+import { Reveal } from '@/components/public/Reveal';
 import Link from 'next/link';
 import { GrowthEcosystemHero } from '@/components/public/GrowthEcosystemHero';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 export async function generateMetadata() {
   try {
@@ -38,7 +39,8 @@ export default async function Home() {
     db.getAllSections(),
     db.getBlogs(false),
     db.getCaseStudies(),
-    db.getTracking()
+    db.getTracking(),
+    db.getTestimonials()
   ]);
 
   const settings: any = results[0].status === 'fulfilled' && results[0].value ? results[0].value : {};
@@ -46,6 +48,7 @@ export default async function Home() {
   const blogs: any[] = results[2].status === 'fulfilled' && Array.isArray(results[2].value) ? results[2].value : [];
   const caseStudies: any[] = results[3].status === 'fulfilled' && Array.isArray(results[3].value) ? results[3].value : [];
   const tracking: any = results[4].status === 'fulfilled' && results[4].value ? results[4].value : {};
+  const testimonials: any[] = results[5].status === 'fulfilled' && Array.isArray(results[5].value) ? results[5].value : [];
 
   const findSection = (key: string) => {
     const found = sections.find((s: any) => s?.section_key === key);
@@ -138,6 +141,24 @@ export default async function Home() {
                       </span>
                     ))}
                   </div>
+
+                  {/* Compact proof strip */}
+                  {(resultsSection.content_json?.stats || []).length > 0 && (
+                    <div className="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center gap-x-8 gap-y-4">
+                      {(resultsSection.content_json.stats || []).slice(0, 3).map((s: any, i: number) => (
+                        <div key={i} className="flex items-center gap-2.5">
+                          <strong className="text-lg font-display font-bold text-white">{s.value}</strong>
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#7b8bad] leading-tight">{s.label}</span>
+                        </div>
+                      ))}
+                      <div className="flex items-center gap-2">
+                        <span className="flex gap-0.5 text-[#25D366]">
+                          {[1,2,3,4,5].map(n => <svg key={n} width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>)}
+                        </span>
+                        <span className="text-[12px] text-[#aebcda] font-semibold">Rated by clients</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="w-full animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
                   <PulseCard />
@@ -174,7 +195,7 @@ export default async function Home() {
           {/* SERVICES SECTION */}
           <section className="w-full bg-[#0a1c34] border-b border-white/5" id="services">
             <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
-              <div className="sec-head max-w-[720px] mb-12">
+              <Reveal className="sec-head max-w-[720px] mb-12">
                 <span className="eyebrow">Services</span>
                 <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
                   {services.title}
@@ -182,8 +203,9 @@ export default async function Home() {
                 <p className="text-[#aebcda] text-[17px] leading-relaxed">
                   {services.subtitle}
                 </p>
-              </div>
-              <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-5">
+              </Reveal>
+              <Reveal delay={0.08}>
+                <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-5">
                 {(services.content_json?.services_list || []).map((s: any, i: number) => (
                   <article key={i} className="group p-7 bg-[#050f1f]/50 border border-white/5 rounded-[28px] hover:border-[#1a73e8]/30 hover:bg-[#050f1f] transition-all duration-300 flex flex-col gap-5">
                     <div className="w-12 h-12 rounded-2xl bg-[#1a73e8]/10 border border-[#1a73e8]/20 grid place-items-center text-[#4c9bff] group-hover:scale-110 transition-transform">
@@ -196,20 +218,21 @@ export default async function Home() {
                     </div>
                   </article>
                 ))}
-              </div>
+                </div>
+              </Reveal>
             </div>
           </section>
 
           {/* WHY ME SECTION */}
           <section className="w-full bg-[#050f1f] border-b border-white/5" id="why-me">
             <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
-              <div className="sec-head max-w-[720px] mb-12">
+              <Reveal className="sec-head max-w-[720px] mb-12">
                 <span className="eyebrow">Why Me</span>
                 <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
                   {why.title || "A specialist who also understands the page the click lands on."}
                 </h2>
                 {why.subtitle && <p className="text-[#aebcda] text-[17px] leading-relaxed">{why.subtitle}</p>}
-              </div>
+              </Reveal>
               <div className="grid grid-cols-2 max-lg:grid-cols-1 gap-10">
                 <div className="space-y-6">
                   {(why.content_json?.bullets_col1 || []).map((bullet: any, i: number) => {
@@ -276,7 +299,7 @@ export default async function Home() {
           {/* RESULTS SECTION */}
           <section className="w-full bg-[#0a1c34] border-b border-white/5" id="results">
             <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
-              <div className="sec-head max-w-[720px] mb-12">
+              <Reveal className="sec-head max-w-[720px] mb-12">
                 <span className="eyebrow">Performance</span>
                 <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
                   {resultsSection.title}
@@ -284,9 +307,9 @@ export default async function Home() {
                 <p className="text-[#aebcda] text-[17px] leading-relaxed">
                   {resultsSection.subtitle}
                 </p>
-              </div>
+              </Reveal>
               <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-6">
-                {(results.content_json?.stats || []).map((stat: any, i: number) => (
+                {(resultsSection.content_json?.stats || []).map((stat: any, i: number) => (
                   <div key={i} className="p-8 rounded-[32px] border border-white/5 bg-[#050f1f]/60 hover:border-white/10 transition-all group overflow-hidden relative">
                     <div className="absolute top-0 right-0 w-24 h-24 blur-3xl opacity-10 transition-opacity group-hover:opacity-20" style={{ background: stat.color }} />
                     <CountUp value={stat.value} className="block text-5xl font-display font-bold text-white mb-2 tracking-tight tabular-nums" />
@@ -301,14 +324,14 @@ export default async function Home() {
           {/* CASE STUDIES SECTION */}
           <section className="w-full bg-[#050f1f] border-b border-white/5" id="case-studies">
             <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
-              <div className="sec-head max-w-[720px] mb-12 flex justify-between items-end gap-6 max-sm:flex-col max-sm:items-start">
+              <Reveal className="sec-head max-w-[720px] mb-12 flex justify-between items-end gap-6 max-sm:flex-col max-sm:items-start">
                 <div>
                   <span className="eyebrow">Case Studies</span>
                   <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight text-white font-bold">
                     Real accounts, real fixes — client results.
                   </h2>
                 </div>
-              </div>
+              </Reveal>
               <div className="grid grid-cols-3 max-xl:grid-cols-2 max-md:grid-cols-1 gap-7">
                 {caseStudies.map((c: any, i: number) => (
                   <article key={i} className="group flex flex-col bg-[#0a1c34]/50 border border-white/5 rounded-[32px] p-8 hover:border-[#1a73e8]/30 transition-all hover:-translate-y-1 duration-300">
@@ -341,12 +364,12 @@ export default async function Home() {
           {/* PROCESS SECTION */}
           <section className="w-full bg-[#0a1c34] border-b border-white/5" id="process">
             <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
-              <div className="sec-head max-w-[720px] mb-16">
+              <Reveal className="sec-head max-w-[720px] mb-16">
                 <span className="eyebrow">Process</span>
                 <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
                   {process.title}
                 </h2>
-              </div>
+              </Reveal>
               <div className="relative">
                 {/* Visual Connection Line */}
                 <div className="absolute top-7 left-0 right-0 h-0.5 bg-gradient-to-r from-[#1a73e8] to-transparent max-md:hidden opacity-20" />
@@ -368,7 +391,7 @@ export default async function Home() {
           {/* BLOG FEED SECTION */}
           <section className="w-full bg-[#050f1f] border-b border-white/5" id="blog">
             <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
-              <div className="sec-head max-w-[720px] mb-12 flex justify-between items-end gap-6 max-sm:flex-col max-sm:items-start">
+              <Reveal className="sec-head max-w-[720px] mb-12 flex justify-between items-end gap-6 max-sm:flex-col max-sm:items-start">
                 <div>
                   <span className="eyebrow">Insights</span>
                   <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight text-white font-bold">
@@ -378,7 +401,7 @@ export default async function Home() {
                 <Link href="/blog" className="text-[14px] font-bold text-[#4c9bff] hover:underline flex items-center gap-1">
                   View All Insights <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                 </Link>
-              </div>
+              </Reveal>
               <div className="grid grid-cols-2 gap-8 max-md:grid-cols-1">
                 {blogs.slice(0, 2).map((post: any) => (
                   <article key={post.id} className="group bg-[#0a1c34]/40 border border-white/5 rounded-[32px] p-8 hover:border-[#1a73e8]/20 transition-all flex flex-col gap-6">
@@ -401,25 +424,25 @@ export default async function Home() {
           {/* TESTIMONIALS SECTION */}
           <section className="w-full bg-[#0a1c34] border-b border-white/5" id="testimonials">
             <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
-              <div className="sec-head max-w-[720px] mb-16 text-center mx-auto">
+              <Reveal className="sec-head max-w-[720px] mb-16 text-center mx-auto">
                 <span className="eyebrow mx-auto">Testimonials</span>
                 <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
                   What clients say — once the calls start coming in.
                 </h2>
-              </div>
-              <TestimonialsSlider />
+              </Reveal>
+              <TestimonialsSlider testimonials={testimonials} />
             </div>
           </section>
 
           {/* CERTIFICATIONS SECTION */}
           <section className="w-full bg-[#050f1f] border-b border-white/5" id="certifications">
             <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
-              <div className="sec-head max-w-[720px] mb-12">
+              <Reveal className="sec-head max-w-[720px] mb-12">
                 <span className="eyebrow">Certifications</span>
                 <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
                   {certsSection.title}
                 </h2>
-              </div>
+              </Reveal>
               <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-5">
                 {(certsSection.content_json?.certs || []).map((cert: any, i: number) => (
                   <div key={i} className="group relative bg-white rounded-3xl p-8 h-40 flex items-center justify-center overflow-hidden border border-white/5 shadow-xl transition-all hover:scale-[1.02]">
@@ -439,12 +462,12 @@ export default async function Home() {
           {/* FAQ SECTION */}
           <section className="w-full bg-[#0a1c34] border-b border-white/5" id="faq">
             <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
-              <div className="sec-head max-w-[720px] mb-12">
+              <Reveal className="sec-head max-w-[720px] mb-12">
                 <span className="eyebrow">FAQ</span>
                 <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
                   {faq.title}
                 </h2>
-              </div>
+              </Reveal>
               <FaqAccordion />
             </div>
           </section>
@@ -452,13 +475,13 @@ export default async function Home() {
           {/* CONTACT & BOOKING SECTION */}
           <section className="w-full bg-[#050f1f] border-b border-white/5" id="contact">
             <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
-              <div className="sec-head max-w-[720px] mb-16">
+              <Reveal className="sec-head max-w-[720px] mb-16">
                 <span className="eyebrow">Book a Call</span>
                 <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
                   Book a free Google Ads audit.
                 </h2>
                 <p className="text-[#aebcda] text-[17px]">Select a time that works for you. I&apos;ll prepare a custom review of your current setup before we talk.</p>
-              </div>
+              </Reveal>
 
               <div className="flex gap-10 max-xl:flex-col items-start">
                 {/* Zcal Embed */}

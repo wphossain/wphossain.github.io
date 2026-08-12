@@ -446,7 +446,7 @@ function LandingPageStep() {
   return (
     <>
       <div className="relative h-[92px] w-full overflow-hidden rounded-lg border border-white/10 bg-slate-800">
-        <Image src="/landing-page.png" alt="HVAC landing page preview" fill sizes="184px" className="object-cover object-top" />
+        <Image src="/landing-page.webp" alt="HVAC landing page preview" fill sizes="184px" className="object-cover object-top" />
       </div>
       <div className="flex flex-col items-center gap-1 rounded-lg border border-white/5 bg-white/[0.03] px-2 py-2">
         <span className="text-[9.5px] uppercase tracking-wide text-slate-400">Page Score</span>
@@ -581,13 +581,13 @@ function TechnicianStep() {
         Job Assigned
       </span>
       <div className="relative h-[74px] w-full overflow-hidden rounded-lg border border-white/10 bg-slate-800">
-        <Image src="/technician.png" alt="Dispatched HVAC technician" fill sizes="184px" className="object-cover object-top" />
+        <Image src="/technician.webp" alt="Dispatched HVAC technician" fill sizes="184px" className="object-cover object-top" />
       </div>
       <p className="text-[10px] text-slate-400">
         ETA <span className="font-semibold text-white">25 mins</span>
       </p>
       <div className="relative h-[58px] w-full overflow-hidden rounded-lg border border-white/10 bg-[#0a1526]">
-        <Image src="/technician-map.png" alt="Technician route map" fill sizes="184px" className="object-cover" />
+        <Image src="/technician-map.webp" alt="Technician route map" fill sizes="184px" className="object-cover" />
       </div>
     </>
   );
@@ -615,7 +615,7 @@ function CustomerStep() {
       <p className="text-[10.5px] italic leading-snug text-slate-300">&ldquo;Great service, very professional. Highly recommended!&rdquo;</p>
       <p className="text-[9.5px] font-medium text-slate-500">— Michael T.</p>
       <div className="relative h-[78px] w-full overflow-hidden rounded-lg border border-white/10 bg-slate-800">
-        <Image src="/customer-house.png" alt="Customer's home" fill sizes="184px" className="object-cover" />
+        <Image src="/customer-house.webp" alt="Customer's home" fill sizes="184px" className="object-cover" />
       </div>
     </>
   );
@@ -640,7 +640,7 @@ function RevenueCard() {
 
       <div className="relative aspect-[300/64] w-full flex-1 overflow-hidden rounded-lg sm:aspect-auto sm:h-[52px]">
         <Image
-          src="/revenue-stats.png"
+          src="/revenue-stats.webp"
           alt="Clicks 530K · Conversions 364K · Conv. rate 37.44% · Cost $33.5K"
           fill
           sizes="(min-width: 640px) 480px, 100vw"
@@ -694,7 +694,7 @@ function FounderPanel() {
     <div className="relative w-full shrink-0 lg:w-[36%] lg:min-h-[640px] lg:shrink-0">
       <div className="relative aspect-[3/4] w-full sm:aspect-[4/5] lg:absolute lg:inset-0 lg:aspect-auto">
         <Image
-          src="/founder.png"
+          src="/founder.webp"
           alt="Founder — Google Ads specialist for HVAC companies. I Build Google Ads Systems That Generate More Booked Calls."
           fill
           priority
