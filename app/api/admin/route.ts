@@ -1,5 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getAdminClient } from '@/lib/supabase/server-admin';
+
+function purgeCache() {
+  try {
+    revalidatePath('/', 'page');
+    revalidatePath('/blog', 'page');
+    revalidatePath('/case-studies', 'page');
+  } catch (e) {
+    console.error('Revalidate error', e);
+  }
+}
 
 // Server-only admin data API.
 // All admin mutations flow through here using the service_role key,
@@ -29,11 +40,13 @@ export async function POST(req: NextRequest) {
           .from(table)
           .upsert(payload, { onConflict: where?.onConflict });
         if (error) throw error;
+        purgeCache();
         return NextResponse.json({ ok: true, data: result });
       }
       case 'insert': {
         const { data: result, error } = await admin.from(table).insert(payload);
         if (error) throw error;
+        purgeCache();
         return NextResponse.json({ ok: true, data: result });
       }
       case 'update': {
@@ -48,6 +61,7 @@ export async function POST(req: NextRequest) {
         }
         const { data: result, error } = await query;
         if (error) throw error;
+        purgeCache();
         return NextResponse.json({ ok: true, data: result });
       }
       case 'delete': {
@@ -59,6 +73,7 @@ export async function POST(req: NextRequest) {
         }
         const { data: result, error } = await query;
         if (error) throw error;
+        purgeCache();
         return NextResponse.json({ ok: true, data: result });
       }
       default:

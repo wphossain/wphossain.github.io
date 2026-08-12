@@ -296,31 +296,6 @@ export default async function Home() {
             </div>
           </section>
 
-          {/* RESULTS SECTION */}
-          <section className="w-full bg-[#0a1c34] border-b border-white/5" id="results">
-            <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
-              <Reveal className="sec-head max-w-[720px] mb-12">
-                <span className="eyebrow">Performance</span>
-                <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
-                  {resultsSection.title}
-                </h2>
-                <p className="text-[#aebcda] text-[17px] leading-relaxed">
-                  {resultsSection.subtitle}
-                </p>
-              </Reveal>
-              <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-6">
-                {(resultsSection.content_json?.stats || []).map((stat: any, i: number) => (
-                  <div key={i} className="p-8 rounded-[32px] border border-white/5 bg-[#050f1f]/60 hover:border-white/10 transition-all group overflow-hidden relative">
-                    <div className="absolute top-0 right-0 w-24 h-24 blur-3xl opacity-10 transition-opacity group-hover:opacity-20" style={{ background: stat.color }} />
-                    <CountUp value={stat.value} className="block text-5xl font-display font-bold text-white mb-2 tracking-tight tabular-nums" />
-                    <span className="text-[13px] font-bold uppercase tracking-widest block mb-3" style={{ color: stat.color }}>{stat.label}</span>
-                    <p className="text-[14px] text-[#aebcda] leading-relaxed">{stat.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
           {/* CASE STUDIES SECTION */}
           <section className="w-full bg-[#050f1f] border-b border-white/5" id="case-studies">
             <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
@@ -384,6 +359,31 @@ export default async function Home() {
                     </div>
                   ))}
                 </div>
+              </div>
+            </div>
+          </section>
+
+          {/* RESULTS SECTION */}
+          <section className="w-full bg-[#0a1c34] border-b border-white/5" id="results">
+            <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
+              <Reveal className="sec-head max-w-[720px] mb-12">
+                <span className="eyebrow">Performance</span>
+                <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
+                  {resultsSection.title}
+                </h2>
+                <p className="text-[#aebcda] text-[17px] leading-relaxed">
+                  {resultsSection.subtitle}
+                </p>
+              </Reveal>
+              <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-6">
+                {(resultsSection.content_json?.stats || []).map((stat: any, i: number) => (
+                  <div key={i} className="p-8 rounded-[32px] border border-white/5 bg-[#050f1f]/60 hover:border-white/10 transition-all group overflow-hidden relative">
+                    <div className="absolute top-0 right-0 w-24 h-24 blur-3xl opacity-10 transition-opacity group-hover:opacity-20" style={{ background: stat.color }} />
+                    <CountUp value={stat.value} className="block text-5xl font-display font-bold text-white mb-2 tracking-tight tabular-nums" />
+                    <span className="text-[13px] font-bold uppercase tracking-widest block mb-3" style={{ color: stat.color }}>{stat.label}</span>
+                    <p className="text-[14px] text-[#aebcda] leading-relaxed">{stat.desc}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </section>
