@@ -15,8 +15,17 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: 'WPHossain | Google Ads Specialist for HVAC Contractors',
+  metadataBase: new URL('https://wphossain.com'),
+  title: {
+    default: 'WPHossain | Google Ads Specialist for HVAC Contractors',
+    template: '%s | WPHossain',
+  },
   description: 'Google Ads Specialist for HVAC contractors.',
+  openGraph: {
+    siteName: 'WPHossain',
+    type: 'website',
+    url: 'https://wphossain.com',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

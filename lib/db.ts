@@ -279,6 +279,25 @@ function setLocalItem<T>(key: string, val: T) {
   }
 }
 
+// Server-side admin write via service_role (bypasses anon RLS write blocks).
+// If the API is unavailable we fall through to the old anon/local paths.
+async function adminWrite(body: any): Promise<boolean> {
+  if (typeof window === 'undefined') return false;
+  try {
+    const res = await fetch('/api/admin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) return false;
+    const json = await res.json();
+    return json?.ok === true;
+  } catch (e) {
+    console.error('Admin write failed, falling back', e);
+    return false;
+  }
+}
+
 // -------------------------------------------------------------
 // MAIN DB WRAPPERS (FALLBACK-RESILIENT)
 // -------------------------------------------------------------
@@ -304,23 +323,23 @@ export const db = {
   },
 
   updateSettings: async (settings: Partial<typeof INITIAL_SETTINGS>) => {
+    const current = await db.getSettings();
+    const merged = { ...current, ...settings, updated_at: new Date().toISOString() };
+    if (await adminWrite({ action: 'upsert', table: 'site_settings', payload: merged as any })) return true;
     if (isSupabaseConnected()) {
       try {
         const supabase = await getSupabase();
         if (supabase) {
-          const current = await db.getSettings();
           const { error } = await supabase
             .from('site_settings')
-            .upsert({ ...current, ...settings, updated_at: new Date().toISOString() } as any);
+            .upsert(merged as any);
           if (!error) return true;
         }
       } catch (e) {
         console.error("Supabase settings save error, saving locally", e);
       }
     }
-    const current = getLocalItem('site_settings', INITIAL_SETTINGS);
-    const updated = { ...current, ...settings };
-    setLocalItem('site_settings', updated);
+    setLocalItem('site_settings', merged);
     return true;
   },
 
@@ -346,13 +365,19 @@ export const db = {
       try {
         const supabase = await getSupabase();
         if (supabase) {
-          const { data, error } = await supabase.from('page_sections').select('*');
+          const { data, error } = await supabase.from('page_sections').select('*').order('updated_at', { ascending: false });
           if (!error && Array.isArray(data) && data.length > 0) {
+            // Merge DB over seeds for known keys, then append any DB-only sections
             const sectionMap = new Map(data.map((s: any) => [s.section_key, s]));
-            return INITIAL_SECTIONS.map((initS) => {
+            const known = INITIAL_SECTIONS.map((initS) => {
               const dbS = sectionMap.get(initS.section_key);
               return dbS ? { ...initS, ...dbS } : initS;
             });
+            const knownKeys = new Set(INITIAL_SECTIONS.map((s) => s.section_key));
+            const extra = data
+              .filter((s: any) => !knownKeys.has(s.section_key))
+              .map((s: any) => ({ ...INITIAL_SECTIONS[0], ...s }));
+            return [...known, ...extra];
           }
         }
       } catch (e) {
@@ -362,15 +387,29 @@ export const db = {
     const local = getLocalItem('page_sections', INITIAL_SECTIONS);
     if (Array.isArray(local) && local.length > 0) {
       const sectionMap = new Map(local.map((s: any) => [s.section_key, s]));
-      return INITIAL_SECTIONS.map((initS) => {
+      const known = INITIAL_SECTIONS.map((initS) => {
         const locS = sectionMap.get(initS.section_key);
         return locS ? { ...initS, ...locS } : initS;
       });
+      const knownKeys = new Set(INITIAL_SECTIONS.map((s) => s.section_key));
+      const extra = local
+        .filter((s: any) => !knownKeys.has(s.section_key))
+        .map((s: any) => ({ ...INITIAL_SECTIONS[0], ...s }));
+      return [...known, ...extra];
     }
     return INITIAL_SECTIONS;
   },
 
   saveSection: async (sectionKey: string, title: string, subtitle: string | null, contentJson: any, isVisible: boolean = true) => {
+    const payload = {
+      section_key: sectionKey,
+      title,
+      subtitle: subtitle || '',
+      content_json: contentJson,
+      is_visible: isVisible,
+      updated_at: new Date().toISOString()
+    };
+    if (await adminWrite({ action: 'upsert', table: 'page_sections', payload, where: { onConflict: 'section_key' } })) return true;
     if (isSupabaseConnected()) {
       try {
         const supabase = await getSupabase();
@@ -414,7 +453,20 @@ export const db = {
             query = query.eq('status', 'published');
           }
           const { data, error } = await query;
-          if (!error && Array.isArray(data)) return data;
+          if (!error && Array.isArray(data)) {
+            // Attach human-readable category name (fall back to author/category fields)
+            let catMap: Record<string, string> = {};
+            try {
+              const { data: cats } = await supabase.from('blog_categories').select('id,name');
+              if (Array.isArray(cats)) {
+                catMap = Object.fromEntries(cats.map((c: any) => [c.id, c.name]));
+              }
+            } catch (e) { /* ignore */ }
+            return data.map((p: any) => ({
+              ...p,
+              category: catMap[p.category_id] || p.category || 'HVAC PPC Strategy',
+            }));
+          }
         }
       } catch (e) {
         console.error("Supabase blog load error", e);
@@ -422,7 +474,8 @@ export const db = {
     }
     const blogs = getLocalItem('blog_posts', INITIAL_BLOGS);
     const arr = Array.isArray(blogs) ? blogs : INITIAL_BLOGS;
-    return includeDrafts ? arr : arr.filter(b => b.status === 'published');
+    const result = includeDrafts ? arr : arr.filter(b => b.status === 'published');
+    return result.map((b: any) => ({ ...b, category: b.category || (b.category_id === 'google-ads' ? 'Google Ads' : 'HVAC PPC Strategy') }));
   },
 
   getBlogBySlug: async (slug: string) => {
@@ -431,25 +484,37 @@ export const db = {
         const supabase = await getSupabase();
         if (supabase) {
           const { data, error } = await supabase.from('blog_posts').select('*').eq('slug', slug).maybeSingle();
-          if (!error && data) return data;
+          if (!error && data) {
+            let category = data.category || 'HVAC PPC Strategy';
+            try {
+              const { data: cat } = await supabase.from('blog_categories').select('name').eq('id', data.category_id).maybeSingle();
+              if (cat?.name) category = cat.name;
+            } catch (e) { /* ignore */ }
+            return { ...data, category };
+          }
         }
       } catch (e) {
         console.error("Supabase single blog load error", e);
       }
     }
     const blogs = getLocalItem('blog_posts', INITIAL_BLOGS);
-    return blogs.find(b => b.slug === slug) || null;
+    const found: any = blogs.find(b => b.slug === slug) || null;
+    return found ? { ...found, category: found.category || 'HVAC PPC Strategy' } : null;
   },
 
   saveBlog: async (blog: any) => {
+    const finalBlog = {
+      ...blog,
+      id: blog.id || Math.random().toString(36).substring(2, 9),
+      created_at: blog.created_at || new Date().toISOString(),
+      published_at: blog.status === 'published' ? (blog.published_at || new Date().toISOString()) : null
+    };
+    if (await adminWrite({ action: 'upsert', table: 'blog_posts', payload: { ...finalBlog, published_at: finalBlog.published_at } })) return true;
     if (isSupabaseConnected()) {
       try {
         const supabase = await getSupabase();
         if (supabase) {
-          const { error } = await supabase.from('blog_posts').upsert({
-            ...blog,
-            published_at: blog.status === 'published' ? (blog.published_at || new Date().toISOString()) : null
-          } as any);
+          const { error } = await supabase.from('blog_posts').upsert(finalBlog as any);
           if (!error) return true;
         }
       } catch (e) {
@@ -458,12 +523,6 @@ export const db = {
     }
     const blogs = getLocalItem('blog_posts', INITIAL_BLOGS);
     const idx = blogs.findIndex(b => b.id === blog.id || b.slug === blog.slug);
-    const finalBlog = {
-      ...blog,
-      id: blog.id || Math.random().toString(36).substring(2, 9),
-      created_at: blog.created_at || new Date().toISOString(),
-      published_at: blog.status === 'published' ? (blog.published_at || new Date().toISOString()) : null
-    };
     if (idx > -1) {
       blogs[idx] = { ...blogs[idx], ...finalBlog };
     } else {
@@ -474,6 +533,7 @@ export const db = {
   },
 
   deleteBlog: async (id: string) => {
+    if (await adminWrite({ action: 'delete', table: 'blog_posts', where: { id } })) return true;
     if (isSupabaseConnected()) {
       try {
         const supabase = await getSupabase();
@@ -508,12 +568,37 @@ export const db = {
     return Array.isArray(studies) ? studies : INITIAL_CASE_STUDIES;
   },
 
-  saveCaseStudy: async (study: any) => {
+  getCaseStudyBySlug: async (slug: string) => {
     if (isSupabaseConnected()) {
       try {
         const supabase = await getSupabase();
         if (supabase) {
-          const { error } = await supabase.from('case_studies').upsert(study as any);
+          const { data, error } = await supabase.from('case_studies').select('*').eq('slug', slug).maybeSingle();
+          if (!error && data) return data;
+        }
+      } catch (e) {
+        console.error("Supabase single case study load error", e);
+      }
+    }
+    const studies = Array.isArray(getLocalItem('case_studies', INITIAL_CASE_STUDIES))
+      ? getLocalItem('case_studies', INITIAL_CASE_STUDIES)
+      : INITIAL_CASE_STUDIES;
+    return studies.find((s: any) => s.slug === slug) || null;
+  },
+
+
+  saveCaseStudy: async (study: any) => {
+    const finalStudy = {
+      ...study,
+      id: study.id || Math.random().toString(36).substring(2, 9),
+      created_at: study.created_at || new Date().toISOString()
+    };
+    if (await adminWrite({ action: 'upsert', table: 'case_studies', payload: finalStudy })) return true;
+    if (isSupabaseConnected()) {
+      try {
+        const supabase = await getSupabase();
+        if (supabase) {
+          const { error } = await supabase.from('case_studies').upsert(finalStudy as any);
           if (!error) return true;
         }
       } catch (e) {
@@ -522,11 +607,6 @@ export const db = {
     }
     const studies = getLocalItem('case_studies', INITIAL_CASE_STUDIES);
     const idx = studies.findIndex(s => s.id === study.id || s.slug === study.slug);
-    const finalStudy = {
-      ...study,
-      id: study.id || Math.random().toString(36).substring(2, 9),
-      created_at: study.created_at || new Date().toISOString()
-    };
     if (idx > -1) {
       studies[idx] = { ...studies[idx], ...finalStudy };
     } else {
@@ -537,6 +617,7 @@ export const db = {
   },
 
   deleteCaseStudy: async (id: string) => {
+    if (await adminWrite({ action: 'delete', table: 'case_studies', where: { id } })) return true;
     if (isSupabaseConnected()) {
       try {
         const supabase = await getSupabase();
@@ -571,18 +652,18 @@ export const db = {
   },
 
   submitLead: async (lead: Omit<typeof INITIAL_LEADS[0], 'id' | 'status' | 'category' | 'created_at'>) => {
+    const payload = {
+      ...lead,
+      status: 'new',
+      category: 'Inbox',
+      created_at: new Date().toISOString()
+    };
+    if (await adminWrite({ action: 'insert', table: 'lead_submissions', payload })) return true;
     if (isSupabaseConnected()) {
       try {
         const supabase = await getSupabase();
         if (supabase) {
-          const { error } = await supabase.from('lead_submissions').insert([
-            {
-              ...lead,
-              status: 'new',
-              category: 'Inbox',
-              created_at: new Date().toISOString()
-            }
-          ] as any);
+          const { error } = await supabase.from('lead_submissions').insert([payload] as any);
           if (!error) return true;
         }
       } catch (e) {
@@ -603,6 +684,7 @@ export const db = {
   },
 
   updateLeadStatus: async (id: string, status: string, category: string) => {
+    if (await adminWrite({ action: 'update', table: 'lead_submissions', data: { status, category }, where: { id } })) return true;
     if (isSupabaseConnected()) {
       try {
         const supabase = await getSupabase();
@@ -624,6 +706,7 @@ export const db = {
   },
 
   deleteLead: async (id: string) => {
+    if (await adminWrite({ action: 'delete', table: 'lead_submissions', where: { id } })) return true;
     if (isSupabaseConnected()) {
       try {
         const supabase = await getSupabase();
@@ -661,23 +744,23 @@ export const db = {
   },
 
   updateTracking: async (tracking: Partial<typeof INITIAL_TRACKING>) => {
+    const current = await db.getTracking();
+    const merged = { ...current, ...tracking, updated_at: new Date().toISOString() };
+    if (await adminWrite({ action: 'upsert', table: 'tracking_codes', payload: merged as any })) return true;
     if (isSupabaseConnected()) {
       try {
         const supabase = await getSupabase();
         if (supabase) {
-          const current = await db.getTracking();
           const { error } = await supabase
             .from('tracking_codes')
-            .upsert({ ...current, ...tracking, updated_at: new Date().toISOString() } as any);
+            .upsert(merged as any);
           if (!error) return true;
         }
       } catch (e) {
         console.error("Supabase tracking save error", e);
       }
     }
-    const current = getLocalItem('tracking_codes', INITIAL_TRACKING);
-    const updated = { ...current, ...tracking };
-    setLocalItem('tracking_codes', updated);
+    setLocalItem('tracking_codes', merged);
     return true;
   }
 };

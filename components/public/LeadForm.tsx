@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from 'react';
-import { db } from '@/lib/db';
 import { Send, CheckCircle2, User, Mail, Globe, Linkedin } from 'lucide-react';
 
 export function LeadForm() {
@@ -11,6 +10,7 @@ export function LeadForm() {
     websiteUrl: '',
     linkedinUrl: ''
   });
+  const [honeypot, setHoneypot] = useState('');
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -18,18 +18,7 @@ export function LeadForm() {
     setStatus('submitting');
     
     try {
-      await db.submitLead({
-        full_name: formData.fullName,
-        email: formData.email,
-        website_url: formData.websiteUrl,
-        linkedin_url: formData.linkedinUrl,
-        form_type: 'audit_request',
-        phone: '',
-        monthly_ad_spend: '',
-        message: 'Submitted via Footer Audit Form'
-      });
-      
-      await fetch('/api/contact', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -37,12 +26,19 @@ export function LeadForm() {
           email: formData.email,
           websiteUrl: formData.websiteUrl,
           linkedinUrl: formData.linkedinUrl,
-          formType: 'audit_request'
+          formType: 'audit_request',
+          website_hp: honeypot
         })
       });
 
+      if (!res.ok) {
+        const json = await res.json().catch(() => ({}));
+        throw new Error(json?.error || 'Submission failed');
+      }
+
       setStatus('success');
       setFormData({ fullName: '', email: '', websiteUrl: '', linkedinUrl: '' });
+      setHoneypot('');
       setTimeout(() => setStatus('idle'), 6000);
     } catch (err) {
       setStatus('error');
@@ -124,6 +120,19 @@ export function LeadForm() {
           />
         </div>
         
+        {/* Honeypot field — hidden from humans, catches bots */}
+        <div className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+          <label htmlFor="website_hp">Leave this field empty</label>
+          <input
+            id="website_hp"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+          />
+        </div>
+
         <button 
           type="submit" 
           disabled={status === 'submitting'}

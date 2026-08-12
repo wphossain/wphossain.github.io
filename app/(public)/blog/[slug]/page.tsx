@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { Sidebar } from '@/components/public/Sidebar';
 import { MobileHeader } from '@/components/public/MobileHeader';
 import { db } from '@/lib/db';
+import { sanitizeHtml } from '@/lib/sanitize';
+import { MobileCtaBar } from '@/components/public/MobileCtaBar';
 import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -49,7 +51,7 @@ export default async function SingleBlogPostPage({ params }: { params: Promise<{
     "datePublished": post.published_at || post.created_at,
     "author": {
       "@type": "Person",
-      "name": "Mikail Hossain"
+      "name": post.author_name || "Mikail Hossain"
     },
     "publisher": {
       "@type": "Organization",
@@ -69,21 +71,22 @@ export default async function SingleBlogPostPage({ params }: { params: Promise<{
       />
       <Sidebar />
       <MobileHeader />
+      <MobileCtaBar />
 
-      <main className="content p-6.5 max-lg:p-4.5 min-h-screen bg-[#050f1f]">
+      <main className="content p-6.5 max-lg:p-4.5 min-h-screen bg-[#050f1f] pb-24 lg:pb-0">
         <div className="content-inner max-w-4xl mx-auto w-full flex flex-col gap-6">
           <Link href="/blog" className="text-[14px] text-[var(--ink-faint)] hover:text-[var(--gold)] font-bold flex items-center gap-2 transition-colors">
             ← Back to Blog Index
           </Link>
 
           <article className="panel p-10 max-sm:p-6">
-            <span className="eyebrow">HVAC PPC Strategy</span>
+            <span className="eyebrow">{post.category || 'HVAC PPC Strategy'}</span>
             <h1 className="text-4xl font-display font-bold text-white mb-4 leading-tight">
               {post.title}
             </h1>
             
             <div className="flex items-center gap-4 text-[13px] text-[var(--ink-faint)] pb-6 mb-8 border-b border-[var(--line)]">
-              <span>By Mikail Hossain</span>
+              <span>By {post.author_name || 'Mikail Hossain'}</span>
               <span>•</span>
               <span>{post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Draft'}</span>
               <span>•</span>
@@ -102,7 +105,7 @@ export default async function SingleBlogPostPage({ params }: { params: Promise<{
                 prose-a:text-[var(--blue-light)] prose-a:font-bold prose-a:no-underline hover:prose-a:underline
                 prose-strong:text-white prose-strong:font-bold
                 prose-img:rounded-2xl prose-img:border prose-img:border-white/10"
-              dangerouslySetInnerHTML={{ __html: post.content_html }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content_html) }}
             />
           </article>
         </div>

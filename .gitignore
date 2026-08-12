@@ -3,3 +3,9 @@
 .next/
 node_modules/
 *.tsbuildinfo
+
+# Environment secrets - never commit real keys
+.env
+.env.local
+.env.*.local
+!.env.example

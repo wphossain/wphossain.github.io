@@ -2,26 +2,37 @@ import React from 'react';
 
 interface StructuredDataProps {
   faqs?: { question: string; answer: string }[];
+  settings?: any;
 }
 
-export function StructuredData({ faqs = [] }: StructuredDataProps) {
+export function StructuredData({ faqs = [], settings = {} }: StructuredDataProps) {
+  const siteUrl = 'https://wphossain.com';
+  const businessName = settings.business_name || 'WPHossain';
+  const jobTitle = settings.job_title || 'Google Ads Specialist for HVAC Contractors';
+  const email = settings.email || 'Contact@wphossain.com';
+  const phone = settings.phone || '';
+  const linkedin = settings.linkedin_url || 'https://www.linkedin.com/in/wphossain/';
+  const facebook = settings.facebook_url || 'https://facebook.com/wphossain374';
+  const twitter = settings.twitter_url || '';
+  const owner = settings.owner_name || 'Mikail Hossain';
+
   const professionalServiceSchema = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    "name": "WPHossain — Google Ads Specialist for HVAC Contractors",
+    "name": `${businessName} — ${jobTitle}`,
     "description": "Google Ads Specialist for HVAC contractors. Search Ads, Conversion Tracking, GTM, GA4 — built to turn ad spend into booked service calls.",
-    "url": "https://wphossain.com",
-    "email": "Contact@wphossain.com",
-    "telephone": "",
+    "url": siteUrl,
+    "email": email,
+    ...(phone ? { "telephone": phone } : {}),
     "founder": {
       "@type": "Person",
-      "name": "Mikail Hossain",
-      "jobTitle": "Google Ads Specialist",
-      "url": "https://www.linkedin.com/in/wphossain/"
+      "name": owner,
+      "jobTitle": jobTitle,
+      ...(linkedin ? { "url": linkedin } : {})
     },
     "address": {
       "@type": "PostalAddress",
-      "addressCountry": ["US", "CA", "AU", "NZ", "GB"]
+      "addressCountry": "US"
     },
     "areaServed": [
       { "@type": "Country", "name": "United States" },
@@ -45,27 +56,24 @@ export function StructuredData({ faqs = [] }: StructuredDataProps) {
       "Search Engine Marketing",
       "Conversion Rate Optimization"
     ],
-    "sameAs": [
-      "https://www.linkedin.com/in/wphossain/",
-      "https://facebook.com/wphossain374",
-      "https://youtube.com/@wphossain"
-    ]
+    "sameAs": [linkedin, facebook, twitter].filter(Boolean)
   };
 
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "WPHossain",
-    "url": "https://wphossain.com",
-    "logo": "https://wphossain.com/images/headshot.jpg",
+    "name": businessName,
+    "url": siteUrl,
+    "logo": `${siteUrl}/images/headshot.jpg`,
     "description": "Google Ads Specialist helping local service businesses generate more qualified leads through data-driven PPC campaigns.",
     "founder": {
       "@type": "Person",
-      "name": "Mikail Hossain"
+      "name": owner
     },
     "contactPoint": {
       "@type": "ContactPoint",
-      "email": "Contact@wphossain.com",
+      "email": email,
+      ...(phone ? { "telephone": phone } : {}),
       "contactType": "customer service",
       "availableLanguage": "English"
     }
@@ -75,11 +83,11 @@ export function StructuredData({ faqs = [] }: StructuredDataProps) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://wphossain.com" },
-      { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://wphossain.com/#services" },
-      { "@type": "ListItem", "position": 3, "name": "Case Studies", "item": "https://wphossain.com/#case-studies" },
-      { "@type": "ListItem", "position": 4, "name": "Blog", "item": "https://wphossain.com/blog" },
-      { "@type": "ListItem", "position": 5, "name": "Contact", "item": "https://wphossain.com/#contact" }
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": siteUrl },
+      { "@type": "ListItem", "position": 2, "name": "Services", "item": `${siteUrl}/#services` },
+      { "@type": "ListItem", "position": 3, "name": "Case Studies", "item": `${siteUrl}/#case-studies` },
+      { "@type": "ListItem", "position": 4, "name": "Blog", "item": `${siteUrl}/blog` },
+      { "@type": "ListItem", "position": 5, "name": "Contact", "item": `${siteUrl}/#contact` }
     ]
   };
 

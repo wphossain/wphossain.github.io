@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Sidebar } from '@/components/public/Sidebar';
 import { MobileHeader } from '@/components/public/MobileHeader';
 import { db } from '@/lib/db';
+import { MobileCtaBar } from '@/components/public/MobileCtaBar';
 
 export const metadata = {
   title: 'HVAC Google Ads & PPC Insights Blog | WPHossain',
@@ -22,8 +23,9 @@ export default async function BlogIndexPage() {
     <>
       <Sidebar />
       <MobileHeader />
+      <MobileCtaBar />
 
-      <main className="content p-6.5 max-lg:p-4.5 min-h-screen bg-[#050f1f]">
+      <main className="content p-6.5 max-lg:p-4.5 min-h-screen bg-[#050f1f] pb-24 lg:pb-0">
         <div className="content-inner max-w-[var(--container)] mx-auto w-full flex flex-col gap-6">
           <section className="panel">
             <span className="eyebrow">PPC &amp; Tracking Insights</span>
@@ -39,7 +41,7 @@ export default async function BlogIndexPage() {
                 <div>
                   <div className="flex items-center gap-3 mb-3">
                     <span className="text-[11px] font-extrabold uppercase text-[var(--gold)] bg-[var(--gold-soft)] border border-[var(--gold-line)] px-2.5 py-1 rounded-full">
-                      HVAC PPC Strategy
+                      {post.category || 'HVAC PPC Strategy'}
                     </span>
                     <span className="text-[12px] text-[var(--ink-faint)]">
                       {post.published_at ? new Date(post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Draft'} · {post.reading_time_minutes || 5} min read

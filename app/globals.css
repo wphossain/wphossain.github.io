@@ -18,9 +18,19 @@
     --blue-light: #4c9bff;
     --blue-dark: #0b57b0;
     --blue-glow: rgba(26, 115, 232, 0.35);
-    --gold: #25D366;
-    --gold-soft: rgba(37, 211, 102, 0.12);
-    --gold-line: rgba(37, 211, 102, 0.35);
+    /* Accurate naming. The token previously called "--gold" held a green value
+       (#25D366). We keep identical hex values for zero visual change. */
+    --accent-green: #25D366;
+    --accent-green-soft: rgba(37, 211, 102, 0.12);
+    --accent-green-line: rgba(37, 211, 102, 0.35);
+    /* "gold" accent (distinct from green) */
+    --accent-gold: #f2a93d;
+    --accent-gold-soft: rgba(242, 169, 61, 0.12);
+    --accent-gold-line: rgba(242, 169, 61, 0.35);
+    /* Back-compat aliases referencing the accurate tokens (identical visual output) */
+    --gold: var(--accent-green);
+    --gold-soft: var(--accent-green-soft);
+    --gold-line: var(--accent-green-line);
     --font-display: var(--font-display, 'Space Grotesk', Inter, sans-serif);
     --font-body: var(--font-body, 'Inter', Arial, sans-serif);
     --sidebar-w: 0px;

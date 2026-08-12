@@ -10,6 +10,8 @@ import { StructuredData } from '@/components/public/StructuredData';
 import { GoogleAdsCertBadge, GoogleAnalyticsCertBadge, GTMCertBadge, MetaCertBadge } from '@/components/public/CertBadges';
 import { db } from '@/lib/db';
 import { LeadForm } from '@/components/public/LeadForm';
+import { MobileCtaBar } from '@/components/public/MobileCtaBar';
+import { CountUp } from '@/components/public/CountUp';
 import Link from 'next/link';
 import { GrowthEcosystemHero } from '@/components/public/GrowthEcosystemHero';
 
@@ -55,13 +57,15 @@ export default async function Home() {
   const why = findSection('why');
   const process = findSection('process');
   const faq = findSection('faq');
+  const resultsSection = findSection('results');
   const certsSection = findSection('certifications');
 
   return (
     <>
-      <StructuredData faqs={faq.content_json?.faqs || []} />
+      <StructuredData faqs={faq.content_json?.faqs || []} settings={settings} />
       <Sidebar />
       <MobileHeader />
+      <MobileCtaBar />
 
       {/* Inject Tracking Codes */}
       {tracking?.gtm_enabled && tracking?.gtm_id && (
@@ -88,12 +92,12 @@ export default async function Home() {
         <div dangerouslySetInnerHTML={{ __html: tracking.custom_head_scripts }} />
       )}
 
-      <main className="content min-h-screen bg-[#050f1f]">
+      <main className="content min-h-screen bg-[#050f1f] pb-24 lg:pb-0">
         <div className="content-inner w-full flex flex-col">
 
-          {/* HERO SECTION */}
+          {/* HERO SECTION (intro band) */}
           <section 
-            className="w-full bg-[#050f1f] min-h-[calc(100vh-80px)] lg:min-h-screen flex items-center border-b border-white/5 relative overflow-hidden" 
+            className="w-full bg-[#050f1f] flex items-center border-b border-white/5 relative overflow-hidden" 
             id="home"
             style={{ 
               backgroundImage: 'linear-gradient(rgba(26,115,232,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(26,115,232,0.03) 1px, transparent 1px)', 
@@ -104,20 +108,20 @@ export default async function Home() {
             <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-[radial-gradient(circle,rgba(26,115,232,0.08),transparent_70%)] pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-[radial-gradient(circle,rgba(37,211,102,0.05),transparent_70%)] pointer-events-none" />
 
-            <div className="max-w-[var(--container)] mx-auto w-full px-6 lg:px-10 py-16">
+            <div className="max-w-[var(--container)] mx-auto w-full px-6 lg:px-10 py-14 lg:py-20">
               <div className="hero-grid grid grid-cols-[1.1fr_0.9fr] max-xl:grid-cols-1 gap-10 items-center">
                 <div className="hero-copy animate-in fade-in slide-in-from-left-8 duration-700">
                   <span className="eyebrow inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#25D366]/10 border border-[#25D366]/30 text-[#25D366] text-[11px] font-extrabold uppercase tracking-widest mb-6 shadow-[0_0_15px_rgba(37,211,102,0.15)]">
                     <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
                     FOR HVAC CONTRACTORS
                   </span>
-                  <h1 className="text-[clamp(36px,5vw,60px)] font-display leading-[1.05] mb-6 text-white font-bold tracking-tight">
+                  <h1 className="text-[clamp(32px,4.4vw,54px)] font-display leading-[1.08] mb-5 text-white font-bold tracking-tight">
                     {hero.title}
                   </h1>
-                  <p className="text-[18px] text-[#aebcda] max-w-[620px] leading-relaxed mb-8">
+                  <p className="text-[17px] text-[#aebcda] max-w-[620px] leading-relaxed mb-7">
                     {hero.subtitle}
                   </p>
-                  <div className="hero-actions flex flex-wrap gap-4 my-8 max-sm:flex-col">
+                  <div className="hero-actions flex flex-wrap gap-4 my-6 max-sm:flex-col">
                     <a className="btn btn-primary px-8 py-4 text-[15px] font-bold rounded-xl shadow-xl shadow-[#1a73e8]/25 hover:scale-[1.02] transition-all" href="#contact">
                       Book Free Audit
                       <svg className="btn-arrow ml-2" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -140,7 +144,7 @@ export default async function Home() {
                 </div>
               </div>
 
-              <div className="hero-certs mt-16 pt-10 border-t border-white/5">
+              <div className="hero-certs mt-12 pt-8 border-t border-white/5">
                 <span className="block text-[11px] font-extrabold tracking-[0.15em] uppercase text-[#7b8bad] mb-6">Certified &amp; Partnered with</span>
                 <div className="cert-row flex flex-wrap gap-5">
                   {[
@@ -158,6 +162,9 @@ export default async function Home() {
                   ))}
                 </div>
               </div>
+
+              {/* Smooth transition into the ecosystem hero */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-[#0a1c34] opacity-60" />
             </div>
           </section>
 
@@ -272,22 +279,17 @@ export default async function Home() {
               <div className="sec-head max-w-[720px] mb-12">
                 <span className="eyebrow">Performance</span>
                 <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
-                  Measurable metrics that impact the bottom line.
+                  {resultsSection.title}
                 </h2>
                 <p className="text-[#aebcda] text-[17px] leading-relaxed">
-                  We don&apos;t just optimize for clicks. We measure phone calls, booked service jobs, and customer acquisition cost.
+                  {resultsSection.subtitle}
                 </p>
               </div>
               <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-6">
-                {[
-                  { value: "$28.50", label: "Average HVAC CPL", desc: "Industry average is often over $65.00 for local search.", color: "#1a73e8" },
-                  { value: "+310%", label: "Inbound Call Volume", desc: "Increase in emergency repair calls within first 90 days.", color: "#25D366" },
-                  { value: "18.4%", label: "Average CTR", desc: "Highly relevant ad copies matched to exact search intent.", color: "#10b981" },
-                  { value: "100%", label: "Lead Attribution", desc: "Form-fills, calls, and booking widget clicks fully verified.", color: "#a855f7" }
-                ].map((stat, i) => (
+                {(results.content_json?.stats || []).map((stat: any, i: number) => (
                   <div key={i} className="p-8 rounded-[32px] border border-white/5 bg-[#050f1f]/60 hover:border-white/10 transition-all group overflow-hidden relative">
                     <div className="absolute top-0 right-0 w-24 h-24 blur-3xl opacity-10 transition-opacity group-hover:opacity-20" style={{ background: stat.color }} />
-                    <strong className="block text-5xl font-display font-bold text-white mb-2 tracking-tight">{stat.value}</strong>
+                    <CountUp value={stat.value} className="block text-5xl font-display font-bold text-white mb-2 tracking-tight tabular-nums" />
                     <span className="text-[13px] font-bold uppercase tracking-widest block mb-3" style={{ color: stat.color }}>{stat.label}</span>
                     <p className="text-[14px] text-[#aebcda] leading-relaxed">{stat.desc}</p>
                   </div>
@@ -325,7 +327,10 @@ export default async function Home() {
                     </div>
                     <div className="mt-8 pt-6 border-t border-white/5">
                       <span className="text-[10px] font-extrabold tracking-wider uppercase text-[#25D366] block mb-2">Final Result</span>
-                      <p className="text-[16px] font-display font-bold text-white leading-tight">{c.result_summary}</p>
+                      <p className="text-[16px] font-display font-bold text-white leading-tight mb-4">{c.result_summary}</p>
+                      <Link href={`/case-studies/${c.slug}`} className="inline-flex items-center gap-2 text-[14px] font-bold text-[#4c9bff] group/link hover:underline">
+                        View Case Study <span className="group-hover/link:translate-x-1 transition-transform">→</span>
+                      </Link>
                     </div>
                   </article>
                 ))}
@@ -378,7 +383,7 @@ export default async function Home() {
                 {blogs.slice(0, 2).map((post: any) => (
                   <article key={post.id} className="group bg-[#0a1c34]/40 border border-white/5 rounded-[32px] p-8 hover:border-[#1a73e8]/20 transition-all flex flex-col gap-6">
                     <div>
-                      <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest text-[#25D366] bg-[#25D366]/10 border border-[#25D366]/20 px-3 py-1 rounded-full mb-5">Strategy Guide</span>
+                      <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest text-[#25D366] bg-[#25D366]/10 border border-[#25D366]/20 px-3 py-1 rounded-full mb-5">{post.category || 'Strategy Guide'}</span>
                       <h3 className="text-2xl font-display font-bold text-white mb-3 leading-tight group-hover:text-[#4c9bff] transition-colors">
                         <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                       </h3>
@@ -527,7 +532,7 @@ export default async function Home() {
       </main>
 
       {/* Floating WhatsApp Button */}
-      <a className="floating-wa fixed right-6 bottom-6 z-50 w-15 h-15 rounded-full grid place-items-center bg-gradient-to-br from-[#25D366] to-[#128C7E] text-white shadow-2xl hover:scale-110 transition-all active:scale-95 group" href={`https://wa.me/${settings.whatsapp_number}`} target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+      <a className="floating-wa fixed right-6 bottom-24 lg:bottom-6 z-50 w-15 h-15 rounded-full grid place-items-center bg-gradient-to-br from-[#25D366] to-[#128C7E] text-white shadow-2xl hover:scale-110 transition-all active:scale-95 group" href={`https://wa.me/${settings.whatsapp_number}`} target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
         <span className="floating-wa-ring absolute inset-0 rounded-full border-2 border-[#25D366] animate-[wa-pulse_2s_ease-out_infinite]" />
         <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor" className="relative z-10">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.05-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-2.078l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.87 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.135-1.61a11.783 11.783 0 005.912 1.61h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />

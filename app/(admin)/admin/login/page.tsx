@@ -9,6 +9,7 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'error' | 'success'; text: string } | null>(null);
+  const [useFallback, setUseFallback] = useState(false);
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -17,11 +18,28 @@ export default function AdminLoginPage() {
     setMessage(null);
 
     try {
+      // Fallback: password-only gate for when Supabase auth is unavailable
+      if (useFallback) {
+        const res = await fetch('/api/admin/fallback-login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password }),
+        });
+        if (!res.ok) {
+          const json = await res.json().catch(() => ({}));
+          setMessage({ type: 'error', text: json?.error || 'Invalid password' });
+          setLoading(false);
+          return;
+        }
+        setMessage({ type: 'success', text: 'Login successful! Redirecting...' });
+        router.push('/admin');
+        router.refresh();
+        return;
+      }
+
+      // Primary: Supabase email/password auth
       const supabase = createClient();
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
 
       if (error) {
         setMessage({ type: 'error', text: error.message || 'Invalid email or password' });
@@ -52,29 +70,45 @@ export default function AdminLoginPage() {
         {/* Message */}
         {message && (
           <div className={`mb-4 p-3 rounded-lg text-xs font-semibold ${
-            message.type === 'error' 
-              ? 'bg-red-500/10 border border-red-500/30 text-red-400' 
+            message.type === 'error'
+              ? 'bg-red-500/10 border border-red-500/30 text-red-400'
               : 'bg-green-500/10 border border-green-500/30 text-green-400'
           }`}>
             {message.text}
           </div>
         )}
 
+        {/* Mode toggle */}
+        <div className="mb-5 flex items-center justify-between">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-[#7b8bad]">
+            {useFallback ? 'Fallback Password' : 'Supabase Auth'}
+          </span>
+          <button
+            type="button"
+            onClick={() => setUseFallback((v) => !v)}
+            className="text-[11px] font-bold text-[#4c9bff] hover:underline"
+          >
+            {useFallback ? 'Use email sign-in' : 'Use recovery password'}
+          </button>
+        </div>
+
         {/* Form */}
         <form onSubmit={handleLogin} className="space-y-5">
-          <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#aebcda] mb-1.5">
-              Email Address
-            </label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@wphossain.com"
-              className="w-full bg-[#050f1f] border border-[#0e2340] rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-[#1a73e8] transition-colors"
-            />
-          </div>
+          {!useFallback && (
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#aebcda] mb-1.5">
+                Email Address
+              </label>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="admin@wphossain.com"
+                className="w-full bg-[#050f1f] border border-[#0e2340] rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-[#1a73e8] transition-colors"
+              />
+            </div>
+          )}
 
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider text-[#aebcda] mb-1.5">
@@ -100,7 +134,7 @@ export default function AdminLoginPage() {
         </form>
 
         <div className="mt-6 text-center text-xs text-[#7b8bad]">
-          Secured with Supabase Auth · Session cookies protect all admin routes
+          Secured with Supabase Auth · A recovery password fallback protects admin routes even if Supabase is offline.
         </div>
       </div>
     </div>
