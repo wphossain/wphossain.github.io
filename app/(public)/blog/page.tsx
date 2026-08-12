@@ -10,8 +10,13 @@ export const metadata = {
 };
 
 export default async function BlogIndexPage() {
-  // Fetch from our fallback-resilient db wrapper
-  const posts = await db.getBlogs(false); // Only fetch published posts for public site
+  let posts: any[] = [];
+  try {
+    const fetched = await db.getBlogs(false);
+    if (Array.isArray(fetched)) posts = fetched;
+  } catch (e) {
+    console.error("Error loading blog posts:", e);
+  }
 
   return (
     <>

@@ -16,15 +16,22 @@ import { GrowthEcosystemHero } from '@/components/public/GrowthEcosystemHero';
 export const dynamic = 'force-dynamic';
 
 export async function generateMetadata() {
-  const settings = await db.getSettings();
-  return {
-    title: `${settings.business_name} | ${settings.job_title}`,
-    description: `Specialist for HVAC contractors. Search Ads, Conversion Tracking, GTM, GA4 — built to turn ad spend into booked service calls.`,
-  };
+  try {
+    const settings = await db.getSettings();
+    return {
+      title: `${settings?.business_name || 'WPHossain'} | ${settings?.job_title || 'Google Ads Specialist'}`,
+      description: `Specialist for HVAC contractors. Search Ads, Conversion Tracking, GTM, GA4 — built to turn ad spend into booked service calls.`,
+    };
+  } catch (e) {
+    return {
+      title: 'WPHossain | Google Ads Specialist for HVAC Contractors',
+      description: 'Specialist for HVAC contractors. Search Ads, Conversion Tracking, GTM, GA4 — built to turn ad spend into booked service calls.',
+    };
+  }
 }
 
 export default async function Home() {
-  const [settings, sections, blogs, caseStudies, tracking] = await Promise.all([
+  const results = await Promise.allSettled([
     db.getSettings(),
     db.getAllSections(),
     db.getBlogs(false),
@@ -32,7 +39,16 @@ export default async function Home() {
     db.getTracking()
   ]);
 
-  const findSection = (key: string) => sections.find((s: any) => s.section_key === key) || { title: '', subtitle: '', content_json: {} };
+  const settings: any = results[0].status === 'fulfilled' && results[0].value ? results[0].value : {};
+  const sections: any[] = results[1].status === 'fulfilled' && Array.isArray(results[1].value) ? results[1].value : [];
+  const blogs: any[] = results[2].status === 'fulfilled' && Array.isArray(results[2].value) ? results[2].value : [];
+  const caseStudies: any[] = results[3].status === 'fulfilled' && Array.isArray(results[3].value) ? results[3].value : [];
+  const tracking: any = results[4].status === 'fulfilled' && results[4].value ? results[4].value : {};
+
+  const findSection = (key: string) => {
+    const found = sections.find((s: any) => s?.section_key === key);
+    return found || { title: '', subtitle: '', content_json: {} };
+  };
 
   const hero = findSection('hero');
   const services = findSection('services');
@@ -48,7 +64,7 @@ export default async function Home() {
       <MobileHeader />
 
       {/* Inject Tracking Codes */}
-      {tracking.gtm_enabled && tracking.gtm_id && (
+      {tracking?.gtm_enabled && tracking?.gtm_id && (
         <Script id="gtm" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -57,7 +73,7 @@ export default async function Home() {
           })(window,document,'script','dataLayer','${tracking.gtm_id}');`}
         </Script>
       )}
-      {tracking.ga4_enabled && tracking.ga4_measurement_id && (
+      {tracking?.ga4_enabled && tracking?.ga4_measurement_id && (
         <>
           <Script src={`https://www.googletagmanager.com/gtag/js?id=${tracking.ga4_measurement_id}`} strategy="afterInteractive" />
           <Script id="ga4" strategy="afterInteractive">
@@ -68,7 +84,7 @@ export default async function Home() {
           </Script>
         </>
       )}
-      {tracking.custom_head_scripts && (
+      {tracking?.custom_head_scripts && (
         <div dangerouslySetInnerHTML={{ __html: tracking.custom_head_scripts }} />
       )}
 
@@ -491,7 +507,7 @@ export default async function Home() {
       <Script src="https://static.zcal.co/embed/v1/embed.js" strategy="lazyOnload" />
 
       {/* Custom Body Scripts Injection */}
-      {tracking.custom_body_scripts && (
+      {tracking?.custom_body_scripts && (
         <div dangerouslySetInnerHTML={{ __html: tracking.custom_body_scripts }} />
       )}
     </>

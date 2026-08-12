@@ -6,26 +6,35 @@ import { db } from '@/lib/db';
 import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const post = await db.getBlogBySlug(slug);
-  
-  if (!post) return { title: 'Post Not Found' };
+  try {
+    const { slug } = await params;
+    const post = await db.getBlogBySlug(slug);
+    
+    if (!post) return { title: 'Post Not Found' };
 
-  return {
-    title: `${post.meta_title || post.title} | WPHossain Blog`,
-    description: post.meta_description || post.excerpt,
-    alternates: {
-      canonical: post.canonical_url
-    },
-    openGraph: {
-      images: post.og_image ? [{ url: post.og_image }] : []
-    }
-  };
+    return {
+      title: `${post.meta_title || post.title} | WPHossain Blog`,
+      description: post.meta_description || post.excerpt,
+      alternates: {
+        canonical: post.canonical_url
+      },
+      openGraph: {
+        images: post.og_image ? [{ url: post.og_image }] : []
+      }
+    };
+  } catch (e) {
+    return { title: 'WPHossain Blog' };
+  }
 }
 
 export default async function SingleBlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = await db.getBlogBySlug(slug);
+  let post = null;
+  try {
+    post = await db.getBlogBySlug(slug);
+  } catch (e) {
+    console.error("Error fetching single blog post:", e);
+  }
 
   if (!post) {
     notFound();

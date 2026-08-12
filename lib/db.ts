@@ -1,12 +1,24 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Isomorphic Supabase Client (Works on both Server and Client)
+// Isomorphic Supabase Client (Works on both Server and Client safely)
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-const supabase = (supabaseUrl && supabaseAnonKey && !supabaseUrl.includes('dummy')) 
-  ? createClient(supabaseUrl, supabaseAnonKey) 
-  : null;
+let supabase: any = null;
+try {
+  if (
+    supabaseUrl &&
+    supabaseAnonKey &&
+    !supabaseUrl.includes('dummy') &&
+    !supabaseAnonKey.includes('dummy') &&
+    supabaseUrl.startsWith('http')
+  ) {
+    supabase = createClient(supabaseUrl, supabaseAnonKey);
+  }
+} catch (e) {
+  console.error("Failed to initialize Supabase client:", e);
+  supabase = null;
+}
 
 async function getSupabase() {
   return supabase;
@@ -14,14 +26,7 @@ async function getSupabase() {
 
 // Check if Supabase credentials are valid/non-dummy
 export function isSupabaseConnected(): boolean {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-  return (
-    url !== '' && 
-    anonKey !== '' && 
-    !url.includes('dummy') && 
-    !anonKey.includes('dummy')
-  );
+  return supabase !== null;
 }
 
 // -------------------------------------------------------------
@@ -286,13 +291,16 @@ export const db = {
         const supabase = await getSupabase();
         if (supabase) {
           const { data, error } = await supabase.from('site_settings').select('*').maybeSingle();
-          if (!error && data) return data;
+          if (!error && data && typeof data === 'object') {
+            return { ...INITIAL_SETTINGS, ...(data as Record<string, any>) };
+          }
         }
       } catch (e) {
         console.error("Supabase settings load error, using local fallback", e);
       }
     }
-    return getLocalItem('site_settings', INITIAL_SETTINGS);
+    const local = getLocalItem('site_settings', INITIAL_SETTINGS);
+    return { ...INITIAL_SETTINGS, ...((local || {}) as Record<string, any>) };
   },
 
   updateSettings: async (settings: Partial<typeof INITIAL_SETTINGS>) => {
@@ -303,7 +311,7 @@ export const db = {
           const current = await db.getSettings();
           const { error } = await supabase
             .from('site_settings')
-            .upsert({ ...current, ...settings, updated_at: new Date().toISOString() });
+            .upsert({ ...current, ...settings, updated_at: new Date().toISOString() } as any);
           if (!error) return true;
         }
       } catch (e) {
@@ -339,13 +347,27 @@ export const db = {
         const supabase = await getSupabase();
         if (supabase) {
           const { data, error } = await supabase.from('page_sections').select('*');
-          if (!error && data && data.length > 0) return data;
+          if (!error && Array.isArray(data) && data.length > 0) {
+            const sectionMap = new Map(data.map((s: any) => [s.section_key, s]));
+            return INITIAL_SECTIONS.map((initS) => {
+              const dbS = sectionMap.get(initS.section_key);
+              return dbS ? { ...initS, ...dbS } : initS;
+            });
+          }
         }
       } catch (e) {
         console.error("Supabase sections load error", e);
       }
     }
-    return getLocalItem('page_sections', INITIAL_SECTIONS);
+    const local = getLocalItem('page_sections', INITIAL_SECTIONS);
+    if (Array.isArray(local) && local.length > 0) {
+      const sectionMap = new Map(local.map((s: any) => [s.section_key, s]));
+      return INITIAL_SECTIONS.map((initS) => {
+        const locS = sectionMap.get(initS.section_key);
+        return locS ? { ...initS, ...locS } : initS;
+      });
+    }
+    return INITIAL_SECTIONS;
   },
 
   saveSection: async (sectionKey: string, title: string, subtitle: string | null, contentJson: any, isVisible: boolean = true) => {
@@ -362,7 +384,7 @@ export const db = {
               content_json: contentJson,
               is_visible: isVisible,
               updated_at: new Date().toISOString()
-            }, { onConflict: 'section_key' });
+            } as any, { onConflict: 'section_key' });
           if (!error) return true;
         }
       } catch (e) {
@@ -392,14 +414,15 @@ export const db = {
             query = query.eq('status', 'published');
           }
           const { data, error } = await query;
-          if (!error && data) return data;
+          if (!error && Array.isArray(data)) return data;
         }
       } catch (e) {
         console.error("Supabase blog load error", e);
       }
     }
     const blogs = getLocalItem('blog_posts', INITIAL_BLOGS);
-    return includeDrafts ? blogs : blogs.filter(b => b.status === 'published');
+    const arr = Array.isArray(blogs) ? blogs : INITIAL_BLOGS;
+    return includeDrafts ? arr : arr.filter(b => b.status === 'published');
   },
 
   getBlogBySlug: async (slug: string) => {
@@ -426,7 +449,7 @@ export const db = {
           const { error } = await supabase.from('blog_posts').upsert({
             ...blog,
             published_at: blog.status === 'published' ? (blog.published_at || new Date().toISOString()) : null
-          });
+          } as any);
           if (!error) return true;
         }
       } catch (e) {
@@ -475,13 +498,14 @@ export const db = {
         const supabase = await getSupabase();
         if (supabase) {
           const { data, error } = await supabase.from('case_studies').select('*').order('display_order', { ascending: true });
-          if (!error && data) return data;
+          if (!error && Array.isArray(data)) return data;
         }
       } catch (e) {
         console.error("Supabase case studies load error", e);
       }
     }
-    return getLocalItem('case_studies', INITIAL_CASE_STUDIES);
+    const studies = getLocalItem('case_studies', INITIAL_CASE_STUDIES);
+    return Array.isArray(studies) ? studies : INITIAL_CASE_STUDIES;
   },
 
   saveCaseStudy: async (study: any) => {
@@ -489,7 +513,7 @@ export const db = {
       try {
         const supabase = await getSupabase();
         if (supabase) {
-          const { error } = await supabase.from('case_studies').upsert(study);
+          const { error } = await supabase.from('case_studies').upsert(study as any);
           if (!error) return true;
         }
       } catch (e) {
@@ -558,7 +582,7 @@ export const db = {
               category: 'Inbox',
               created_at: new Date().toISOString()
             }
-          ]);
+          ] as any);
           if (!error) return true;
         }
       } catch (e) {
@@ -583,7 +607,7 @@ export const db = {
       try {
         const supabase = await getSupabase();
         if (supabase) {
-          const { error } = await supabase.from('lead_submissions').update({ status, category }).eq('id', id);
+          const { error } = await supabase.from('lead_submissions').update({ status, category } as any).eq('id', id);
           if (!error) return true;
         }
       } catch (e) {
@@ -624,13 +648,16 @@ export const db = {
         const supabase = await getSupabase();
         if (supabase) {
           const { data, error } = await supabase.from('tracking_codes').select('*').maybeSingle();
-          if (!error && data) return data;
+          if (!error && data && typeof data === 'object') {
+            return { ...INITIAL_TRACKING, ...(data as Record<string, any>) };
+          }
         }
       } catch (e) {
         console.error("Supabase tracking load error", e);
       }
     }
-    return getLocalItem('tracking_codes', INITIAL_TRACKING);
+    const local = getLocalItem('tracking_codes', INITIAL_TRACKING);
+    return { ...INITIAL_TRACKING, ...((local || {}) as Record<string, any>) };
   },
 
   updateTracking: async (tracking: Partial<typeof INITIAL_TRACKING>) => {
@@ -641,7 +668,7 @@ export const db = {
           const current = await db.getTracking();
           const { error } = await supabase
             .from('tracking_codes')
-            .upsert({ ...current, ...tracking, updated_at: new Date().toISOString() });
+            .upsert({ ...current, ...tracking, updated_at: new Date().toISOString() } as any);
           if (!error) return true;
         }
       } catch (e) {
