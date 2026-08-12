@@ -205,28 +205,58 @@ export default async function Home() {
               </div>
               <div className="grid grid-cols-2 max-lg:grid-cols-1 gap-10">
                 <div className="space-y-6">
-                  {(why.content_json?.bullets_col1 || []).map((bullet: string, i: number) => {
-                    const [title, ...rest] = bullet.split('. ');
+                  {(why.content_json?.bullets_col1 || []).map((bullet: any, i: number) => {
+                    let title = '';
+                    let desc = '';
+                    if (bullet && typeof bullet === 'object') {
+                      title = bullet.title || bullet.name || bullet.heading || '';
+                      desc = bullet.desc || bullet.text || bullet.description || bullet.content || '';
+                    } else if (typeof bullet === 'string') {
+                      const dotIndex = bullet.indexOf('. ');
+                      if (dotIndex > -1) {
+                        title = bullet.slice(0, dotIndex);
+                        desc = bullet.slice(dotIndex + 2);
+                      } else {
+                        title = bullet;
+                      }
+                    } else {
+                      title = String(bullet || '');
+                    }
                     return (
                       <div key={i} className="flex gap-5 p-6 rounded-3xl border border-white/5 bg-[#0a1c34]/30 hover:border-[#1a73e8]/20 transition-all duration-300">
                         <div className="w-12 h-12 rounded-2xl bg-[#1a73e8]/10 text-[#4c9bff] flex items-center justify-center font-bold flex-none shadow-inner">✓</div>
                         <div>
                           <h3 className="text-[18px] font-bold text-white mb-2 font-display">{title}</h3>
-                          <p className="text-[14.5px] text-[#aebcda] leading-relaxed">{rest.join('. ')}</p>
+                          {desc && <p className="text-[14.5px] text-[#aebcda] leading-relaxed">{desc}</p>}
                         </div>
                       </div>
                     );
                   })}
                 </div>
                 <div className="space-y-6">
-                  {(why.content_json?.bullets_col2 || []).map((bullet: string, i: number) => {
-                    const [title, ...rest] = bullet.split('. ');
+                  {(why.content_json?.bullets_col2 || []).map((bullet: any, i: number) => {
+                    let title = '';
+                    let desc = '';
+                    if (bullet && typeof bullet === 'object') {
+                      title = bullet.title || bullet.name || bullet.heading || '';
+                      desc = bullet.desc || bullet.text || bullet.description || bullet.content || '';
+                    } else if (typeof bullet === 'string') {
+                      const dotIndex = bullet.indexOf('. ');
+                      if (dotIndex > -1) {
+                        title = bullet.slice(0, dotIndex);
+                        desc = bullet.slice(dotIndex + 2);
+                      } else {
+                        title = bullet;
+                      }
+                    } else {
+                      title = String(bullet || '');
+                    }
                     return (
                       <div key={i} className="flex gap-5 p-6 rounded-3xl border border-white/5 bg-[#0a1c34]/30 hover:border-[#25D366]/20 transition-all duration-300">
                         <div className="w-12 h-12 rounded-2xl bg-[#25D366]/10 text-[#25D366] flex items-center justify-center font-bold flex-none shadow-inner">✓</div>
                         <div>
                           <h3 className="text-[18px] font-bold text-white mb-2 font-display">{title}</h3>
-                          <p className="text-[14.5px] text-[#aebcda] leading-relaxed">{rest.join('. ')}</p>
+                          {desc && <p className="text-[14.5px] text-[#aebcda] leading-relaxed">{desc}</p>}
                         </div>
                       </div>
                     );
