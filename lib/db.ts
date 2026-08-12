@@ -314,7 +314,7 @@ export const db = {
       try {
         const supabase = await getSupabase();
         if (supabase) {
-          const { data, error } = await supabase.from('site_settings').select('*').maybeSingle();
+          const { data, error } = await supabase.from('site_settings').select('*').order('updated_at', { ascending: false }).limit(1).maybeSingle();
           if (!error && data && typeof data === 'object') {
             return { ...INITIAL_SETTINGS, ...(data as Record<string, any>) };
           }
@@ -331,7 +331,7 @@ export const db = {
     // Only send columns that actually exist in site_settings so an unknown
     // field can never fail the whole save.
     const VALID_SETTINGS_COLUMNS = [
-      'business_name', 'owner_name', 'job_title', 'niche_category', 'email',
+      'id', 'business_name', 'owner_name', 'job_title', 'niche_category', 'email',
       'phone', 'whatsapp_number', 'address', 'logo_url', 'avatar_url',
       'availability_status', 'primary_color', 'gold_accent_color', 'bg_navy_color',
       'zcal_link', 'linkedin_url', 'facebook_url', 'twitter_url', 'youtube_url',
@@ -343,6 +343,9 @@ export const db = {
     const cleanPayload: Record<string, any> = {};
     for (const key of VALID_SETTINGS_COLUMNS) {
       if (key in merged) cleanPayload[key] = merged[key];
+    }
+    if (cleanPayload.whatsapp_number) {
+      cleanPayload.whatsapp_number = cleanPayload.whatsapp_number.replace(/\D/g, '');
     }
     cleanPayload.updated_at = merged.updated_at;
     if (await adminWrite({ action: 'upsert', table: 'site_settings', payload: cleanPayload })) return true;

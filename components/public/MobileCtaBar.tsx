@@ -14,7 +14,8 @@ export function MobileCtaBar() {
     return () => { mounted = false; };
   }, []);
 
-  const whatsapp = settings.whatsapp_number ? `https://wa.me/${settings.whatsapp_number}` : '';
+  const whatsappNumber = (settings.whatsapp_number || '').replace(/\D/g, '');
+  const whatsapp = whatsappNumber ? `https://wa.me/${whatsappNumber}` : '';
   const tel = settings.phone ? `tel:${settings.phone.replace(/[^+\d]/g, '')}` : null;
   const book = `#contact`;
 

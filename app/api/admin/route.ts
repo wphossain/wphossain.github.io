@@ -36,6 +36,17 @@ export async function POST(req: NextRequest) {
   try {
     switch (action) {
       case 'upsert': {
+        if ((table === 'site_settings' || table === 'tracking_codes') && !payload.id) {
+          const { data: existing } = await admin
+            .from(table)
+            .select('id')
+            .order('updated_at', { ascending: false })
+            .limit(1)
+            .maybeSingle();
+          if (existing?.id) {
+            payload.id = existing.id;
+          }
+        }
         const { data: result, error } = await admin
           .from(table)
           .upsert(payload, { onConflict: where?.onConflict });
