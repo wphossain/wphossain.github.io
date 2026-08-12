@@ -47,8 +47,7 @@ const INITIAL_SETTINGS = {
   avatar_url: '',
   primary_color: '#1a73e8',
   gold_accent_color: '#f2a93d',
-  bg_navy_color: '#050f1f',
-  accent_enabled: false
+  bg_navy_color: '#050f1f'
 };
 
 const INITIAL_TRACKING = {
@@ -329,16 +328,31 @@ export const db = {
   },
 
   updateSettings: async (settings: Partial<typeof INITIAL_SETTINGS>) => {
+    // Only send columns that actually exist in site_settings so an unknown
+    // field can never fail the whole save.
+    const VALID_SETTINGS_COLUMNS = [
+      'business_name', 'owner_name', 'job_title', 'niche_category', 'email',
+      'phone', 'whatsapp_number', 'address', 'logo_url', 'avatar_url',
+      'availability_status', 'primary_color', 'gold_accent_color', 'bg_navy_color',
+      'zcal_link', 'linkedin_url', 'facebook_url', 'twitter_url', 'youtube_url',
+      'instagram_url', 'avatar_alt', 'logo_alt', 'og_image_url',
+      'default_meta_title', 'default_meta_description', 'footer_note', 'service_areas',
+    ];
     const current = await db.getSettings();
-    const merged = { ...current, ...settings, updated_at: new Date().toISOString() };
-    if (await adminWrite({ action: 'upsert', table: 'site_settings', payload: merged as any })) return true;
+    const merged: Record<string, any> = { ...current, ...settings, updated_at: new Date().toISOString() };
+    const cleanPayload: Record<string, any> = {};
+    for (const key of VALID_SETTINGS_COLUMNS) {
+      if (key in merged) cleanPayload[key] = merged[key];
+    }
+    cleanPayload.updated_at = merged.updated_at;
+    if (await adminWrite({ action: 'upsert', table: 'site_settings', payload: cleanPayload })) return true;
     if (isSupabaseConnected()) {
       try {
         const supabase = await getSupabase();
         if (supabase) {
           const { error } = await supabase
             .from('site_settings')
-            .upsert(merged as any);
+            .upsert(cleanPayload as any);
           if (!error) return true;
         }
       } catch (e) {

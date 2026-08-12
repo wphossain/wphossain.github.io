@@ -33,8 +33,7 @@ export default function SettingsAdminPage() {
     avatar_url: '',
     primary_color: '#1a73e8',
     gold_accent_color: '#f2a93d',
-    bg_navy_color: '#050f1f',
-    accent_enabled: false
+    bg_navy_color: '#050f1f'
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -258,19 +257,7 @@ export default function SettingsAdminPage() {
           </SettingGroup>
 
           <SettingGroup title="Brand & Accent Colors" icon={Zap}>
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-[14px] font-bold text-white">Enable custom accent colors</p>
-                <p className="text-[12px] text-[#7b8bad] leading-relaxed max-w-xs">Off by default so the current theme stays exactly as-is. Toggle on to apply the colors below.</p>
-              </div>
-              <button 
-                onClick={() => setSettings({...settings, accent_enabled: !settings.accent_enabled})}
-                className={`relative inline-flex h-7 w-14 items-center rounded-full transition-colors ${settings.accent_enabled ? 'bg-[#1a73e8]' : 'bg-white/5 border border-white/10'}`}
-                aria-pressed={!!settings.accent_enabled}
-              >
-                <span className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${settings.accent_enabled ? 'translate-x-8' : 'translate-x-1'}`} />
-              </button>
-            </div>
+            <p className="text-[12px] text-[#7b8bad] leading-relaxed max-w-xs mb-5">Set the accent colors used across the site. Field these empty to keep the default navy/blue/green theme.</p>
             <div className="grid grid-cols-1 gap-5">
               {[
                 { key: 'primary_color', label: 'Primary Blue', def: '#1a73e8' },
