@@ -209,30 +209,108 @@ export default function PageContentEditorPage() {
                           <label className="text-[11px] font-bold text-[#7b8bad] uppercase tracking-widest ml-1">Eyebrow Text</label>
                           <input 
                             type="text" 
-                            value={currentSection.content_json.eyebrow_text || 'Helping Local Services to Get Jobs'}
+                            value={currentSection.content_json.eyebrow_text || 'Available For New Clients'}
                             onChange={(e) => updateContentJson('hero', { eyebrow_text: e.target.value })}
                             className="w-full bg-[#050f1f]/80 border border-white/5 rounded-xl px-5 py-3 text-white text-sm"
                           />
                         </div>
                         <div className="space-y-2">
-                          <label className="text-[11px] font-bold text-[#7b8bad] uppercase tracking-widest ml-1">Primary CTA Button Text</label>
+                          <label className="text-[11px] font-bold text-[#7b8bad] uppercase tracking-widest ml-1">Availability Badge</label>
                           <input 
                             type="text" 
-                            value={currentSection.content_json.cta_primary?.text || 'Book Free Strategy Call'}
-                            onChange={(e) => updateContentJson('hero', { cta_primary: { ...(currentSection.content_json.cta_primary || {}), text: e.target.value } })}
+                            value={currentSection.content_json.availability_badge || ''}
+                            onChange={(e) => updateContentJson('hero', { availability_badge: e.target.value })}
                             className="w-full bg-[#050f1f]/80 border border-white/5 rounded-xl px-5 py-3 text-white text-sm"
                           />
                         </div>
                       </div>
-                      <div className="space-y-2">
-                        <label className="text-[11px] font-bold text-[#7b8bad] uppercase tracking-widest ml-1">Availability Status</label>
-                        <input 
-                          type="text" 
-                          value={currentSection.content_json.availability_badge || ''}
-                          onChange={(e) => updateContentJson('hero', { availability_badge: e.target.value })}
-                          className="w-full bg-[#050f1f]/80 border border-white/5 rounded-xl px-5 py-3 text-white text-sm"
-                        />
+
+                      {/* Call to Actions Editor */}
+                      <div className="p-6 bg-white/5 rounded-3xl border border-white/5 space-y-4">
+                        <h5 className="text-[11px] font-bold text-[#1a73e8] uppercase tracking-widest">Call To Action Buttons</h5>
+                        <div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
+                           <div className="space-y-2">
+                             <label className="text-[10px] font-bold text-[#7b8bad] uppercase">Primary Button Text</label>
+                             <input 
+                               type="text" 
+                               value={currentSection.content_json.cta_primary?.text || 'Book Free Strategy Call'}
+                               onChange={(e) => updateContentJson('hero', { cta_primary: { ...(currentSection.content_json.cta_primary || {}), text: e.target.value } })}
+                               className="w-full bg-[#050f1f] border border-white/10 rounded-xl px-4 py-2 text-white text-sm"
+                             />
+                           </div>
+                           <div className="space-y-2">
+                             <label className="text-[10px] font-bold text-[#7b8bad] uppercase">Primary Button Link</label>
+                             <input 
+                               type="text" 
+                               value={currentSection.content_json.cta_primary?.link || '#contact'}
+                               onChange={(e) => updateContentJson('hero', { cta_primary: { ...(currentSection.content_json.cta_primary || {}), link: e.target.value } })}
+                               className="w-full bg-[#050f1f] border border-white/10 rounded-xl px-4 py-2 text-white text-sm"
+                             />
+                           </div>
+                           <div className="space-y-2">
+                             <label className="text-[10px] font-bold text-[#7b8bad] uppercase">Secondary Button Text</label>
+                             <input 
+                               type="text" 
+                               value={currentSection.content_json.cta_secondary?.text || 'View Results'}
+                               onChange={(e) => updateContentJson('hero', { cta_secondary: { ...(currentSection.content_json.cta_secondary || {}), text: e.target.value } })}
+                               className="w-full bg-[#050f1f] border border-white/10 rounded-xl px-4 py-2 text-white text-sm"
+                             />
+                           </div>
+                           <div className="space-y-2">
+                             <label className="text-[10px] font-bold text-[#7b8bad] uppercase">Secondary Button Link</label>
+                             <input 
+                               type="text" 
+                               value={currentSection.content_json.cta_secondary?.link || '#portfolio'}
+                               onChange={(e) => updateContentJson('hero', { cta_secondary: { ...(currentSection.content_json.cta_secondary || {}), link: e.target.value } })}
+                               className="w-full bg-[#050f1f] border border-white/10 rounded-xl px-4 py-2 text-white text-sm"
+                             />
+                           </div>
+                        </div>
                       </div>
+
+                      {/* Trusted / Rating Card Editor */}
+                      <div className="p-6 bg-white/5 rounded-3xl border border-white/5 space-y-4">
+                        <h5 className="text-[11px] font-bold text-emerald-400 uppercase tracking-widest">Trusted / Rating Card</h5>
+                        <div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
+                           <div className="space-y-2">
+                             <label className="text-[10px] font-bold text-[#7b8bad] uppercase">Rating Label</label>
+                             <input 
+                               type="text" 
+                               value={currentSection.content_json.trusted_block?.rating_text || 'Rated 5.0'}
+                               onChange={(e) => updateContentJson('hero', { trusted_block: { ...(currentSection.content_json.trusted_block || {}), rating_text: e.target.value } })}
+                               className="w-full bg-[#050f1f] border border-white/10 rounded-xl px-4 py-2 text-white text-sm"
+                             />
+                           </div>
+                           <div className="space-y-2">
+                             <label className="text-[10px] font-bold text-[#7b8bad] uppercase">Trust Highlight Text</label>
+                             <input 
+                               type="text" 
+                               value={currentSection.content_json.trusted_block?.trust_text || '75+ businesses'}
+                               onChange={(e) => updateContentJson('hero', { trusted_block: { ...(currentSection.content_json.trusted_block || {}), trust_text: e.target.value } })}
+                               className="w-full bg-[#050f1f] border border-white/10 rounded-xl px-4 py-2 text-white text-sm"
+                             />
+                           </div>
+                           <div className="space-y-2">
+                             <label className="text-[10px] font-bold text-[#7b8bad] uppercase">Client Avatar Image URL</label>
+                             <input 
+                               type="text" 
+                               value={currentSection.content_json.trusted_block?.avatar_image_url || '/images/client-avatars.png'}
+                               onChange={(e) => updateContentJson('hero', { trusted_block: { ...(currentSection.content_json.trusted_block || {}), avatar_image_url: e.target.value } })}
+                               className="w-full bg-[#050f1f] border border-white/10 rounded-xl px-4 py-2 text-white text-sm"
+                             />
+                           </div>
+                           <div className="space-y-2">
+                             <label className="text-[10px] font-bold text-[#7b8bad] uppercase">Click Destination Link</label>
+                             <input 
+                               type="text" 
+                               value={currentSection.content_json.trusted_block?.link || '#testimonials'}
+                               onChange={(e) => updateContentJson('hero', { trusted_block: { ...(currentSection.content_json.trusted_block || {}), link: e.target.value } })}
+                               className="w-full bg-[#050f1f] border border-white/10 rounded-xl px-4 py-2 text-white text-sm"
+                             />
+                           </div>
+                        </div>
+                      </div>
+
                       <div className="space-y-4">
                         <label className="text-[11px] font-bold text-[#7b8bad] uppercase tracking-widest ml-1">Trust Pills (Badges)</label>
                         <div className="grid grid-cols-1 gap-3">
@@ -267,6 +345,56 @@ export default function PageContentEditorPage() {
                             <Plus size={16} /> Add Trust Pill
                           </button>
                         </div>
+                      </div>
+
+                      {/* Bottom 4-Stat Strip Editor */}
+                      <div className="p-6 bg-white/5 rounded-3xl border border-white/5 space-y-4">
+                         <h5 className="text-[11px] font-bold text-[#f2a93d] uppercase tracking-widest">Bottom 4-Stat Strip Editor</h5>
+                         <div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
+                            {(currentSection.content_json.hero_stats || [
+                              { value: "$2.4M+", label: "Total Ad Spend Managed" },
+                              { value: "42%", label: "Avg. CPL Reduction", highlight: true },
+                              { value: "180+", label: "Campaigns Managed" },
+                              { value: "94%", label: "Client Retention" }
+                            ]).map((s: any, idx: number) => (
+                               <div key={idx} className="p-4 bg-[#050f1f] rounded-2xl border border-white/5 space-y-2">
+                                  <div className="flex gap-2">
+                                     <input 
+                                        type="text"
+                                        placeholder="Value e.g. $2.4M+"
+                                        value={s.value}
+                                        onChange={(e) => {
+                                           const stats = [...(currentSection.content_json.hero_stats || [
+                                             { value: "$2.4M+", label: "Total Ad Spend Managed" },
+                                             { value: "42%", label: "Avg. CPL Reduction", highlight: true },
+                                             { value: "180+", label: "Campaigns Managed" },
+                                             { value: "94%", label: "Client Retention" }
+                                           ])];
+                                           stats[idx].value = e.target.value;
+                                           updateContentJson('hero', { hero_stats: stats });
+                                        }}
+                                        className="w-1/2 bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 text-white text-sm font-bold"
+                                     />
+                                     <input 
+                                        type="text"
+                                        placeholder="Label"
+                                        value={s.label}
+                                        onChange={(e) => {
+                                           const stats = [...(currentSection.content_json.hero_stats || [
+                                             { value: "$2.4M+", label: "Total Ad Spend Managed" },
+                                             { value: "42%", label: "Avg. CPL Reduction", highlight: true },
+                                             { value: "180+", label: "Campaigns Managed" },
+                                             { value: "94%", label: "Client Retention" }
+                                           ])];
+                                           stats[idx].label = e.target.value;
+                                           updateContentJson('hero', { hero_stats: stats });
+                                        }}
+                                        className="w-1/2 bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 text-white text-sm"
+                                     />
+                                  </div>
+                               </div>
+                            ))}
+                         </div>
                       </div>
 
                       {/* Interactive Card Section Editor */}
@@ -320,6 +448,19 @@ export default function PageContentEditorPage() {
                                               updateContentJson('hero', { niche_tabs: { ...tabs, [niche]: { ...nicheData, ad_desc: e.target.value } } });
                                            }}
                                            className="w-full bg-[#050f1f] border border-white/10 rounded-xl px-4 py-2 text-white text-sm resize-none"
+                                        />
+                                     </div>
+                                     <div className="space-y-1">
+                                        <label className="text-[10px] text-[#7b8bad] uppercase font-bold">Chart Image URL</label>
+                                        <input 
+                                           type="text" 
+                                           placeholder="/images/charts/..."
+                                           value={nicheData.chart || ''}
+                                           onChange={(e) => {
+                                              const tabs = currentSection.content_json.niche_tabs || {};
+                                              updateContentJson('hero', { niche_tabs: { ...tabs, [niche]: { ...nicheData, chart: e.target.value } } });
+                                           }}
+                                           className="w-full bg-[#050f1f] border border-white/10 rounded-xl px-4 py-2 text-white text-sm"
                                         />
                                      </div>
                                   </div>

@@ -68,6 +68,21 @@ const INITIAL_SECTIONS = [
     title: 'More booked service calls. Less wasted ad spend.',
     subtitle: 'Search Ads, Conversion Tracking, GTM, and GA4 — set up correctly so every lead is tracked and every dollar is measured.',
     content_json: {
+      eyebrow_text: 'Available For New Clients',
+      cta_primary: { text: 'Book Free Strategy Call', link: '#contact' },
+      cta_secondary: { text: 'View Results', link: '#portfolio' },
+      trusted_block: {
+        rating_text: 'Rated 5.0',
+        trust_text: '75+ businesses',
+        avatar_image_url: '/images/client-avatars.png',
+        link: '#testimonials'
+      },
+      hero_stats: [
+        { value: '$2.4M+', label: 'Total Ad Spend Managed' },
+        { value: '42%', label: 'Avg. CPL Reduction', highlight: true },
+        { value: '180+', label: 'Campaigns Managed' },
+        { value: '94%', label: 'Client Retention' }
+      ],
       availability_badge: 'Available for new projects',
       certificates: [
         { name: 'Google Ads Certified', type: 'google-ads' },
