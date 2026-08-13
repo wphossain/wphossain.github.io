@@ -128,7 +128,7 @@ export default async function Home() {
                 <div className="hero-copy animate-in fade-in slide-in-from-left-8 duration-700">
                   <span className="eyebrow inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#25D366]/10 border border-[#25D366]/30 text-[#25D366] text-[11px] font-extrabold uppercase tracking-widest mb-6 shadow-[0_0_15px_rgba(37,211,102,0.15)]">
                     <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
-                    {hero.content_json?.eyebrow_text || 'Helping Local Services to Get Jobs'}
+                    {hero.content_json?.eyebrow_text || 'Available For New Clients'}
                   </span>
                   <h1 className="text-[clamp(32px,4.4vw,54px)] font-display leading-[1.08] mb-5 text-white font-bold tracking-tight">
                     {hero.title}
