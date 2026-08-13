@@ -124,51 +124,56 @@ export default async function Home() {
             <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-[radial-gradient(circle,rgba(37,211,102,0.05),transparent_70%)] pointer-events-none" />
 
             <div className="max-w-[var(--container)] mx-auto w-full px-6 lg:px-10 py-14 lg:py-20">
-              <div className="hero-grid grid grid-cols-[1.1fr_0.9fr] max-xl:grid-cols-1 gap-10 items-center">
-                <div className="hero-copy animate-in fade-in slide-in-from-left-8 duration-700">
-                  <span className="eyebrow inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#25D366]/10 border border-[#25D366]/30 text-[#25D366] text-[11px] font-extrabold uppercase tracking-widest mb-6 shadow-[0_0_15px_rgba(37,211,102,0.15)]">
-                    <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
-                    {hero.content_json?.eyebrow_text || 'Available For New Clients'}
-                  </span>
-                  <h1 className="text-[clamp(32px,4.4vw,54px)] font-display leading-[1.08] mb-5 text-white font-bold tracking-tight">
-                    {hero.title}
-                  </h1>
-                  <p className="text-[17px] text-[#aebcda] max-w-[620px] leading-relaxed mb-7">
-                    {hero.subtitle}
-                  </p>
-                  <div className="hero-actions flex flex-wrap gap-4 my-6 max-sm:flex-col">
-                    <a className="btn btn-primary px-8 py-4 text-[15px] font-bold rounded-xl shadow-xl shadow-[#1a73e8]/25 animate-double-pulse transition-all relative overflow-hidden" href={hero.content_json?.cta_primary?.link || "#contact"}>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                      {hero.content_json?.cta_primary?.text || 'Book Free Strategy Call'}
-                    </a>
-                    <a className="btn btn-ghost px-8 py-4 text-[15px] font-bold rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all backdrop-blur-sm flex items-center gap-2" href="#portfolio">
-                      <span>View Results</span>
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                    </a>
-                  </div>
-                  <div className="trust-pills flex flex-wrap gap-3">
-                    {(hero.content_json?.certificates || []).map((c: any, i: number) => (
-                      <span key={i} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-[12.5px] font-semibold text-[#aebcda] hover:border-[#1a73e8]/30 transition-all">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#1a73e8]" />
-                        {c.name}
-                      </span>
-                    ))}
+              <div className="hero-grid grid grid-cols-[1.1fr_0.9fr] max-xl:grid-cols-1 gap-10 items-stretch">
+                <div className="hero-copy flex flex-col justify-between h-full animate-in fade-in slide-in-from-left-8 duration-700">
+                  <div>
+                    <span className="eyebrow inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#25D366]/10 border border-[#25D366]/30 text-[#25D366] text-[11px] font-extrabold uppercase tracking-widest mb-7 shadow-[0_0_15px_rgba(37,211,102,0.15)]">
+                      <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
+                      {hero.content_json?.eyebrow_text || 'Available For New Clients'}
+                    </span>
+                    <h1 className="text-[clamp(32px,4.4vw,54px)] font-display leading-[1.08] mb-6 text-white font-bold tracking-tight">
+                      {hero.title}
+                    </h1>
+                    <p className="text-[17px] text-[#aebcda] max-w-[620px] leading-relaxed mb-8">
+                      {hero.subtitle}
+                    </p>
+                    <div className="hero-actions flex flex-wrap gap-4 mt-8 mb-8 max-sm:flex-col">
+                      <a className="btn btn-primary px-8 py-4 text-[15px] font-bold rounded-xl shadow-xl shadow-[#1a73e8]/25 animate-double-pulse transition-all relative overflow-hidden" href={hero.content_json?.cta_primary?.link || "#contact"}>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        {hero.content_json?.cta_primary?.text || 'Book Free Strategy Call'}
+                      </a>
+                      <a className="btn btn-ghost px-8 py-4 text-[15px] font-bold rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all backdrop-blur-sm flex items-center gap-2" href="#portfolio">
+                        <span>View Results</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                      </a>
+                    </div>
                   </div>
 
-                  {/* Rated by clients / Trusted by businesses block */}
-                  <div className="mt-6">
-                    <a href="#testimonials" className="inline-flex items-center gap-3.5 group/rated hover:opacity-90 transition-all bg-white/5 border border-white/10 px-4 py-2.5 rounded-2xl w-full sm:w-auto">
-                       <img src="/images/client-avatars.png" alt="Happy Clients" className="h-8 w-auto object-contain shrink-0" />
-                       <div className="flex flex-col">
-                          <div className="flex items-center gap-2">
-                             <div className="flex gap-0.5 text-[#25D366]">
-                                {[1,2,3,4,5].map(n => <svg key={n} width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>)}
-                             </div>
-                             <span className="text-[12px] text-[#aebcda]">Rated 5.0</span>
-                          </div>
-                          <span className="text-[13px] text-white font-bold tracking-tight">Trusted by <strong className="text-[#25D366]">75+ businesses</strong> worldwide</span>
-                       </div>
-                    </a>
+                  <div className="mt-auto pt-4">
+                    <div className="trust-pills flex flex-wrap gap-3 mb-6">
+                      {(hero.content_json?.certificates || []).map((c: any, i: number) => (
+                        <span key={i} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-[12.5px] font-semibold text-[#aebcda] hover:border-[#1a73e8]/30 transition-all">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#1a73e8]" />
+                          {c.name}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Rated by clients / Trusted by businesses block */}
+                    <div>
+                      <a href="#testimonials" className="inline-flex items-center gap-3.5 group/rated hover:opacity-90 transition-all bg-white/5 border border-white/10 px-4 py-2.5 rounded-2xl w-full sm:w-auto">
+                         <img src="/images/client-avatars.png" alt="Happy Clients" className="h-8 w-auto object-contain shrink-0" />
+                         <div className="flex flex-col">
+                            <div className="flex items-center gap-2">
+                               <div className="flex gap-0.5 text-[#25D366]">
+                                  {[1,2,3,4,5].map(n => <svg key={n} width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>)}
+                               </div>
+                               <span className="text-[12px] text-[#aebcda]">Rated 5.0</span>
+                            </div>
+                            <span className="text-[13px] text-white font-bold tracking-tight">Trusted by <strong className="text-[#25D366]">75+ businesses</strong> worldwide</span>
+                         </div>
+                      </a>
+                    </div>
                   </div>
                 </div>
 
