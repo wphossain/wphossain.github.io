@@ -37,7 +37,7 @@ TELEGRAM_CHAT_ID=-100123456
 ## Recent Improvements (Aug 6, 2026)
 
 - 🔧 Fixed broken avatar references (moved from external to local)
-- 🖼️ Added real images from Unsplash for Portfolio, Case Studies, Certifications
+- 🖼️ Added real images from Unsplash for Portfolio, Portfolio, Certifications
 - 👤 Replaced SVG placeholder avatars with UI Avatars API in testimonials
 - 🎨 Added service icons with Lucide-style SVG paths
 - 📊 Enhanced PulseCard with animated number simulation

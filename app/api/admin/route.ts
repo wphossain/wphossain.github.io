@@ -6,7 +6,7 @@ function purgeCache() {
   try {
     revalidatePath('/', 'page');
     revalidatePath('/blog', 'page');
-    revalidatePath('/case-studies', 'page');
+    revalidatePath('/portfolio', 'page');
   } catch (e) {
     console.error('Revalidate error', e);
   }

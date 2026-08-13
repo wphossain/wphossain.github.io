@@ -48,15 +48,15 @@ export default function CaseStudiesAdminPage() {
       {/* Header Area */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-4xl font-display font-bold text-white mb-2 tracking-tight">Case Studies</h1>
+          <h1 className="text-4xl font-display font-bold text-white mb-2 tracking-tight">Portfolio</h1>
           <p className="text-[#aebcda] text-[15px]">Manage client success stories and ROI performance metrics.</p>
         </div>
         <Link 
-          href="/admin/case-studies/editor" 
+          href="/admin/portfolio/editor" 
           className="flex items-center gap-2 px-8 py-4 rounded-2xl bg-[#1a73e8] text-white font-bold text-[15px] hover:shadow-xl hover:shadow-[#1a73e8]/20 transition-all active:scale-[0.98] shadow-lg"
         >
           <Plus size={18} />
-          Add Case Study
+          Add Project
         </Link>
       </div>
 
@@ -118,7 +118,7 @@ export default function CaseStudiesAdminPage() {
                 <span className="text-[11px] text-[#7b8bad] font-bold uppercase tracking-widest">Client Success documented</span>
                 <div className="flex gap-2">
                   <Link 
-                    href={`/admin/case-studies/editor?id=${study.id}`}
+                    href={`/admin/portfolio/editor?id=${study.id}`}
                     className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1a73e8] text-white font-bold text-xs hover:bg-[#1a73e8]/80 transition-all shadow-lg shadow-[#1a73e8]/10"
                   >
                     <Edit size={14} /> Edit Case

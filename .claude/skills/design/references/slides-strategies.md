@@ -43,7 +43,7 @@
 2. Their Problem
 3. Cost of Inaction
 4. Your Solution
-5. Proof/Case Studies
+5. Proof/Portfolio
 6. Differentiators
 7. Pricing/ROI
 8. Objection Handling

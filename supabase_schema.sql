@@ -153,7 +153,7 @@ SELECT
 WHERE NOT EXISTS (SELECT 1 FROM blog_posts WHERE slug = 'lower-hvac-google-ads-cost-per-lead');
 
 
--- 5. Case Studies
+-- 5. Portfolio
 CREATE TABLE IF NOT EXISTS case_studies (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title TEXT NOT NULL,
@@ -167,7 +167,7 @@ CREATE TABLE IF NOT EXISTS case_studies (
   created_at TIMESTAMPTZ DEFAULT now()
 );
 
--- Seed Case Studies if empty
+-- Seed Portfolio if empty
 INSERT INTO case_studies (title, slug, client_niche, challenge, strategy, result_summary, display_order)
 SELECT 'AC Repair Cost Reduction', 'ac-repair-cost-reduction', 'HVAC', 'Cost-per-lead had crept up as broad-match keywords pulled in low-intent clicks.', 'Rebuilt the account around tightly themed ad groups, added call tracking.', 'Example pattern: cost-per-call trending down while booked-job volume holds steady.', 0
 WHERE NOT EXISTS (SELECT 1 FROM case_studies WHERE slug = 'ac-repair-cost-reduction');

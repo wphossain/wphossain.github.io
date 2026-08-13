@@ -66,8 +66,20 @@ export default async function Home() {
   return (
     <>
       <StructuredData faqs={faq.content_json?.faqs || []} settings={settings} />
-      <Sidebar />
-      <MobileHeader />
+      <Sidebar 
+        ownerName={settings.owner_name} 
+        jobTitle={settings.job_title} 
+        avatarUrl={settings.avatar_url} 
+        email={settings.email} 
+        ctaText={settings.global_cta_text} 
+      />
+      <MobileHeader 
+        ownerName={settings.owner_name} 
+        jobTitle={settings.job_title} 
+        avatarUrl={settings.avatar_url} 
+        email={settings.email} 
+        ctaText={settings.global_cta_text} 
+      />
       <MobileCtaBar />
 
       {/* Inject Tracking Codes */}
@@ -116,7 +128,7 @@ export default async function Home() {
                 <div className="hero-copy animate-in fade-in slide-in-from-left-8 duration-700">
                   <span className="eyebrow inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#25D366]/10 border border-[#25D366]/30 text-[#25D366] text-[11px] font-extrabold uppercase tracking-widest mb-6 shadow-[0_0_15px_rgba(37,211,102,0.15)]">
                     <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
-                    FOR HVAC CONTRACTORS
+                    {hero.content_json?.eyebrow_text || 'Helping Local Services to Get Jobs'}
                   </span>
                   <h1 className="text-[clamp(32px,4.4vw,54px)] font-display leading-[1.08] mb-5 text-white font-bold tracking-tight">
                     {hero.title}
@@ -125,12 +137,12 @@ export default async function Home() {
                     {hero.subtitle}
                   </p>
                   <div className="hero-actions flex flex-wrap gap-4 my-6 max-sm:flex-col">
-                    <a className="btn btn-primary px-8 py-4 text-[15px] font-bold rounded-xl shadow-xl shadow-[#1a73e8]/25 hover:scale-[1.02] transition-all" href="#contact">
-                      Book Free Audit
-                      <svg className="btn-arrow ml-2" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    <a className="btn btn-primary px-8 py-4 text-[15px] font-bold rounded-xl shadow-xl shadow-[#1a73e8]/25 animate-double-pulse transition-all relative overflow-hidden" href={hero.content_json?.cta_primary?.link || "#contact"}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                      {hero.content_json?.cta_primary?.text || 'Book Free Strategy Call'}
                     </a>
-                    <a className="btn btn-ghost px-8 py-4 text-[15px] font-bold rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all backdrop-blur-sm" href={`https://wa.me/${(settings.whatsapp_number || '').replace(/\D/g, '')}`} target="_blank" rel="noopener">
-                      WhatsApp Chat
+                    <a className="btn btn-ghost px-8 py-4 text-[15px] font-bold rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all backdrop-blur-sm" href="#portfolio">
+                      See Result
                     </a>
                   </div>
                   <div className="trust-pills flex flex-wrap gap-3">
@@ -142,26 +154,25 @@ export default async function Home() {
                     ))}
                   </div>
 
-                  {/* Compact proof strip */}
-                  {(resultsSection.content_json?.stats || []).length > 0 && (
-                    <div className="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center gap-x-8 gap-y-4">
-                      {(resultsSection.content_json.stats || []).slice(0, 3).map((s: any, i: number) => (
-                        <div key={i} className="flex items-center gap-2.5">
-                          <strong className="text-lg font-display font-bold text-white">{s.value}</strong>
-                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#7b8bad] leading-tight">{s.label}</span>
-                        </div>
-                      ))}
-                      <div className="flex items-center gap-2">
-                        <span className="flex gap-0.5 text-[#25D366]">
-                          {[1,2,3,4,5].map(n => <svg key={n} width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>)}
-                        </span>
-                        <span className="text-[12px] text-[#aebcda] font-semibold">Rated by clients</span>
-                      </div>
-                    </div>
-                  )}
+                  {/* Rated by clients block */}
+                  <div className="mt-8 pt-6 border-t border-white/10">
+                    <a href="#testimonials" className="inline-flex flex-col gap-3 group/rated transition-all">
+                       <div className="flex items-center gap-3">
+                          <div className="flex -space-x-3 overflow-hidden">
+                             <img src="/images/client-avatars.png" alt="Happy Clients" className="h-10 w-auto object-contain" />
+                          </div>
+                          <div className="flex flex-col">
+                             <div className="flex gap-0.5 text-emerald-400 group-hover/rated:scale-110 transition-transform origin-left">
+                                {[1,2,3,4,5].map(n => <svg key={n} width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>)}
+                             </div>
+                             <span className="text-[13px] text-white font-bold tracking-tight">Rated by clients</span>
+                          </div>
+                       </div>
+                    </a>
+                  </div>
                 </div>
                 <div className="w-full animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
-                  <PulseCard />
+                  <PulseCard content={hero.content_json?.niche_tabs} />
                 </div>
               </div>
 
@@ -169,13 +180,13 @@ export default async function Home() {
                 <span className="block text-[11px] font-extrabold tracking-[0.15em] uppercase text-[#7b8bad] mb-6">Certified &amp; Partnered with</span>
                 <div className="cert-row flex flex-wrap gap-5">
                   {[
-                    { label: "Google Ads", icon: <svg viewBox="0 0 24 24" width="26" height="26"><path d="M12,12 L12,3 A9,9 0 0,1 21,12 Z" fill="#4285F4"/><path d="M12,12 L12,3 A9,9 0 0,1 21,12 Z" fill="#EA4335" transform="rotate(90 12 12)"/><path d="M12,12 L12,3 A9,9 0 0,1 21,12 Z" fill="#FBBC05" transform="rotate(180 12 12)"/><path d="M12,12 L12,3 A9,9 0 0,1 21,12 Z" fill="#34A853" transform="rotate(270 12 12)"/></svg> },
-                    { label: "Google Analytics", color: "#F9AB00", svg: <svg viewBox="0 0 24 24" width="14" height="14"><rect x="4" y="13" width="4" height="7" rx="1" fill="#fff"/><rect x="10" y="8" width="4" height="12" rx="1" fill="#fff"/><rect x="16" y="3" width="4" height="17" rx="1" fill="#fff"/></svg> },
-                    { label: "Tag Manager", color: "#4285F4", svg: <svg viewBox="0 0 24 24" width="14" height="14"><path d="M12.5 3H6a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .586 1.414l7.5 7.5a2 2 0 0 0 2.828 0l6.5-6.5a2 2 0 0 0 0-2.828l-7.5-7.5A2 2 0 0 0 12.5 3z" fill="#fff"/><circle cx="8" cy="8" r="1.6" fill="#4285F4"/></svg> },
-                    { label: "WordPress", color: "#21759B", svg: <svg viewBox="0 0 24 24" width="14" height="14"><path d="M3 5l3.2 14h2.1l2.2-9 2.2 9h2.1L18 5h-2.3l-1.9 9-2-9h-1.9l-2 9-1.9-9H3z" fill="#fff"/></svg> }
+                    { label: "Google Ads", icon: <svg viewBox="0 0 24 24" width="24" height="24"><path d="M21.35 11.1h-9.17v2.73h6.51c-.33 3.81-3.5 5.44-6.5 5.44C8.36 19.27 5 16.25 5 12c0-4.1 3.2-7.27 7.2-7.27 3.09 0 4.44 1.76 4.44 1.76l2.04-2.1S16.46 2 12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c7.06 0 10-4.95 10-10 0-.67-.04-1.35-.65-.9z" fill="#4285F4"/></svg>, color: "rgba(66, 133, 244, 0.1)" },
+                    { label: "Google Analytics", color: "rgba(249, 171, 0, 0.1)", svg: <svg viewBox="0 0 24 24" width="14" height="14"><rect x="4" y="13" width="4" height="7" rx="1" fill="#F9AB00"/><rect x="10" y="8" width="4" height="12" rx="1" fill="#F9AB00"/><rect x="16" y="3" width="4" height="17" rx="1" fill="#F9AB00"/></svg> },
+                    { label: "Tag Manager", color: "rgba(66, 133, 244, 0.1)", svg: <svg viewBox="0 0 24 24" width="14" height="14"><path d="M12.5 3H6a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .586 1.414l7.5 7.5a2 2 0 0 0 2.828 0l6.5-6.5a2 2 0 0 0 0-2.828l-7.5-7.5A2 2 0 0 0 12.5 3z" fill="#4285F4"/><circle cx="8" cy="8" r="1.6" fill="#fff"/></svg> },
+                    { label: "WordPress", color: "rgba(33, 117, 155, 0.1)", svg: <svg viewBox="0 0 24 24" width="22" height="22" fill="#21759B"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.12 17.55c-2.07 0-3.95-.73-5.43-1.95l2.67-7.75c.21-.57.36-1 .36-1 0-.12-.06-.21-.21-.21-.06 0-.6.09-.9.09h-.18l.12-.48.9-.03c.57-.03 1.23-.03 1.23-.03l.93.03.48.03-.12.48c-.09 0-.21 0-.39 0-.24 0-.48.06-.63.24-.15.21-.24.48-.36.87l-2.04 6 1.35-4.11 1.29 3.63zm3.72-3.12c1-.48 1.68-1.5 1.68-2.61 0-.78-.36-1.53-1.02-2.1-.66-.57-1.32-.81-1.32-.81 0-.09.09-.15.18-.15.15 0 .39.03.6.03.66 0 1.23-.09 1.23-.09l-.12-.48c-.36-.03-1.11-.03-1.11-.03l-1.05.03c-.27 0-.54.03-.84.03-.42 0-1.11-.03-1.11-.03l.12.48s.51.03.78.03c.36 0 .57.18.57.57 0 .21-.09.48-.21.84l-2.04 6c-.03.09-.06.18-.06.27l1.98-5.76 1.95 5.82s.06-.06.12-.12c.24-.24.36-.63.36-1.05zm1.5-6.6c.15-.12.27-.12.42-.12.42 0 .81.24.81.63 0 .12 0 .24-.06.33-.18.54-.42.93-.42.93s-.36.21-.84.21c-.42 0-.69-.15-.84-.15s-.27.06-.27.06-.18.24-.24.33c-.15.21-.27.42-.27.42l-.57 1.65c-.09.24-.21.57-.21.87 0 .39.15.69.45.69.18 0 .42-.06.42-.06l.12-.48s-.15.03-.24.03c-.12 0-.21-.06-.21-.21s.03-.18.09-.33l.42-1.11 1.14-3.3c.03-.09.09-.12.18-.12zm-9.06 9.3c-2.43-1.44-4.05-4.14-4.05-7.23 0-.63.15-1.23.39-1.77L8.28 18.21z"/></svg> }
                   ].map((item, idx) => (
-                    <span key={idx} className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 font-bold text-[13.5px] text-[#aebcda] hover:border-white/20 transition-all">
-                      <span className="flex items-center justify-center w-6 h-6 rounded-md" style={{ background: item.color || 'transparent' }}>
+                    <span key={idx} className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 font-bold text-[13.5px] text-[#aebcda] hover:border-white/20 transition-all" style={{ background: item.color || 'transparent' }}>
+                      <span className="flex items-center justify-center w-6 h-6 rounded-md">
                         {item.icon || item.svg}
                       </span>
                       {item.label}
@@ -296,12 +307,12 @@ export default async function Home() {
             </div>
           </section>
 
-          {/* CASE STUDIES SECTION */}
-          <section className="w-full bg-[#050f1f] border-b border-white/5" id="case-studies">
+          {/* PORTFOLIO SECTION */}
+          <section className="w-full bg-[#050f1f] border-b border-white/5" id="portfolio">
             <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-20">
               <Reveal className="sec-head max-w-[720px] mb-12 flex justify-between items-end gap-6 max-sm:flex-col max-sm:items-start">
                 <div>
-                  <span className="eyebrow">Case Studies</span>
+                  <span className="eyebrow">Portfolio</span>
                   <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight text-white font-bold">
                     Real accounts, real fixes — client results.
                   </h2>
@@ -326,8 +337,8 @@ export default async function Home() {
                     <div className="mt-8 pt-6 border-t border-white/5">
                       <span className="text-[10px] font-extrabold tracking-wider uppercase text-[#25D366] block mb-2">Final Result</span>
                       <p className="text-[16px] font-display font-bold text-white leading-tight mb-4">{c.result_summary}</p>
-                      <Link href={`/case-studies/${c.slug}`} className="inline-flex items-center gap-2 text-[14px] font-bold text-[#4c9bff] group/link hover:underline">
-                        View Case Study <span className="group-hover/link:translate-x-1 transition-transform">→</span>
+                      <Link href={`/portfolio/${c.slug}`} className="inline-flex items-center gap-2 text-[14px] font-bold text-[#4c9bff] group/link hover:underline">
+                        View Portfolio <span className="group-hover/link:translate-x-1 transition-transform">→</span>
                       </Link>
                     </div>
                   </article>

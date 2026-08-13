@@ -6,7 +6,7 @@ import { db } from '@/lib/db';
 import { MobileCtaBar } from '@/components/public/MobileCtaBar';
 
 export const metadata = {
-  title: 'Case Studies | WPHossain',
+  title: 'Portfolio | WPHossain',
   description: 'Real HVAC, plumbing, and local service Google Ads results — account rebuilds, tracking fixes, and landing page lifts.',
 };
 
@@ -31,7 +31,7 @@ export default async function CaseStudiesIndexPage() {
         <div className="content-inner max-w-[var(--container)] mx-auto w-full flex flex-col gap-6">
           <section className="panel">
             <span className="eyebrow">Client Results</span>
-            <h1 className="text-3xl font-display font-bold text-white mb-3">Case Studies</h1>
+            <h1 className="text-3xl font-display font-bold text-white mb-3">Portfolio</h1>
             <p className="text-[var(--ink-dim)] text-[16px] max-w-2xl">
               Real accounts, real fixes — a look at how focused account rebuilds, clean tracking, and landing page work move the metrics that matter.
             </p>
@@ -53,7 +53,7 @@ export default async function CaseStudiesIndexPage() {
                       </span>
                     </div>
                     <h2 className="text-xl font-bold text-white mb-2.5 leading-snug hover:text-[var(--blue-light)] transition-colors">
-                      <Link href={`/case-studies/${s.slug}`}>{s.title}</Link>
+                      <Link href={`/portfolio/${s.slug}`}>{s.title}</Link>
                     </h2>
                     {s.metrics_json && (
                       <div className="flex flex-wrap gap-4 my-4">
@@ -70,7 +70,7 @@ export default async function CaseStudiesIndexPage() {
                     </p>
                   </div>
 
-                  <Link href={`/case-studies/${s.slug}`} className="text-[14px] font-bold text-[var(--blue-light)] inline-flex items-center gap-1 hover:gap-2 transition-all">
+                  <Link href={`/portfolio/${s.slug}`} className="text-[14px] font-bold text-[var(--blue-light)] inline-flex items-center gap-1 hover:gap-2 transition-all">
                     View Case Study →
                   </Link>
                 </article>

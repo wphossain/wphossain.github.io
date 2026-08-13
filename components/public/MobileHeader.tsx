@@ -9,6 +9,7 @@ interface MobileHeaderProps {
   avatarUrl?: string;
   email?: string;
   availabilityStatus?: string;
+  ctaText?: string;
 }
 
 export function MobileHeader({
@@ -16,7 +17,8 @@ export function MobileHeader({
   jobTitle = "Google Ads Specialist",
   avatarUrl = "/images/headshot.jpg",
   email = "Contact@wphossain.com",
-  availabilityStatus = "Available for new projects"
+  availabilityStatus = "Available for new projects",
+  ctaText = "Book Free Call"
 }: MobileHeaderProps) {
   const [imgError, setImgError] = useState(false);
   const [activeHash, setActiveHash] = useState('#home');
@@ -62,7 +64,7 @@ export function MobileHeader({
     { label: 'Home', href: '/#home', key: '#home' },
     { label: 'Services', href: '/#services', key: '#services' },
     { label: 'Why Me', href: '/#why-me', key: '#why-me' },
-    { label: 'Case Studies', href: '/#case-studies', key: '#case-studies' },
+    { label: 'Portfolio', href: '/#portfolio', key: '#portfolio' },
     { label: 'Process', href: '/#process', key: '#process' },
     { label: 'Results', href: '/#results', key: '#results' },
     { label: 'FAQ', href: '/#faq', key: '#faq' },
@@ -110,7 +112,7 @@ export function MobileHeader({
               className="btn btn-primary text-[12px] font-bold py-1.5 px-3.5 rounded-xl shadow-md" 
               href="/#contact"
             >
-              Free Audit
+              {ctaText.replace('Book ', '')}
             </Link>
 
             {/* Hamburger Button */}
@@ -217,7 +219,7 @@ export function MobileHeader({
                 href="/#contact"
                 onClick={() => setIsOpen(false)}
               >
-                Book Free Audit
+                {ctaText}
               </Link>
 
               <div className="flex justify-center gap-3">

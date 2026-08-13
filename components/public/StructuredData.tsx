@@ -85,7 +85,7 @@ export function StructuredData({ faqs = [], settings = {} }: StructuredDataProps
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": siteUrl },
       { "@type": "ListItem", "position": 2, "name": "Services", "item": `${siteUrl}/#services` },
-      { "@type": "ListItem", "position": 3, "name": "Case Studies", "item": `${siteUrl}/#case-studies` },
+      { "@type": "ListItem", "position": 3, "name": "Portfolio", "item": `${siteUrl}/#case-studies` },
       { "@type": "ListItem", "position": 4, "name": "Blog", "item": `${siteUrl}/blog` },
       { "@type": "ListItem", "position": 5, "name": "Contact", "item": `${siteUrl}/#contact` }
     ]

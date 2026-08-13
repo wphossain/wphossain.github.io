@@ -9,6 +9,7 @@ interface SidebarProps {
   avatarUrl?: string;
   email?: string;
   availabilityStatus?: string;
+  ctaText?: string;
 }
 
 export function Sidebar({
@@ -16,7 +17,8 @@ export function Sidebar({
   jobTitle = "Google Ads Specialist",
   avatarUrl = "/images/headshot.jpg",
   email = "Contact@wphossain.com",
-  availabilityStatus = "Available for new projects"
+  availabilityStatus = "Available for new projects",
+  ctaText = "Book Free Call"
 }: SidebarProps) {
   const [imgError, setImgError] = useState(false);
   const [activeHash, setActiveHash] = useState('#home');
@@ -41,7 +43,7 @@ export function Sidebar({
       'why-me',
       'process',
       'results',
-      'case-studies',
+      'portfolio',
       'testimonials',
       'certifications',
       'faq',
@@ -86,7 +88,7 @@ export function Sidebar({
     { label: 'Home', href: '/#home', key: '#home' },
     { label: 'Services', href: '/#services', key: '#services' },
     { label: 'Why Me', href: '/#why-me', key: '#why-me' },
-    { label: 'Case Studies', href: '/#case-studies', key: '#case-studies' },
+    { label: 'Portfolio', href: '/#portfolio', key: '#portfolio' },
     { label: 'Process', href: '/#process', key: '#process' },
     { label: 'Results', href: '/#results', key: '#results' },
     { label: 'FAQ', href: '/#faq', key: '#faq' },
@@ -155,7 +157,7 @@ export function Sidebar({
             className="btn btn-primary px-5 py-2.5 text-[13px] font-bold rounded-xl shadow-lg shadow-[#1a73e8]/30 hover:scale-[1.03] transition-all flex items-center gap-2" 
             href="/#contact"
           >
-            <span>Book Free Audit</span>
+            <span>{ctaText}</span>
             <svg className="btn-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14M13 6l6 6-6 6"/>
             </svg>

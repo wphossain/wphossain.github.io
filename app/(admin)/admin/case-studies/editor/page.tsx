@@ -44,7 +44,7 @@ function CaseStudyEditorContent() {
     const slug = study.slug || study.title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
     await db.saveCaseStudy({ ...study, slug });
     setSaving(false);
-    router.push('/admin/case-studies');
+    router.push('/admin/portfolio');
     router.refresh();
   };
 
@@ -54,7 +54,7 @@ function CaseStudyEditorContent() {
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Link href="/admin/case-studies" className="p-2 hover:bg-white/5 rounded-lg text-[#7b8bad] transition-colors">
+          <Link href="/admin/portfolio" className="p-2 hover:bg-white/5 rounded-lg text-[#7b8bad] transition-colors">
             <ArrowLeft size={20} />
           </Link>
           <h1 className="text-2xl font-display font-bold text-white">

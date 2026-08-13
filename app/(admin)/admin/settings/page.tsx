@@ -25,6 +25,7 @@ export default function SettingsAdminPage() {
     email: '',
     phone: '',
     whatsapp_number: '',
+    global_cta_text: 'Book Free Call',
     zcal_link: '',
     linkedin_url: '',
     facebook_url: '',
@@ -220,6 +221,14 @@ export default function SettingsAdminPage() {
                 value={settings.phone || ''}
                 onChange={(e: any) => setSettings({...settings, phone: e.target.value})}
                 placeholder="+1 (555) 000-0000"
+              />
+              <InputField 
+                label="Global CTA Button Text"
+                icon={Zap}
+                type="text"
+                value={settings.global_cta_text || ''}
+                onChange={(e: any) => setSettings({...settings, global_cta_text: e.target.value})}
+                placeholder="Book Free Call"
               />
               <div className="space-y-2 group">
                 <label className="text-[11px] font-bold text-[#7b8bad] uppercase tracking-widest ml-1 flex items-center gap-2 group-focus-within:text-emerald-500 transition-colors">

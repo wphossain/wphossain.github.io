@@ -91,6 +91,7 @@ export default function PageContentEditorPage() {
     { key: 'services', label: 'Services', icon: Settings2 },
     { key: 'why', label: 'Why Me', icon: CheckCircle2 },
     { key: 'process', label: 'Process', icon: Activity },
+    { key: 'case-studies', label: 'Portfolio', icon: Layout },
     { key: 'results', label: 'Results / KPIs', icon: TrendingUp },
     { key: 'faq', label: 'FAQ', icon: HelpCircle },
     { key: 'certifications', label: 'Certifications', icon: Trophy }
@@ -203,6 +204,26 @@ export default function PageContentEditorPage() {
                   
                   {activeTab === 'hero' && (
                     <div className="space-y-8">
+                      <div className="grid grid-cols-2 gap-6 max-sm:grid-cols-1">
+                        <div className="space-y-2">
+                          <label className="text-[11px] font-bold text-[#7b8bad] uppercase tracking-widest ml-1">Eyebrow Text</label>
+                          <input 
+                            type="text" 
+                            value={currentSection.content_json.eyebrow_text || 'Helping Local Services to Get Jobs'}
+                            onChange={(e) => updateContentJson('hero', { eyebrow_text: e.target.value })}
+                            className="w-full bg-[#050f1f]/80 border border-white/5 rounded-xl px-5 py-3 text-white text-sm"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-[11px] font-bold text-[#7b8bad] uppercase tracking-widest ml-1">Primary CTA Button Text</label>
+                          <input 
+                            type="text" 
+                            value={currentSection.content_json.cta_primary?.text || 'Book Free Strategy Call'}
+                            onChange={(e) => updateContentJson('hero', { cta_primary: { ...(currentSection.content_json.cta_primary || {}), text: e.target.value } })}
+                            className="w-full bg-[#050f1f]/80 border border-white/5 rounded-xl px-5 py-3 text-white text-sm"
+                          />
+                        </div>
+                      </div>
                       <div className="space-y-2">
                         <label className="text-[11px] font-bold text-[#7b8bad] uppercase tracking-widest ml-1">Availability Status</label>
                         <input 
@@ -246,6 +267,65 @@ export default function PageContentEditorPage() {
                             <Plus size={16} /> Add Trust Pill
                           </button>
                         </div>
+                      </div>
+
+                      {/* Interactive Card Section Editor */}
+                      <div className="pt-6 border-t border-white/5 space-y-6">
+                         <h5 className="text-[11px] font-bold text-white uppercase tracking-widest bg-white/5 px-4 py-2 rounded-lg inline-block">Interactive Dashboard Editor</h5>
+                         <p className="text-[12px] text-[#7b8bad]">Configure the details for HVAC, Plumbing, and Roofing tabs on the hero card.</p>
+                         
+                         <div className="space-y-8">
+                            {['hvac', 'plumbing', 'roofing'].map((niche) => {
+                               const nicheData = currentSection.content_json.niche_tabs?.[niche] || {};
+                               return (
+                                  <div key={niche} className="p-6 bg-white/5 rounded-3xl border border-white/5 space-y-5">
+                                     <div className="flex items-center justify-between">
+                                        <h6 className="text-sm font-bold text-[#1a73e8] uppercase tracking-wide">{niche} Configuration</h6>
+                                     </div>
+                                     <div className="grid grid-cols-2 gap-4">
+                                        <div className="space-y-1">
+                                           <label className="text-[10px] text-[#7b8bad] uppercase font-bold">Campaign Name</label>
+                                           <input 
+                                              type="text" 
+                                              placeholder="e.g. Dallas HVAC Campaign"
+                                              value={nicheData.campaign_name || ''}
+                                              onChange={(e) => {
+                                                 const tabs = currentSection.content_json.niche_tabs || {};
+                                                 updateContentJson('hero', { niche_tabs: { ...tabs, [niche]: { ...nicheData, campaign_name: e.target.value } } });
+                                              }}
+                                              className="w-full bg-[#050f1f] border border-white/10 rounded-xl px-4 py-2 text-white text-sm"
+                                           />
+                                        </div>
+                                        <div className="space-y-1">
+                                           <label className="text-[10px] text-[#7b8bad] uppercase font-bold">Ad Headline</label>
+                                           <input 
+                                              type="text" 
+                                              placeholder="Catchy headline..."
+                                              value={nicheData.ad_headline || ''}
+                                              onChange={(e) => {
+                                                 const tabs = currentSection.content_json.niche_tabs || {};
+                                                 updateContentJson('hero', { niche_tabs: { ...tabs, [niche]: { ...nicheData, ad_headline: e.target.value } } });
+                                              }}
+                                              className="w-full bg-[#050f1f] border border-white/10 rounded-xl px-4 py-2 text-white text-sm"
+                                           />
+                                        </div>
+                                     </div>
+                                     <div className="space-y-1">
+                                        <label className="text-[10px] text-[#7b8bad] uppercase font-bold">Ad Description</label>
+                                        <textarea 
+                                           rows={2}
+                                           value={nicheData.ad_desc || ''}
+                                           onChange={(e) => {
+                                              const tabs = currentSection.content_json.niche_tabs || {};
+                                              updateContentJson('hero', { niche_tabs: { ...tabs, [niche]: { ...nicheData, ad_desc: e.target.value } } });
+                                           }}
+                                           className="w-full bg-[#050f1f] border border-white/10 rounded-xl px-4 py-2 text-white text-sm resize-none"
+                                        />
+                                     </div>
+                                  </div>
+                               )
+                            })}
+                         </div>
                       </div>
                     </div>
                   )}

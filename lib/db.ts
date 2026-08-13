@@ -39,6 +39,7 @@ const INITIAL_SETTINGS = {
   email: 'Contact@wphossain.com',
   phone: '+1...',
   whatsapp_number: '10000000000',
+  global_cta_text: 'Book Free Call',
   zcal_link: 'https://zcal.co/i/hJJ3Hx9l',
   linkedin_url: 'https://www.linkedin.com/in/wphossain/',
   facebook_url: '',
@@ -332,7 +333,7 @@ export const db = {
     // field can never fail the whole save.
     const VALID_SETTINGS_COLUMNS = [
       'id', 'business_name', 'owner_name', 'job_title', 'niche_category', 'email',
-      'phone', 'whatsapp_number', 'address', 'logo_url', 'avatar_url',
+      'phone', 'whatsapp_number', 'global_cta_text', 'address', 'logo_url', 'avatar_url',
       'availability_status', 'primary_color', 'gold_accent_color', 'bg_navy_color',
       'zcal_link', 'linkedin_url', 'facebook_url', 'twitter_url', 'youtube_url',
       'instagram_url', 'avatar_alt', 'logo_alt', 'og_image_url',

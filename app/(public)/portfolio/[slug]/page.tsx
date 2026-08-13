@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title: `${study.meta_title || study.title} | WPHossain`,
       description: study.meta_description || study.result_summary || study.challenge,
       alternates: {
-        canonical: `https://wphossain.com/case-studies/${study.slug}`,
+        canonical: `https://wphossain.com/portfolio/${study.slug}`,
       },
       openGraph: {
         images: study.featured_image ? [{ url: study.featured_image }] : [],
@@ -65,8 +65,8 @@ export default async function SingleCaseStudyPage({ params }: { params: Promise<
 
       <main className="content p-6.5 max-lg:p-4.5 min-h-screen bg-[#050f1f] pb-24 lg:pb-0">
         <div className="content-inner max-w-4xl mx-auto w-full flex flex-col gap-6">
-          <Link href="/case-studies" className="text-[14px] text-[var(--ink-faint)] hover:text-[var(--blue-light)] font-bold flex items-center gap-2 transition-colors">
-            ← Back to Case Studies
+          <Link href="/portfolio" className="text-[14px] text-[var(--ink-faint)] hover:text-[var(--blue-light)] font-bold flex items-center gap-2 transition-colors">
+            ← Back to Portfolio
           </Link>
 
           <article className="panel p-10 max-sm:p-6">

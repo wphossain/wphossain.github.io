@@ -37,7 +37,7 @@ export default function AdminLayout({
     { name: 'Overview', href: '/admin', icon: LayoutDashboard },
     { name: 'Page Editor', href: '/admin/content', icon: FolderOpen },
     { name: 'Blog Manager', href: '/admin/blog', icon: FileText },
-    { name: 'Case Studies', href: '/admin/case-studies', icon: Briefcase },
+    { name: 'Portfolio', href: '/admin/portfolio', icon: Briefcase },
     { name: 'Testimonials', href: '/admin/testimonials', icon: MessageSquare },
     { name: 'Media Library', href: '/admin/media', icon: ImageIcon },
     { name: 'Leads & Audits', href: '/admin/leads', icon: MessageSquare },

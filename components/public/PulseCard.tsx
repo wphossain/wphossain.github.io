@@ -4,7 +4,11 @@ import React, { useEffect, useState } from 'react';
 
 type Niche = 'hvac' | 'plumbing' | 'roofing';
 
-export function PulseCard() {
+interface PulseCardProps {
+  content?: any;
+}
+
+export function PulseCard({ content }: PulseCardProps) {
   const [activeNiche, setActiveNiche] = useState<Niche>('hvac');
   const [metrics, setMetrics] = useState({
     hvac: { calls: 165, cpl: 28.50, ctr: 8.5 },
@@ -12,25 +16,34 @@ export function PulseCard() {
     roofing: { calls: 84, cpl: 48.00, ctr: 7.1 }
   });
 
-  const campaigns = {
+  const campaignsFallback = {
     hvac: {
       location: "Dallas HVAC Campaign",
       headline: "24/7 Emergency AC Repair — Same-Day Service Guarantee",
       url: "www.yourhvaccompany.com/emergency-service",
-      desc: "Licensed & certified HVAC technicians near you. Fast response times, upfront transparent pricing, & 100% satisfaction guaranteed. Book online in 60s."
+      desc: "Licensed & certified HVAC technicians near you. Fast response times, upfront transparent pricing, & 100% satisfaction guaranteed. Book online in 60s.",
+      chart: "/images/charts/hvac-chart.png"
     },
     plumbing: {
       location: "Austin Plumbing Campaign",
       headline: "Slab Leak & Emergency Clog Experts — $50 Off Any Repair",
       url: "www.austineliteplumbing.com/emergency-drain",
-      desc: "Slab leaks, clogged drains, water heater failures? Fast response, fully stocked trucks, and expert plumbers ready today. No extra charge on weekends."
+      desc: "Slab leaks, clogged drains, water heater failures? Fast response, fully stocked trucks, and expert plumbers ready today. No extra charge on weekends.",
+      chart: "/images/charts/plumbing-chart.png"
     },
     roofing: {
       location: "Houston Roofing Campaign",
       headline: "Storm Damage Roof Inspection — 100% Insurance Covered",
       url: "www.lonestarroofrepair.com/hail-audit",
-      desc: "Recent hail storms? Avoid leaks with a free drone roof inspection. We help with claim filing and direct insurance billing. High-quality lifetime shingles."
+      desc: "Recent hail storms? Avoid leaks with a free drone roof inspection. We help with claim filing and direct insurance billing. High-quality lifetime shingles.",
+      chart: "/images/charts/roofing-chart.png"
     }
+  };
+
+  const campaigns: any = {
+     hvac: { ...campaignsFallback.hvac, location: content?.hvac?.campaign_name || campaignsFallback.hvac.location, headline: content?.hvac?.ad_headline || campaignsFallback.hvac.headline, desc: content?.hvac?.ad_desc || campaignsFallback.hvac.desc },
+     plumbing: { ...campaignsFallback.plumbing, location: content?.plumbing?.campaign_name || campaignsFallback.plumbing.location, headline: content?.plumbing?.ad_headline || campaignsFallback.plumbing.headline, desc: content?.plumbing?.ad_desc || campaignsFallback.plumbing.desc },
+     roofing: { ...campaignsFallback.roofing, location: content?.roofing?.campaign_name || campaignsFallback.roofing.location, headline: content?.roofing?.ad_headline || campaignsFallback.roofing.headline, desc: content?.roofing?.ad_desc || campaignsFallback.roofing.desc }
   };
 
   // Live counter simulation for all niches
@@ -112,14 +125,28 @@ export function PulseCard() {
         </p>
         
         {/* Dynamic Ad Badges */}
-        <div className="flex gap-2 flex-wrap">
+        <div className="flex gap-2 flex-wrap items-center">
           <span className="px-2 py-1 text-[9.5px] font-semibold bg-[#1a73e8]/10 text-[#4c9bff] rounded border border-[#1a73e8]/20">
             ✓ Dynamic Call Swap
           </span>
-          <span className="px-2 py-1 text-[9.5px] font-semibold bg-[#25D366]/10 text-[#25D366] rounded border border-[#25D366]/20">
+          <span className="px-2 py-1 text-[9.5px] font-semibold bg-[#25D366]/10 text-[#25D366] rounded border border-[#25D366]/20 mr-auto">
             ✓ GA4 Conversion Active
           </span>
+          
+          <div className="flex items-center gap-1.5 text-emerald-500 animate-slow-blink bg-emerald-500/5 px-2 py-1 rounded-md border border-emerald-500/10">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M20 15.5c-1.2 0-2.4-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.4-5.1-4.2-6.6-7l2.2-2.2c.3-.3.4-.7.2-1-.3-1.1-.5-2.3-.5-3.5 0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.6-.4-1-1-1z"/></svg>
+            <span className="text-[9px] font-black uppercase tracking-wider">Call Now</span>
+          </div>
         </div>
+      </div>
+
+      {/* Result Chart Image Section */}
+      <div className="result-image-box bg-[#050f1f]/60 rounded-xl p-2 border border-white/5 mb-4 animate-in fade-in zoom-in-95 duration-500">
+         <img 
+           src={currentCampaign.chart} 
+           alt={`${activeNiche} results`} 
+           className="w-full h-auto rounded-lg shadow-inner"
+         />
       </div>
 
       {/* Live Metrics Header */}

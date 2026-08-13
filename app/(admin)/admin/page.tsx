@@ -89,13 +89,13 @@ export default function AdminPage() {
       link: '/admin/blog'
     },
     { 
-      label: 'Case Studies', 
+      label: 'Portfolio', 
       value: metrics.caseStudies, 
       total: metrics.caseStudies,
       sub: 'Client ROI proof',
       icon: Briefcase,
       color: 'green',
-      link: '/admin/case-studies' 
+      link: '/admin/portfolio' 
     },
     { 
       label: 'Pixel Status', 

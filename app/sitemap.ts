@@ -17,7 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified, changeFrequency: 'weekly', priority: 1 },
     { url: `${baseUrl}/blog`, lastModified, changeFrequency: 'weekly', priority: 0.9 },
-    { url: `${baseUrl}/case-studies`, lastModified, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/portfolio`, lastModified, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${baseUrl}/#services`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/#case-studies`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/#faq`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
@@ -36,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const caseRoutes = (caseStudies || [])
     .filter((c: any) => c.slug && (typeof c.is_published === 'boolean' ? c.is_published : true))
     .map((c: any) => ({
-      url: `${baseUrl}/case-studies/${c.slug}`,
+      url: `${baseUrl}/portfolio/${c.slug}`,
       lastModified: c.updated_at || c.created_at || lastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.7,
