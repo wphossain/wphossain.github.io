@@ -204,7 +204,7 @@ export default async function Home() {
               </div>
 
               {/* Full-width thin 4-stat strip at the bottom of hero section */}
-              <div className="mt-12 pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0">
+              <div className="mt-10 lg:mt-12 pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-0">
                 {[
                   { value: "$2.4M+", label: "Total Ad Spend Managed" },
                   { value: "42%", label: "Avg. CPL Reduction", highlight: true },
