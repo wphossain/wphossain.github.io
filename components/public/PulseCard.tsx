@@ -10,11 +10,6 @@ interface PulseCardProps {
 
 export function PulseCard({ content }: PulseCardProps) {
   const [activeNiche, setActiveNiche] = useState<Niche>('hvac');
-  const [metrics, setMetrics] = useState({
-    hvac: { calls: 165, cpl: 28.50, ctr: 8.5 },
-    plumbing: { calls: 212, cpl: 24.80, ctr: 9.2 },
-    roofing: { calls: 84, cpl: 48.00, ctr: 7.1 }
-  });
 
   const campaignsFallback = {
     hvac: {
@@ -46,31 +41,6 @@ export function PulseCard({ content }: PulseCardProps) {
      roofing: { ...campaignsFallback.roofing, location: content?.roofing?.campaign_name || campaignsFallback.roofing.location, headline: content?.roofing?.ad_headline || campaignsFallback.roofing.headline, desc: content?.roofing?.ad_desc || campaignsFallback.roofing.desc }
   };
 
-  // Live counter simulation for all niches
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setMetrics(prev => ({
-        hvac: {
-          calls: prev.hvac.calls + (Math.random() > 0.85 ? 1 : 0),
-          cpl: Math.max(25, Math.min(32, prev.hvac.cpl + (Math.random() > 0.5 ? 0.3 : -0.3))),
-          ctr: Math.max(8.1, Math.min(9.4, parseFloat((prev.hvac.ctr + (Math.random() - 0.5) * 0.1).toFixed(1))))
-        },
-        plumbing: {
-          calls: prev.plumbing.calls + (Math.random() > 0.85 ? 1 : 0),
-          cpl: Math.max(21, Math.min(28, prev.plumbing.cpl + (Math.random() > 0.5 ? 0.25 : -0.25))),
-          ctr: Math.max(8.8, Math.min(9.9, parseFloat((prev.plumbing.ctr + (Math.random() - 0.5) * 0.1).toFixed(1))))
-        },
-        roofing: {
-          calls: prev.roofing.calls + (Math.random() > 0.9 ? 1 : 0),
-          cpl: Math.max(42, Math.min(54, prev.roofing.cpl + (Math.random() > 0.5 ? 0.4 : -0.4))),
-          ctr: Math.max(6.5, Math.min(7.9, parseFloat((prev.roofing.ctr + (Math.random() - 0.5) * 0.08).toFixed(1))))
-        }
-      }));
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const currentMetric = metrics[activeNiche];
   const currentCampaign = campaigns[activeNiche];
 
   return (
@@ -141,57 +111,13 @@ export function PulseCard({ content }: PulseCardProps) {
       </div>
 
       {/* Result Chart Image Section */}
-      <div className="result-image-box bg-[#050f1f]/60 rounded-xl p-2 border border-white/5 mb-4 animate-in fade-in zoom-in-95 duration-500">
+      <div className="result-image-box bg-[#050f1f]/60 rounded-xl p-2 border border-white/5 animate-in fade-in zoom-in-95 duration-500">
          <img 
            src={currentCampaign.chart} 
            alt={`${activeNiche} results`} 
            className="w-full h-auto rounded-lg shadow-inner"
          />
       </div>
-
-      {/* Live Metrics Header */}
-      <div className="pulse-top flex items-center justify-between mb-4 relative z-10">
-        <span className="pulse-live inline-flex items-center gap-1.75 text-[10px] font-extrabold tracking-[0.08em] uppercase text-[#aebcda]">
-          <span className="blip w-2 h-2 rounded-full bg-[#1a73e8] shadow-[0_0_0_0_rgba(26,115,232,0.35)] animate-[blip_1.8s_infinite] mr-1.5" />
-          {currentCampaign.location}
-        </span>
-        <span className="pulse-sample text-[9px] text-[#7b8bad] font-bold uppercase tracking-wider">Simulated Live Data</span>
-      </div>
-
-      {/* Metrics Row */}
-      <div className="pulse-stats grid grid-cols-3 gap-3 mb-4.5 relative z-10">
-        <div className="pulse-stat bg-[#050f1f]/80 border border-white/5 rounded-xl p-3 text-center transition-all duration-300 hover:border-[#1a73e8]/30">
-          <strong className="block font-display text-[21px] text-white tabular-nums tracking-tight font-bold">{currentMetric.calls}</strong>
-          <span className="text-[9px] text-[#7b8bad] font-extrabold tracking-[0.05em] uppercase block mt-0.5">Calls</span>
-        </div>
-        <div className="pulse-stat bg-[#050f1f]/80 border border-white/5 rounded-xl p-3 text-center transition-all duration-300 hover:border-[#1a73e8]/30">
-          <strong className="block font-display text-[21px] text-white tabular-nums tracking-tight font-bold">${currentMetric.cpl.toFixed(2)}</strong>
-          <span className="text-[9px] text-[#7b8bad] font-extrabold tracking-[0.05em] uppercase block mt-0.5">CPL</span>
-        </div>
-        <div className="pulse-stat bg-[#050f1f]/80 border border-white/5 rounded-xl p-3 text-center transition-all duration-300 hover:border-[#1a73e8]/30">
-          <strong className="block font-display text-[21px] text-white tabular-nums tracking-tight font-bold">{currentMetric.ctr.toFixed(1)}%</strong>
-          <span className="text-[9px] text-[#7b8bad] font-extrabold tracking-[0.05em] uppercase block mt-0.5">CTR</span>
-        </div>
-      </div>
-
-      {/* Mini Chart visualization */}
-      <div className="pulse-chart flex items-end gap-1.5 h-14 relative z-10" aria-hidden="true">
-        {(activeNiche === 'hvac' ? [42, 58, 48, 72, 62, 85, 74, 94, 88, 100] : activeNiche === 'plumbing' ? [50, 65, 55, 80, 70, 92, 82, 100, 90, 95] : [30, 45, 40, 60, 50, 75, 68, 85, 78, 82]).map((h, i) => (
-          <i 
-            key={i} 
-            className="flex-1 bg-gradient-to-t from-[#1a73e8]/20 to-[#4c9bff]/90 rounded-t-[4px] transition-all duration-500 ease-out" 
-            style={{ 
-              height: `${h}%`,
-              animation: 'grow 0.6s ease-out both',
-              animationDelay: `${i * 0.05}s`
-            }} 
-          />
-        ))}
-      </div>
-      
-      <p className="pulse-foot mt-4 text-[10.5px] text-[#7b8bad] relative z-10 leading-normal border-t border-white/5 pt-3">
-        Interactive live dashboard simulation — click different niche tabs above.
-      </p>
     </div>
   );
 }
