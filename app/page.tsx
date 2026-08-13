@@ -156,42 +156,43 @@ export default async function Home() {
                   </div>
 
                   {/* Rated by clients / Trusted by businesses block */}
-                  <div className="mt-6 pt-5">
-                    <a href="#testimonials" className="inline-flex items-center gap-3.5 group/rated hover:opacity-90 transition-all bg-white/5 border border-white/10 px-4 py-2.5 rounded-2xl">
+                  <div className="mt-6">
+                    <a href="#testimonials" className="inline-flex items-center gap-3.5 group/rated hover:opacity-90 transition-all bg-white/5 border border-white/10 px-4 py-2.5 rounded-2xl w-full sm:w-auto">
                        <img src="/images/client-avatars.png" alt="Happy Clients" className="h-8 w-auto object-contain shrink-0" />
                        <div className="flex flex-col">
                           <div className="flex items-center gap-2">
-                             <div className="flex gap-0.5 text-amber-400">
+                             <div className="flex gap-0.5 text-[#25D366]">
                                 {[1,2,3,4,5].map(n => <svg key={n} width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>)}
                              </div>
                              <span className="text-[12px] text-[#aebcda]">Rated 5.0</span>
                           </div>
-                          <span className="text-[13px] text-white font-bold tracking-tight">Trusted by <strong className="text-amber-400">50+ businesses</strong> worldwide</span>
+                          <span className="text-[13px] text-white font-bold tracking-tight">Trusted by <strong className="text-[#25D366]">75+ businesses</strong> worldwide</span>
                        </div>
                     </a>
+                  </div>
+
+                  {/* Certified & Partnered with section moved here to occupy the empty vertical space on the left */}
+                  <div className="hero-certs mt-8 pt-6 border-t border-white/5 animate-in fade-in slide-in-from-bottom-2 duration-500 delay-100">
+                    <span className="block text-[11px] font-extrabold tracking-[0.15em] uppercase text-[#7b8bad] mb-4">Certified &amp; Partnered with</span>
+                    <div className="cert-row flex flex-wrap gap-3">
+                      {[
+                        { label: "Google Ads", icon: <svg viewBox="0 0 24 24" width="24" height="24"><path d="M21.35 11.1h-9.17v2.73h6.51c-.33 3.81-3.5 5.44-6.5 5.44C8.36 19.27 5 16.25 5 12c0-4.1 3.2-7.27 7.2-7.27 3.09 0 4.44 1.76 4.44 1.76l2.04-2.1S16.46 2 12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c7.06 0 10-4.95 10-10 0-.67-.04-1.35-.65-.9z" fill="#4285F4"/></svg>, color: "rgba(66, 133, 244, 0.1)" },
+                        { label: "Google Analytics", color: "rgba(249, 171, 0, 0.1)", svg: <svg viewBox="0 0 24 24" width="14" height="14"><rect x="4" y="13" width="4" height="7" rx="1" fill="#F9AB00"/><rect x="10" y="8" width="4" height="12" rx="1" fill="#F9AB00"/><rect x="16" y="3" width="4" height="17" rx="1" fill="#F9AB00"/></svg> },
+                        { label: "Tag Manager", color: "rgba(66, 133, 244, 0.1)", svg: <svg viewBox="0 0 24 24" width="14" height="14"><path d="M12.5 3H6a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .586 1.414l7.5 7.5a2 2 0 0 0 2.828 0l6.5-6.5a2 2 0 0 0 0-2.828l-7.5-7.5A2 2 0 0 0 12.5 3z" fill="#4285F4"/><circle cx="8" cy="8" r="1.6" fill="#fff"/></svg> },
+                        { label: "WordPress", color: "rgba(33, 117, 155, 0.1)", svg: <svg viewBox="0 0 24 24" width="22" height="22" fill="#21759B"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.12 17.55c-2.07 0-3.95-.73-5.43-1.95l2.67-7.75c.21-.57.36-1 .36-1 0-.12-.06-.21-.21-.21-.06 0-.6.09-.9.09h-.18l.12-.48.9-.03c.57-.03 1.23-.03 1.23-.03l.93.03.48.03-.12.48c-.09 0-.21 0-.39 0-.24 0-.48.06-.63.24-.15.21-.24.48-.36.87l-2.04 6 1.35-4.11 1.29 3.63zm3.72-3.12c1-.48 1.68-1.5 1.68-2.61 0-.78-.36-1.53-1.02-2.1-.66-.57-1.32-.81-1.32-.81 0-.09.09-.15.18-.15.15 0 .39.03.6.03.66 0 1.23-.09 1.23-.09l-.12-.48c-.36-.03-1.11-.03-1.11-.03l-1.05.03c-.27 0-.54.03-.84.03-.42 0-1.11-.03-1.11-.03l.12.48s.51.03.78.03c.36 0 .57.18.57.57 0 .21-.09.48-.21.84l-2.04 6c-.03.09-.06.18-.06.27l1.98-5.76 1.95 5.82s.06-.06.12-.12c.24-.24.36-.63.36-1.05zm1.5-6.6c.15-.12.27-.12.42-.12.42 0 .81.24.81.63 0 .12 0 .24-.06.33-.18.54-.42.93-.42.93s-.36.21-.84.21c-.42 0-.69-.15-.84-.15s-.27.06-.27.06-.18.24-.24.33c-.15.21-.27.42-.27.42l-.57 1.65c-.09.24-.21.57-.21.87 0 .39.15.69.45.69.18 0 .42-.06.42-.06l.12-.48s-.15.03-.24.03c-.12 0-.21-.06-.21-.21s.03-.18.09-.33l.42-1.11 1.14-3.3c.03-.09.09-.12.18-.12zm-9.06 9.3c-2.43-1.44-4.05-4.14-4.05-7.23 0-.63.15-1.23.39-1.77L8.28 18.21z"/></svg> }
+                      ].map((item, idx) => (
+                        <span key={idx} className="flex items-center gap-3 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 font-bold text-[12.5px] text-[#aebcda] hover:border-white/20 transition-all" style={{ background: item.color || 'transparent' }}>
+                          <span className="flex items-center justify-center w-5 h-5 rounded-md">
+                            {item.icon || item.svg}
+                          </span>
+                          {item.label}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
                 <div className="w-full animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
                   <PulseCard content={hero.content_json?.niche_tabs} />
-                </div>
-              </div>
-
-              <div className="hero-certs mt-6 pt-5 border-t border-white/5">
-                <span className="block text-[11px] font-extrabold tracking-[0.15em] uppercase text-[#7b8bad] mb-6">Certified &amp; Partnered with</span>
-                <div className="cert-row flex flex-wrap gap-5">
-                  {[
-                    { label: "Google Ads", icon: <svg viewBox="0 0 24 24" width="24" height="24"><path d="M21.35 11.1h-9.17v2.73h6.51c-.33 3.81-3.5 5.44-6.5 5.44C8.36 19.27 5 16.25 5 12c0-4.1 3.2-7.27 7.2-7.27 3.09 0 4.44 1.76 4.44 1.76l2.04-2.1S16.46 2 12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c7.06 0 10-4.95 10-10 0-.67-.04-1.35-.65-.9z" fill="#4285F4"/></svg>, color: "rgba(66, 133, 244, 0.1)" },
-                    { label: "Google Analytics", color: "rgba(249, 171, 0, 0.1)", svg: <svg viewBox="0 0 24 24" width="14" height="14"><rect x="4" y="13" width="4" height="7" rx="1" fill="#F9AB00"/><rect x="10" y="8" width="4" height="12" rx="1" fill="#F9AB00"/><rect x="16" y="3" width="4" height="17" rx="1" fill="#F9AB00"/></svg> },
-                    { label: "Tag Manager", color: "rgba(66, 133, 244, 0.1)", svg: <svg viewBox="0 0 24 24" width="14" height="14"><path d="M12.5 3H6a2 2 0 0 0-2 2v6.5a2 2 0 0 0 .586 1.414l7.5 7.5a2 2 0 0 0 2.828 0l6.5-6.5a2 2 0 0 0 0-2.828l-7.5-7.5A2 2 0 0 0 12.5 3z" fill="#4285F4"/><circle cx="8" cy="8" r="1.6" fill="#fff"/></svg> },
-                    { label: "WordPress", color: "rgba(33, 117, 155, 0.1)", svg: <svg viewBox="0 0 24 24" width="22" height="22" fill="#21759B"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.12 17.55c-2.07 0-3.95-.73-5.43-1.95l2.67-7.75c.21-.57.36-1 .36-1 0-.12-.06-.21-.21-.21-.06 0-.6.09-.9.09h-.18l.12-.48.9-.03c.57-.03 1.23-.03 1.23-.03l.93.03.48.03-.12.48c-.09 0-.21 0-.39 0-.24 0-.48.06-.63.24-.15.21-.24.48-.36.87l-2.04 6 1.35-4.11 1.29 3.63zm3.72-3.12c1-.48 1.68-1.5 1.68-2.61 0-.78-.36-1.53-1.02-2.1-.66-.57-1.32-.81-1.32-.81 0-.09.09-.15.18-.15.15 0 .39.03.6.03.66 0 1.23-.09 1.23-.09l-.12-.48c-.36-.03-1.11-.03-1.11-.03l-1.05.03c-.27 0-.54.03-.84.03-.42 0-1.11-.03-1.11-.03l.12.48s.51.03.78.03c.36 0 .57.18.57.57 0 .21-.09.48-.21.84l-2.04 6c-.03.09-.06.18-.06.27l1.98-5.76 1.95 5.82s.06-.06.12-.12c.24-.24.36-.63.36-1.05zm1.5-6.6c.15-.12.27-.12.42-.12.42 0 .81.24.81.63 0 .12 0 .24-.06.33-.18.54-.42.93-.42.93s-.36.21-.84.21c-.42 0-.69-.15-.84-.15s-.27.06-.27.06-.18.24-.24.33c-.15.21-.27.42-.27.42l-.57 1.65c-.09.24-.21.57-.21.87 0 .39.15.69.45.69.18 0 .42-.06.42-.06l.12-.48s-.15.03-.24.03c-.12 0-.21-.06-.21-.21s.03-.18.09-.33l.42-1.11 1.14-3.3c.03-.09.09-.12.18-.12zm-9.06 9.3c-2.43-1.44-4.05-4.14-4.05-7.23 0-.63.15-1.23.39-1.77L8.28 18.21z"/></svg> }
-                  ].map((item, idx) => (
-                    <span key={idx} className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 font-bold text-[13.5px] text-[#aebcda] hover:border-white/20 transition-all" style={{ background: item.color || 'transparent' }}>
-                      <span className="flex items-center justify-center w-6 h-6 rounded-md">
-                        {item.icon || item.svg}
-                      </span>
-                      {item.label}
-                    </span>
-                  ))}
                 </div>
               </div>
 
