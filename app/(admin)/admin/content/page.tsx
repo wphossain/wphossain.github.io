@@ -767,7 +767,109 @@ export default function PageContentEditorPage() {
                     </div>
                   )}
 
-                  {(activeTab !== 'hero' && activeTab !== 'services' && activeTab !== 'faq' && activeTab !== 'process' && activeTab !== 'results') && (
+                  {activeTab === 'why' && (
+                    <div className="space-y-8">
+                      <div className="space-y-2">
+                        <label className="text-[11px] font-bold text-[#7b8bad] uppercase tracking-widest ml-1">Eyebrow Badge Text</label>
+                        <input 
+                          type="text" 
+                          value={currentSection.content_json?.eyebrow || 'WHY CHOOSE ME'}
+                          onChange={(e) => updateContentJson('why', { eyebrow: e.target.value })}
+                          className="w-full bg-[#050f1f]/80 border border-white/5 rounded-xl px-5 py-3 text-white text-sm focus:border-[#1a73e8] outline-none"
+                          placeholder="WHY CHOOSE ME"
+                        />
+                      </div>
+
+                      <div className="space-y-4">
+                        <label className="text-[11px] font-bold text-[#7b8bad] uppercase tracking-widest ml-1">Icon Cards (Grid)</label>
+                        <div className="grid grid-cols-1 gap-4">
+                          {(currentSection.content_json?.cards || []).map((card: any, i: number) => (
+                            <div key={i} className="group bg-[#050f1f]/80 border border-white/5 rounded-[24px] p-6 space-y-4 hover:border-white/10 transition-all">
+                              <div className="flex items-center justify-between border-b border-white/5 pb-4">
+                                <input 
+                                  type="text" 
+                                  placeholder="Card Title"
+                                  value={card.title || ''}
+                                  onChange={(e) => {
+                                    const cards = [...currentSection.content_json.cards];
+                                    cards[i].title = e.target.value;
+                                    updateContentJson('why', { cards });
+                                  }}
+                                  className="bg-transparent font-bold text-white text-[16px] focus:text-[#4c9bff] outline-none w-full"
+                                />
+                                <button 
+                                  onClick={() => {
+                                    const cards = currentSection.content_json.cards.filter((_: any, idx: number) => idx !== i);
+                                    updateContentJson('why', { cards });
+                                  }} 
+                                  className="p-2 text-[#7b8bad] hover:text-red-400 transition-colors"
+                                ><Trash2 size={16} /></button>
+                              </div>
+                              <textarea 
+                                rows={2}
+                                placeholder="Short description..."
+                                value={card.desc || ''}
+                                onChange={(e) => {
+                                  const cards = [...currentSection.content_json.cards];
+                                  cards[i].desc = e.target.value;
+                                  updateContentJson('why', { cards });
+                                }}
+                                className="w-full bg-transparent text-sm text-[#aebcda] outline-none resize-none"
+                              />
+                              <div className="flex flex-wrap items-center gap-6">
+                                <div className="flex items-center gap-3">
+                                  <span className="text-[9px] font-bold text-[#7b8bad] uppercase tracking-widest">Icon</span>
+                                  <select 
+                                    value={card.icon || 'target'}
+                                    onChange={(e) => {
+                                      const cards = [...currentSection.content_json.cards];
+                                      cards[i].icon = e.target.value;
+                                      updateContentJson('why', { cards });
+                                    }}
+                                    className="bg-white/5 px-3 py-1 rounded-lg text-[11px] text-white font-bold border border-white/10 outline-none"
+                                  >
+                                    <option value="target" className="bg-[#050f1f]">Target</option>
+                                    <option value="bar-chart" className="bg-[#050f1f]">Bar Chart</option>
+                                    <option value="layout" className="bg-[#050f1f]">Layout</option>
+                                    <option value="search" className="bg-[#050f1f]">Search</option>
+                                    <option value="file-text" className="bg-[#050f1f]">File Text</option>
+                                    <option value="unlock" className="bg-[#050f1f]">Unlock</option>
+                                    <option value="lightning" className="bg-[#050f1f]">Lightning</option>
+                                    <option value="robot" className="bg-[#050f1f]">Robot</option>
+                                    <option value="globe" className="bg-[#050f1f]">Globe</option>
+                                  </select>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                  <span className="text-[9px] font-bold text-[#7b8bad] uppercase tracking-widest">Color</span>
+                                  <input 
+                                    type="color"
+                                    value={card.color || '#1a73e8'}
+                                    onChange={(e) => {
+                                      const cards = [...currentSection.content_json.cards];
+                                      cards[i].color = e.target.value;
+                                      updateContentJson('why', { cards });
+                                    }}
+                                    className="w-8 h-8 rounded-lg border border-white/10 bg-transparent cursor-pointer"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        <button 
+                          onClick={() => {
+                            const cards = [...(currentSection.content_json?.cards || []), { title: 'New Point', icon: 'target', desc: '', color: '#1a73e8' }];
+                            updateContentJson('why', { cards });
+                          }}
+                          className="w-full py-5 border-2 border-dashed border-white/5 rounded-[24px] text-[#7b8bad] hover:text-white hover:border-[#1a73e8]/30 transition-all text-sm font-bold flex items-center justify-center gap-2 mt-4"
+                        >
+                          <Plus size={18} /> Add New Why Card
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {(activeTab !== 'hero' && activeTab !== 'services' && activeTab !== 'why' && activeTab !== 'faq' && activeTab !== 'process' && activeTab !== 'results') && (
                     <div className="bg-[#050f1f]/60 p-12 rounded-3xl text-center border border-dashed border-white/5">
                       <p className="text-[#7b8bad] text-sm">Rich data fields for <span className="text-white font-bold">{activeTab}</span> are coming soon. Use Global Title/Subtitle fields for now.</p>
                     </div>

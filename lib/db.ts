@@ -113,17 +113,46 @@ const INITIAL_SECTIONS = [
   {
     section_key: 'why',
     title: 'A specialist who also understands the page the click lands on.',
-    subtitle: '',
+    subtitle: 'I don\'t just run ads. I build systems that turn clicks into customers and keep them coming back long-term.',
     content_json: {
-      bullets_col1: [
-        'Built for HVAC, not generic PPC. Campaigns are structured around repair, install, maintenance, and emergency call intent.',
-        'Tracking that holds up under scrutiny. GTM and GA4 are set up so every lead is tracked and every dollar of spend is measured.',
-        'A former websites/CMS specialist. That background means I look closely at landing pages too — not just campaign settings.'
-      ],
-      bullets_col2: [
-        'Fewer wasted clicks. The focus is qualified calls, not raw click volume or impression share.',
-        'Clear reporting on what\'s working. See exactly which keyword, ad, and landing page is generating real service calls.',
-        'Built for growing local service teams. A good fit for HVAC contractors with 3-30 employees.'
+      eyebrow: 'WHY CHOOSE ME',
+      cards: [
+        {
+          title: 'HVAC-first focus',
+          desc: 'Only local service businesses — so keywords and ad copy stay specific, not generic.',
+          icon: 'target',
+          color: '#ef4444'
+        },
+        {
+          title: 'Tracking that reports the truth',
+          desc: 'Calls, forms, and chat unified in GTM and GA4 — one accurate lead count, not guesswork.',
+          icon: 'bar-chart',
+          color: '#25D366'
+        },
+        {
+          title: 'Landing page background',
+          desc: 'I build the page the click lands on too, not just the campaign that sends it there.',
+          icon: 'layout',
+          color: '#1a73e8'
+        },
+        {
+          title: 'Search-term discipline',
+          desc: 'Weekly search-term audits cut wasted spend before it eats into your budget.',
+          icon: 'search',
+          color: '#06b6d4'
+        },
+        {
+          title: 'Reporting you can read',
+          desc: 'Monthly reports in plain language — spend, calls, and cost per booked job.',
+          icon: 'file-text',
+          color: '#f2a93d'
+        },
+        {
+          title: 'No lock-in',
+          desc: 'Month-to-month. If results stop, you\'re free to walk — no long contracts.',
+          icon: 'unlock',
+          color: '#10b981'
+        }
       ]
     },
     is_visible: true

@@ -99,19 +99,27 @@ export function ServiceGrid({ items }: { items?: Service[] }) {
         return (
           <motion.article
             key={i}
-            className={`group p-7 bg-[#050f1f]/50 border border-white/5 rounded-[28px] hover:bg-[#050f1f] transition-all duration-200 flex flex-col gap-5 ${
-              reduce ? 'hover:border-white/20' : 'hover:border-[#1a73e8]/40 hover:-translate-y-1'
-            }`}
-            initial={reduce ? false : { opacity: 0, y: 24 }}
+            className={`group p-8 bg-[#050f1f]/50 border border-white/5 rounded-[28px] hover:bg-[#050f1f] transition-all duration-300 flex flex-col gap-5`}
+            whileHover={!reduce ? { 
+              y: -3,
+              borderColor: `${color}66`
+            } : {}}
+            initial={reduce ? false : { opacity: 0, y: 16 }}
             whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.5, delay: i * 0.09, ease: [0.22, 1, 0.36, 1] }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.4, delay: i * 0.08 }}
           >
             <div
-              className="w-12 h-12 rounded-2xl grid place-items-center group-hover:scale-110 transition-transform border"
-              style={{ backgroundColor: `${color}1a`, borderColor: `${color}33`, color }}
+              className="w-12 h-12 rounded-2xl grid place-items-center border shrink-0 transition-all duration-300"
+              style={{ 
+                backgroundColor: `${color}1a`, 
+                borderColor: `${color}33`, 
+                color 
+              }}
             >
-              <Icon size={24} strokeWidth={2} />
+              <div className="transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[8deg]">
+                <Icon size={24} strokeWidth={2.2} />
+              </div>
             </div>
             <div>
               {s.tag && (
