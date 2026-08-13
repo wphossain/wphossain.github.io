@@ -141,8 +141,9 @@ export default async function Home() {
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                       {hero.content_json?.cta_primary?.text || 'Book Free Strategy Call'}
                     </a>
-                    <a className="btn btn-ghost px-8 py-4 text-[15px] font-bold rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all backdrop-blur-sm" href="#portfolio">
-                      See Result
+                    <a className="btn btn-ghost px-8 py-4 text-[15px] font-bold rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all backdrop-blur-sm flex items-center gap-2" href="#portfolio">
+                      <span>View Results</span>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                     </a>
                   </div>
                   <div className="trust-pills flex flex-wrap gap-3">
@@ -154,19 +155,18 @@ export default async function Home() {
                     ))}
                   </div>
 
-                  {/* Rated by clients block */}
-                  <div className="mt-8 pt-6 border-t border-white/10">
-                    <a href="#testimonials" className="inline-flex flex-col gap-3 group/rated transition-all">
-                       <div className="flex items-center gap-3">
-                          <div className="flex -space-x-3 overflow-hidden">
-                             <img src="/images/client-avatars.png" alt="Happy Clients" className="h-10 w-auto object-contain" />
-                          </div>
-                          <div className="flex flex-col">
-                             <div className="flex gap-0.5 text-emerald-400 group-hover/rated:scale-110 transition-transform origin-left">
-                                {[1,2,3,4,5].map(n => <svg key={n} width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>)}
+                  {/* Rated by clients / Trusted by businesses block */}
+                  <div className="mt-6 pt-5">
+                    <a href="#testimonials" className="inline-flex items-center gap-3.5 group/rated hover:opacity-90 transition-all bg-white/5 border border-white/10 px-4 py-2.5 rounded-2xl">
+                       <img src="/images/client-avatars.png" alt="Happy Clients" className="h-8 w-auto object-contain shrink-0" />
+                       <div className="flex flex-col">
+                          <div className="flex items-center gap-2">
+                             <div className="flex gap-0.5 text-amber-400">
+                                {[1,2,3,4,5].map(n => <svg key={n} width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>)}
                              </div>
-                             <span className="text-[13px] text-white font-bold tracking-tight">Rated by clients</span>
+                             <span className="text-[12px] text-[#aebcda]">Rated 5.0</span>
                           </div>
+                          <span className="text-[13px] text-white font-bold tracking-tight">Trusted by <strong className="text-amber-400">50+ businesses</strong> worldwide</span>
                        </div>
                     </a>
                   </div>
@@ -176,7 +176,7 @@ export default async function Home() {
                 </div>
               </div>
 
-              <div className="hero-certs mt-12 pt-8 border-t border-white/5">
+              <div className="hero-certs mt-6 pt-5 border-t border-white/5">
                 <span className="block text-[11px] font-extrabold tracking-[0.15em] uppercase text-[#7b8bad] mb-6">Certified &amp; Partnered with</span>
                 <div className="cert-row flex flex-wrap gap-5">
                   {[
