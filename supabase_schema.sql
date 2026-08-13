@@ -48,14 +48,12 @@ VALUES
 }', true),
 ('services', 'Everything a Google Ads account needs to produce booked jobs.', 'From strategy to daily optimization — built around repair, install, maintenance, and emergency calls.', '{
   "services_list": [
-    {"tag": "Core", "title": "Google Search Ads", "desc": "High-intent search campaigns for AC repair, furnace repair, and installs.", "icon": "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"},
-    {"tag": "Reach", "title": "Performance Max", "desc": "Layered on top of Search once tracking is solid.", "icon": "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"},
-    {"tag": "Tracking", "title": "Conversion Tracking", "desc": "Calls, form fills, and booking clicks tracked accurately.", "icon": "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"},
-    {"tag": "Setup", "title": "Google Tag Manager", "desc": "Clean GTM container setup — no duplicate tags.", "icon": "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z"},
-    {"tag": "Setup", "title": "GA4 Configuration", "desc": "Analytics configured to your actual funnel.", "icon": "M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"},
-    {"tag": "Audit", "title": "Google Ads Audit", "desc": "A full account review — wasted spend, weak match types.", "icon": "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"},
-    {"tag": "Conversion", "title": "Landing Page Review", "desc": "Headline clarity, trust placement, and CTA flow.", "icon": "M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"},
-    {"tag": "Growth", "title": "Campaign Optimization", "desc": "Ongoing search-term cleanup, bid and budget refinement.", "icon": "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"}
+    {"tag": "Heating & Cooling", "title": "HVAC", "desc": "24/7 emergency repair searches, seasonal campaigns, and local radius targeting that fills your schedule year-round.", "icon": "hvac", "color": "#4c9bff"},
+    {"tag": "Plumbing", "title": "Plumbing", "desc": "Dominate 'plumber near me' searches with tight local targeting and call-tracked campaigns built for booked jobs, not just clicks.", "icon": "plumbing", "color": "#4c9bff"},
+    {"tag": "Roofing", "title": "Roofing", "desc": "Capture homeowners actively searching for roof repair, storm damage, and reroofing — filtered for high-intent buyers only.", "icon": "roofing", "color": "#f2a93d"},
+    {"tag": "Electrical", "title": "Electrical Services", "desc": "Target emergency electrical searches and panel upgrade leads with campaigns tuned for licensed, high-ticket electrical work.", "icon": "electrical", "color": "#f2a93d"},
+    {"tag": "Landscaping", "title": "Landscaping & Lawn Care", "desc": "Recurring-client campaigns for lawn care, landscaping design, and seasonal cleanup — built to keep your crew booked week after week.", "icon": "landscaping", "color": "#25D366"},
+    {"tag": "Home Services", "title": "Other Home Services", "desc": "Pest control, garage doors, locksmith, handyman — any local service business can dominate Google Search with the right strategy and campaign structure.", "icon": "other", "color": "#f2a93d"}
   ]
 }', true),
 ('why', 'A specialist who also understands the page the click lands on.', NULL, '{
