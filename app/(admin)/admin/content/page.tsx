@@ -525,25 +525,59 @@ export default function PageContentEditorPage() {
                               }}
                               className="w-full bg-transparent text-sm text-[#aebcda] outline-none resize-none leading-relaxed"
                             />
-                            <div className="flex items-center gap-3">
-                              <span className="text-[9px] font-bold text-[#7b8bad] uppercase tracking-widest">Label</span>
-                              <input 
-                                type="text" 
-                                value={s.tag}
-                                onChange={(e) => {
-                                  const list = [...currentSection.content_json.services_list];
-                                  list[i].tag = e.target.value;
-                                  updateContentJson('services', { services_list: list });
-                                }}
-                                className="bg-white/5 px-3 py-1 rounded-lg text-[10px] text-[#f2a93d] font-bold uppercase border border-[#f2a93d]/20"
-                              />
+                            <div className="flex flex-wrap items-center gap-4">
+                              <div className="flex items-center gap-3">
+                                <span className="text-[9px] font-bold text-[#7b8bad] uppercase tracking-widest">Label</span>
+                                <input 
+                                  type="text" 
+                                  value={s.tag || ''}
+                                  onChange={(e) => {
+                                    const list = [...currentSection.content_json.services_list];
+                                    list[i].tag = e.target.value;
+                                    updateContentJson('services', { services_list: list });
+                                  }}
+                                  className="bg-white/5 px-3 py-1 rounded-lg text-[10px] text-[#f2a93d] font-bold uppercase border border-[#f2a93d]/20"
+                                />
+                              </div>
+                              <div className="flex items-center gap-3">
+                                <span className="text-[9px] font-bold text-[#7b8bad] uppercase tracking-widest">Icon</span>
+                                <select 
+                                  value={s.icon || 'hvac'}
+                                  onChange={(e) => {
+                                    const list = [...currentSection.content_json.services_list];
+                                    list[i].icon = e.target.value;
+                                    updateContentJson('services', { services_list: list });
+                                  }}
+                                  className="bg-white/5 px-3 py-1.5 rounded-lg text-[11px] text-white font-bold uppercase border border-white/10 outline-none focus:border-[#1a73e8]"
+                                >
+                                  <option value="hvac" className="bg-[#050f1f]">HVAC</option>
+                                  <option value="plumbing" className="bg-[#050f1f]">Plumbing</option>
+                                  <option value="roofing" className="bg-[#050f1f]">Roofing</option>
+                                  <option value="electrical" className="bg-[#050f1f]">Electrical</option>
+                                  <option value="landscaping" className="bg-[#050f1f]">Landscaping</option>
+                                  <option value="other" className="bg-[#050f1f]">Other</option>
+                                </select>
+                              </div>
+                              <div className="flex items-center gap-3">
+                                <span className="text-[9px] font-bold text-[#7b8bad] uppercase tracking-widest">Color</span>
+                                <input 
+                                  type="color"
+                                  value={s.color || '#4c9bff'}
+                                  onChange={(e) => {
+                                    const list = [...currentSection.content_json.services_list];
+                                    list[i].color = e.target.value;
+                                    updateContentJson('services', { services_list: list });
+                                  }}
+                                  className="w-8 h-8 rounded-lg border border-white/10 bg-transparent cursor-pointer"
+                                />
+                              </div>
                             </div>
                           </div>
                         ))}
                       </div>
                       <button 
                         onClick={() => {
-                          const list = [...(currentSection.content_json.services_list || []), { title: 'New PPC Service', desc: '', tag: 'Strategy', icon: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6' }];
+                          const list = [...(currentSection.content_json.services_list || []), { title: 'New PPC Service', desc: '', tag: 'Strategy', icon: 'hvac', color: '#4c9bff' }];
                           updateContentJson('services', { services_list: list });
                         }}
                         className="w-full py-5 border-2 border-dashed border-white/5 rounded-[24px] text-[#7b8bad] hover:text-white hover:border-[#1a73e8]/30 transition-all text-sm font-bold flex items-center justify-center gap-2 mt-4"
