@@ -118,6 +118,10 @@ export function PulseCard({ content }: PulseCardProps) {
            className="w-full h-auto rounded-lg shadow-inner"
          />
       </div>
+
+      <p className="text-[11px] text-[#7b8bad]/80 text-center mt-2.5 font-medium tracking-tight">
+        {content?.dashboard_caption || 'Aggregate across managed accounts'}
+      </p>
     </div>
   );
 }

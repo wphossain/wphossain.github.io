@@ -71,6 +71,8 @@ const INITIAL_SECTIONS = [
       eyebrow_text: 'Available For New Clients',
       cta_primary: { text: 'Book Free Strategy Call', link: '#contact' },
       cta_secondary: { text: 'View Results', link: '#portfolio' },
+      cta_note: 'Free · No commitment · 15-min call',
+      dashboard_caption: 'Aggregate across managed accounts',
       trusted_block: {
         rating_text: 'Rated 5.0',
         trust_text: '75+ businesses',

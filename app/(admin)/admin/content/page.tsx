@@ -265,6 +265,15 @@ export default function PageContentEditorPage() {
                                className="w-full bg-[#050f1f] border border-white/10 rounded-xl px-4 py-2 text-white text-sm"
                              />
                            </div>
+                           <div className="col-span-2 max-sm:col-span-1 space-y-2">
+                             <label className="text-[10px] font-bold text-[#7b8bad] uppercase">CTA Sub-Note (Under Buttons)</label>
+                             <input 
+                               type="text" 
+                               value={currentSection.content_json.cta_note || 'Free · No commitment · 15-min call'}
+                               onChange={(e) => updateContentJson('hero', { cta_note: e.target.value })}
+                               className="w-full bg-[#050f1f] border border-white/10 rounded-xl px-4 py-2 text-white text-sm"
+                             />
+                           </div>
                         </div>
                       </div>
 
@@ -401,6 +410,16 @@ export default function PageContentEditorPage() {
                       <div className="pt-6 border-t border-white/5 space-y-6">
                          <h5 className="text-[11px] font-bold text-white uppercase tracking-widest bg-white/5 px-4 py-2 rounded-lg inline-block">Interactive Dashboard Editor</h5>
                          <p className="text-[12px] text-[#7b8bad]">Configure the details for HVAC, Plumbing, and Roofing tabs on the hero card.</p>
+                         
+                         <div className="p-5 bg-white/5 rounded-2xl border border-white/5 space-y-2">
+                           <label className="text-[10px] font-bold text-[#7b8bad] uppercase tracking-widest">Dashboard Global Caption (Under Metrics)</label>
+                           <input 
+                              type="text" 
+                              value={currentSection.content_json.dashboard_caption || 'Aggregate across managed accounts'}
+                              onChange={(e) => updateContentJson('hero', { dashboard_caption: e.target.value })}
+                              className="w-full bg-[#050f1f] border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm"
+                           />
+                         </div>
                          
                          <div className="space-y-8">
                             {['hvac', 'plumbing', 'roofing'].map((niche) => {
