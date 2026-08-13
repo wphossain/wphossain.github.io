@@ -15,6 +15,7 @@ import { CountUp } from '@/components/public/CountUp';
 import { Reveal } from '@/components/public/Reveal';
 import Link from 'next/link';
 import { GrowthEcosystemHero } from '@/components/public/GrowthEcosystemHero';
+import { ServiceGrid } from '@/components/public/ServiceGrid';
 
 export const revalidate = 60;
 
@@ -239,28 +240,13 @@ export default async function Home() {
               <Reveal className="sec-head max-w-[720px] mb-12">
                 <span className="eyebrow">Services</span>
                 <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-white font-bold">
-                  {services.title}
+                  Google Ads for Local Service Businesses
                 </h2>
                 <p className="text-[#aebcda] text-[17px] leading-relaxed">
-                  {services.subtitle}
+                  {services.subtitle || 'HVAC, plumbing, roofing, electrical, landscaping, and other local home services — built to turn paid search into booked service calls.'}
                 </p>
               </Reveal>
-              <Reveal delay={0.08}>
-                <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-5">
-                {(services.content_json?.services_list || []).map((s: any, i: number) => (
-                  <article key={i} className="group p-7 bg-[#050f1f]/50 border border-white/5 rounded-[28px] hover:border-[#1a73e8]/30 hover:bg-[#050f1f] transition-all duration-300 flex flex-col gap-5">
-                    <div className="w-12 h-12 rounded-2xl bg-[#1a73e8]/10 border border-[#1a73e8]/20 grid place-items-center text-[#4c9bff] group-hover:scale-110 transition-transform">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={s.icon} /></svg>
-                    </div>
-                    <div>
-                      <span className="inline-block text-[10px] font-extrabold tracking-widest uppercase text-[#25D366] bg-[#25D366]/10 border border-[#25D366]/20 px-2.5 py-1 rounded-full mb-3">{s.tag}</span>
-                      <h3 className="text-[19px] mb-2 font-bold text-white font-display group-hover:text-[#4c9bff] transition-colors">{s.title}</h3>
-                      <p className="text-[14px] text-[#aebcda] leading-relaxed">{s.desc}</p>
-                    </div>
-                  </article>
-                ))}
-                </div>
-              </Reveal>
+              <ServiceGrid items={services.content_json?.services_list || []} />
             </div>
           </section>
 
