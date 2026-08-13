@@ -48,12 +48,12 @@ VALUES
 }', true),
 ('services', 'Everything a Google Ads account needs to produce booked jobs.', 'From strategy to daily optimization — built around repair, install, maintenance, and emergency calls.', '{
   "services_list": [
-    {"tag": "Heating & Cooling", "title": "HVAC", "desc": "24/7 emergency repair searches, seasonal campaigns, and local radius targeting that fills your schedule year-round.", "icon": "hvac", "color": "#4c9bff"},
-    {"tag": "Plumbing", "title": "Plumbing", "desc": "Dominate 'plumber near me' searches with tight local targeting and call-tracked campaigns built for booked jobs, not just clicks.", "icon": "plumbing", "color": "#4c9bff"},
+    {"tag": "Heating & Cooling", "title": "HVAC", "desc": "24/7 emergency repair searches, seasonal campaigns, and local radius targeting that fills your schedule year-round.", "icon": "hvac", "color": "#25D366"},
+    {"tag": "Plumbing", "title": "Plumbing", "desc": "Dominate 'plumber near me' searches with tight local targeting and call-tracked campaigns built for booked jobs, not just clicks.", "icon": "plumbing", "color": "#f2a93d"},
     {"tag": "Roofing", "title": "Roofing", "desc": "Capture homeowners actively searching for roof repair, storm damage, and reroofing — filtered for high-intent buyers only.", "icon": "roofing", "color": "#f2a93d"},
-    {"tag": "Electrical", "title": "Electrical Services", "desc": "Target emergency electrical searches and panel upgrade leads with campaigns tuned for licensed, high-ticket electrical work.", "icon": "electrical", "color": "#f2a93d"},
+    {"tag": "Electrical", "title": "Electrical Services", "desc": "Target emergency electrical searches and panel upgrade leads with campaigns tuned for licensed, high-ticket electrical work.", "icon": "electrical", "color": "#4c9bff"},
     {"tag": "Landscaping", "title": "Landscaping & Lawn Care", "desc": "Recurring-client campaigns for lawn care, landscaping design, and seasonal cleanup — built to keep your crew booked week after week.", "icon": "landscaping", "color": "#25D366"},
-    {"tag": "Home Services", "title": "Other Home Services", "desc": "Pest control, garage doors, locksmith, handyman — any local service business can dominate Google Search with the right strategy and campaign structure.", "icon": "other", "color": "#f2a93d"}
+    {"tag": "Home Services", "title": "Other Home Services", "desc": "Pest control, garage doors, locksmith, handyman — any local service business can dominate Google Search with the right strategy and campaign structure.", "icon": "other", "color": "#4c9bff"}
   ]
 }', true),
 ('why', 'A specialist who also understands the page the click lands on.', NULL, '{

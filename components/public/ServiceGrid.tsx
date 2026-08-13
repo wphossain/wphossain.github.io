@@ -15,12 +15,12 @@ export interface Service {
 type IconDef = { Icon: LucideIcon; color: string };
 
 const ICON_MAP: Record<string, IconDef> = {
-  hvac: { Icon: Thermometer, color: '#4c9bff' },
-  plumbing: { Icon: Droplets, color: '#4c9bff' },
+  hvac: { Icon: Thermometer, color: '#25D366' },
+  plumbing: { Icon: Droplets, color: '#f2a93d' },
   roofing: { Icon: Home, color: '#f2a93d' },
-  electrical: { Icon: Zap, color: '#f2a93d' },
+  electrical: { Icon: Zap, color: '#4c9bff' },
   landscaping: { Icon: Leaf, color: '#25D366' },
-  other: { Icon: Wrench, color: '#f2a93d' },
+  other: { Icon: Wrench, color: '#4c9bff' },
 };
 
 const DEFAULT_SERVICES: Service[] = [
@@ -62,8 +62,30 @@ const DEFAULT_SERVICES: Service[] = [
   },
 ];
 
-function getIconDef(key?: string): IconDef {
-  return ICON_MAP[key || ''] || { Icon: Wrench, color: '#4c9bff' };
+const TITLE_MAP: [string, string][] = [
+  ['hvac', 'hvac'],
+  ['ac repair', 'hvac'],
+  ['furnace', 'hvac'],
+  ['plumb', 'plumbing'],
+  ['roof', 'roofing'],
+  ['electr', 'electrical'],
+  ['landscap', 'landscaping'],
+  ['lawn', 'landscaping'],
+  ['pest', 'other'],
+  ['garage', 'other'],
+  ['lock', 'other'],
+  ['handyman', 'other'],
+];
+
+function getIconDef(s: Service): IconDef {
+  const key = (s.icon || '').trim().toLowerCase();
+  if (ICON_MAP[key]) return ICON_MAP[key];
+  const title = (s.title || '').toLowerCase();
+  const match = TITLE_MAP.find(([needle]) => title.includes(needle));
+  if (match && ICON_MAP[match[1]]) {
+    return { ...ICON_MAP[match[1]], color: s.color || ICON_MAP[match[1]].color };
+  }
+  return { Icon: Wrench, color: s.color || '#4c9bff' };
 }
 
 export function ServiceGrid({ items }: { items?: Service[] }) {
@@ -73,7 +95,7 @@ export function ServiceGrid({ items }: { items?: Service[] }) {
   return (
     <div className="grid grid-cols-3 max-sm:grid-cols-1 gap-5">
       {services.map((s: Service, i: number) => {
-        const { Icon, color } = getIconDef(s.icon);
+        const { Icon, color } = getIconDef(s);
         return (
           <motion.article
             key={i}
