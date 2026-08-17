@@ -99,10 +99,10 @@ export function ServiceGrid({ items }: { items?: Service[] }) {
         return (
           <motion.article
             key={i}
-            className={`group p-8 bg-[#050f1f]/50 border border-white/5 rounded-[28px] hover:bg-[#050f1f] transition-all duration-300 flex flex-col gap-5`}
+            className={`group p-8 bg-white border border-[#E2E8F0] rounded-[28px] shadow-sm hover:shadow-md transition-all duration-300 flex flex-col gap-5`}
             whileHover={!reduce ? { 
               y: -3,
-              borderColor: `${color}66`
+              borderColor: `${color}88`
             } : {}}
             initial={reduce ? false : { opacity: 0, y: 16 }}
             whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
@@ -112,7 +112,7 @@ export function ServiceGrid({ items }: { items?: Service[] }) {
             <div
               className="w-12 h-12 rounded-2xl grid place-items-center border shrink-0 transition-all duration-300"
               style={{ 
-                backgroundColor: `${color}1a`, 
+                backgroundColor: `${color}14`, 
                 borderColor: `${color}33`, 
                 color 
               }}
@@ -125,15 +125,15 @@ export function ServiceGrid({ items }: { items?: Service[] }) {
               {s.tag && (
                 <span
                   className="inline-block text-[10px] font-extrabold tracking-widest uppercase px-2.5 py-1 rounded-full mb-3 border"
-                  style={{ color, backgroundColor: `${color}1a`, borderColor: `${color}33` }}
+                  style={{ color, backgroundColor: `${color}14`, borderColor: `${color}33` }}
                 >
                   {s.tag}
                 </span>
               )}
-              <h3 className="text-[19px] mb-2 font-bold text-white font-display group-hover:text-[#4c9bff] transition-colors">
+              <h3 className="text-[19px] mb-2 font-bold text-[#1E293B] font-display group-hover:text-[#2563EB] transition-colors">
                 {s.title}
               </h3>
-              <p className="text-[14px] text-[#aebcda] leading-relaxed">{s.desc}</p>
+              <p className="text-[14px] text-[#475569] leading-relaxed">{s.desc}</p>
             </div>
           </motion.article>
         );

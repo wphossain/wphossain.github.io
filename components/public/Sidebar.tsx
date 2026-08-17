@@ -154,7 +154,7 @@ export function Sidebar({
         {/* Right Action CTA Button */}
         <div className="flex items-center gap-3 shrink-0">
           <Link 
-            className="btn btn-primary px-5 py-2.5 text-[13px] font-bold rounded-xl shadow-lg shadow-[#1a73e8]/30 hover:scale-[1.03] transition-all flex items-center gap-2" 
+            className="btn btn-primary px-5 py-2.5 text-[13px] font-bold rounded-xl shadow-lg shadow-[#2563EB]/30 hover:scale-[1.03] transition-all flex items-center gap-2" 
             href="/#contact"
           >
             <span>{ctaText}</span>

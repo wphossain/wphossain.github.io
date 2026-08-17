@@ -63,20 +63,20 @@ export default async function SingleCaseStudyPage({ params }: { params: Promise<
       <MobileHeader />
       <MobileCtaBar />
 
-      <main className="content p-6.5 max-lg:p-4.5 min-h-screen bg-[#050f1f] pb-24 lg:pb-0">
+      <main className="content p-6.5 max-lg:p-4.5 min-h-screen bg-[#F8FAFC] pb-24 lg:pb-0">
         <div className="content-inner max-w-4xl mx-auto w-full flex flex-col gap-6">
-          <Link href="/portfolio" className="text-[14px] text-[var(--ink-faint)] hover:text-[var(--blue-light)] font-bold flex items-center gap-2 transition-colors">
+          <Link href="/portfolio" className="text-[14px] text-[var(--ink-faint)] hover:text-[#2563EB] font-bold flex items-center gap-2 transition-colors">
             ← Back to Portfolio
           </Link>
 
-          <article className="panel p-10 max-sm:p-6">
+          <article className="panel p-10 max-sm:p-6 shadow-sm">
             <span className="eyebrow">{study.client_niche}</span>
-            <h1 className="text-4xl font-display font-bold text-white mb-4 leading-tight">
+            <h1 className="text-4xl font-display font-bold text-[#1E293B] mb-4 leading-tight">
               {study.title}
             </h1>
 
             {study.featured_image && (
-              <div className="mb-8 rounded-2xl overflow-hidden border border-white/5">
+              <div className="mb-8 rounded-2xl overflow-hidden border border-[#E2E8F0]">
                 <img src={study.featured_image} alt={study.featured_image_alt || study.title} className="w-full h-auto object-cover" loading="lazy" />
               </div>
             )}
@@ -84,9 +84,9 @@ export default async function SingleCaseStudyPage({ params }: { params: Promise<
             {metrics.length > 0 && (
               <div className="grid grid-cols-3 gap-4 max-sm:grid-cols-1 my-6">
                 {metrics.map(([key, value]: any) => (
-                  <div key={key} className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center">
-                    <strong className="block text-2xl font-bold text-white">{value}</strong>
-                    <span className="text-[11px] uppercase tracking-widest text-[var(--ink-faint)]">{String(key).replace(/_/g, ' ')}</span>
+                  <div key={key} className="p-4 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] text-center shadow-sm">
+                    <strong className="block text-2xl font-bold text-[#1E293B]">{value}</strong>
+                    <span className="text-[11px] uppercase tracking-widest text-[#64748B]">{String(key).replace(/_/g, ' ')}</span>
                   </div>
                 ))}
               </div>
@@ -94,16 +94,16 @@ export default async function SingleCaseStudyPage({ params }: { params: Promise<
 
             <div className="space-y-8 mt-8">
               <section>
-                <span className="text-[11px] font-extrabold uppercase tracking-widest text-[var(--blue-light)]">The Challenge</span>
-                <p className="mt-2 text-[15.5px] text-[var(--ink-dim)] leading-relaxed">{study.challenge}</p>
+                <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#2563EB]">The Challenge</span>
+                <p className="mt-2 text-[15.5px] text-[#475569] leading-relaxed">{study.challenge}</p>
               </section>
               <section>
-                <span className="text-[11px] font-extrabold uppercase tracking-widest text-[var(--blue-light)]">The Strategy</span>
-                <p className="mt-2 text-[15.5px] text-[var(--ink-dim)] leading-relaxed">{study.strategy}</p>
+                <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#2563EB]">The Strategy</span>
+                <p className="mt-2 text-[15.5px] text-[#475569] leading-relaxed">{study.strategy}</p>
               </section>
               <section>
-                <span className="text-[11px] font-extrabold uppercase tracking-widest text-[var(--accent-green)]">Final Result</span>
-                <p className="mt-2 text-[16px] font-display font-bold text-white leading-tight">{study.result_summary}</p>
+                <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#25D366]">Final Result</span>
+                <p className="mt-2 text-[16px] font-display font-bold text-[#1E293B] leading-tight">{study.result_summary}</p>
               </section>
             </div>
           </article>

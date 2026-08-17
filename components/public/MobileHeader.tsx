@@ -85,7 +85,7 @@ export function MobileHeader({
           <Link href="/#home" className="mobile-brand flex items-center gap-2.5 group">
             <div className="relative">
               {imgError ? (
-                <div className="w-9 h-9 rounded-full bg-[#1a73e8] grid place-items-center border-2 border-[#050f1f] text-white text-xs font-bold shrink-0">
+                <div className="w-9 h-9 rounded-full bg-[#2563EB] grid place-items-center border-2 border-[#050f1f] text-white text-xs font-bold shrink-0">
                   WH
                 </div>
               ) : (
@@ -103,13 +103,13 @@ export function MobileHeader({
               </span>
             </div>
             <div>
-              <strong className="block text-[14px] font-display text-white font-bold leading-tight group-hover:text-[#4c9bff] transition-colors">{ownerName}</strong>
+              <strong className="block text-[14px] font-display text-white font-bold leading-tight group-hover:text-[#3B82F6] transition-colors">{ownerName}</strong>
             </div>
           </Link>
 
           <div className="flex items-center gap-2.5">
             <Link 
-              className="btn btn-primary text-[12px] font-bold py-1.5 px-3.5 rounded-xl shadow-md" 
+              className="btn btn-primary text-[12px] font-bold py-1.5 px-3.5 rounded-xl shadow-md bg-[#2563EB] hover:bg-[#1D4ED8]" 
               href="/#contact"
             >
               {ctaText.replace('Book ', '')}
@@ -165,7 +165,7 @@ export function MobileHeader({
               <div className="flex items-center gap-3">
                 <div className="relative">
                   {imgError ? (
-                    <div className="w-12 h-12 rounded-full bg-[#1a73e8] grid place-items-center border-2 border-[#050f1f] text-white text-sm font-bold shrink-0">
+                    <div className="w-12 h-12 rounded-full bg-[#2563EB] grid place-items-center border-2 border-[#050f1f] text-white text-sm font-bold shrink-0">
                       WH
                     </div>
                   ) : (
@@ -198,7 +198,7 @@ export function MobileHeader({
                       onClick={() => handleNavClick(item.key)}
                       className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-[14px] font-medium transition-all duration-200 ${
                         isActive
-                          ? 'text-white font-bold bg-[#1a73e8]/20 border-l-2 border-[#1a73e8]'
+                          ? 'text-white font-bold bg-[#2563EB]/20 border-l-2 border-[#2563EB]'
                           : 'text-[#aebcda] hover:text-white hover:bg-white/5'
                       }`}
                     >
@@ -215,7 +215,7 @@ export function MobileHeader({
             {/* Bottom Actions & Socials */}
             <div className="flex flex-col gap-4 border-t border-white/10 pt-4 mt-auto">
               <Link 
-                className="btn btn-primary w-full text-[13.5px] font-bold py-3 rounded-xl text-center shadow-lg" 
+                className="btn btn-primary w-full text-[13.5px] font-bold py-3 rounded-xl text-center shadow-lg bg-[#2563EB] hover:bg-[#1D4ED8]" 
                 href="/#contact"
                 onClick={() => setIsOpen(false)}
               >

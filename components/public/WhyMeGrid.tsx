@@ -100,19 +100,19 @@ export function WhyMeGrid({
     <div className="w-full">
       {/* HEADER AREA */}
       <div className="flex flex-col items-start max-w-[720px] mb-12 text-left">
-        <span className="eyebrow inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1a73e8]/10 border border-[#1a73e8]/30 text-[#4c9bff] text-[11px] font-extrabold uppercase tracking-widest mb-5 shadow-[0_0_15px_rgba(26,115,232,0.15)]">
-          <span className="w-2 h-2 rounded-full bg-[#1a73e8] animate-pulse" />
+        <span className="eyebrow inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2563EB]/10 border border-[#2563EB]/25 text-[#2563EB] text-[11px] font-extrabold uppercase tracking-widest mb-5 shadow-sm">
+          <span className="w-2 h-2 rounded-full bg-[#2563EB] animate-pulse" />
           {eyebrow}
         </span>
         
-        <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-[1.15] mb-4 text-white font-bold">
+        <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-[1.15] mb-4 text-[#1E293B] font-bold">
           {activeTitle}
         </h2>
 
         {/* Animated Accent Bar */}
-        <div className="relative w-full h-[3px] rounded-full overflow-hidden bg-white/5 mb-6">
+        <div className="relative w-full h-[3px] rounded-full overflow-hidden bg-slate-200 mb-6">
           <motion.div 
-            className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#1a73e8] via-[#25D366] to-transparent"
+            className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#2563EB] via-[#25D366] to-transparent"
             initial={{ width: "0%" }}
             whileInView={{ width: "100%" }}
             viewport={{ once: true }}
@@ -121,7 +121,7 @@ export function WhyMeGrid({
         </div>
 
         {activeSubtitle && (
-          <p className="text-[#aebcda] text-[16px] lg:text-[17px] leading-relaxed max-w-[640px]">
+          <p className="text-[#475569] text-[16px] lg:text-[17px] leading-relaxed max-w-[640px]">
             {activeSubtitle}
           </p>
         )}
@@ -131,15 +131,15 @@ export function WhyMeGrid({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {activeCards.map((card, i) => {
           const IconComponent = getIconComponent(card.icon);
-          const accentColor = card.color || "#1a73e8";
+          const accentColor = card.color || "#2563EB";
 
           return (
             <motion.article
               key={i}
-              className="group p-8 bg-[#0a1c34]/50 border border-white/5 rounded-[28px] flex flex-col gap-5 hover:bg-[#0a1c34] transition-all duration-300"
+              className="group p-8 bg-white border border-[#E2E8F0] shadow-sm rounded-[28px] flex flex-col gap-5 hover:shadow-md transition-all duration-300"
               whileHover={!reduce ? { 
                 y: -3,
-                borderColor: `${accentColor}66`
+                borderColor: `${accentColor}88`
               } : {}}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -150,7 +150,7 @@ export function WhyMeGrid({
               <div
                 className="w-12 h-12 rounded-2xl grid place-items-center border shrink-0 transition-all duration-300"
                 style={{ 
-                  backgroundColor: `${accentColor}1a`, 
+                  backgroundColor: `${accentColor}14`, 
                   borderColor: `${accentColor}33`, 
                   color: accentColor 
                 }}
@@ -161,10 +161,10 @@ export function WhyMeGrid({
               </div>
 
               <div>
-                <h3 className="text-[18px] lg:text-[19px] font-bold text-white mb-2 font-display group-hover:text-white transition-colors leading-snug">
+                <h3 className="text-[18px] lg:text-[19px] font-bold text-[#1E293B] mb-2 font-display group-hover:text-[#2563EB] transition-colors leading-snug">
                   {card.title}
                 </h3>
-                <p className="text-[14px] text-[#aebcda] leading-relaxed">
+                <p className="text-[14px] text-[#475569] leading-relaxed">
                   {card.desc}
                 </p>
               </div>

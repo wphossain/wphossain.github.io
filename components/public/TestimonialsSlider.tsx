@@ -80,22 +80,22 @@ export function TestimonialsSlider({ testimonials = [] }: TestimonialsSliderProp
           <div key={sIdx} className="testi-slide flex-none w-full min-w-full">
             <div className="grid grid-cols-3 max-xl:grid-cols-2 max-md:grid-cols-1 gap-6 px-14 max-md:px-12">
               {slide.map((item, idx) => (
-                <article key={idx} className="testi-card bg-[#050f1f]/40 border border-white/5 rounded-2xl p-6 flex flex-col gap-5 hover:border-[#1a73e8]/20 transition-all duration-300">
+                <article key={idx} className="testi-card bg-white border border-[#E2E8F0] shadow-sm rounded-2xl p-6 flex flex-col gap-5 hover:border-slate-300 hover:shadow-md transition-all duration-300">
                   <div className="testi-top flex items-center justify-between">
                     <div className="flex gap-0.5 text-[#25D366]">
                       {[...Array(item.rating)].map((_, i) => (
                         <Star key={i} size={14} fill="currentColor" />
                       ))}
                     </div>
-                    <div className="opacity-10">
+                    <div className="opacity-20 text-slate-400">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V12M5.017 21L5.017 18C5.017 16.8954 5.91243 16 7.017 16H10.017C10.5693 16 11.017 15.5523 11.017 15V9C11.017 8.44772 10.5693 8 10.017 8H6.017C5.46472 8 5.017 8.44772 5.017 9V12"/></svg>
                     </div>
                   </div>
-                  <p className="testi-quote text-[15px] text-[#eef3fb] italic leading-relaxed">
+                  <p className="testi-quote text-[15px] text-[#1E293B] italic leading-relaxed">
                     &quot;{item.quote}&quot;
                   </p>
-                  <div className="testi-who flex items-center gap-3 mt-auto pt-4 border-t border-white/5">
-                    <div className="testi-avatar w-11 h-11 rounded-full flex-none overflow-hidden border border-white/10 p-0.5 bg-gradient-to-tr from-white/5 to-white/10">
+                  <div className="testi-who flex items-center gap-3 mt-auto pt-4 border-t border-[#E2E8F0]">
+                    <div className="testi-avatar w-11 h-11 rounded-full flex-none overflow-hidden border border-[#E2E8F0] p-0.5 bg-slate-100">
                       <Image 
                         src={item.avatar_url || getAvatarUrl(item.client_name)} 
                         alt={item.client_name}
@@ -106,8 +106,8 @@ export function TestimonialsSlider({ testimonials = [] }: TestimonialsSliderProp
                       />
                     </div>
                     <div>
-                      <strong className="block text-[14px] font-bold text-white">{item.client_name}</strong>
-                      <span className="text-[12px] text-[#7b8bad] font-medium">{item.client_role}</span>
+                      <strong className="block text-[14px] font-bold text-[#1E293B]">{item.client_name}</strong>
+                      <span className="text-[12px] text-[#64748B] font-medium">{item.client_role}</span>
                     </div>
                   </div>
                 </article>
@@ -118,15 +118,15 @@ export function TestimonialsSlider({ testimonials = [] }: TestimonialsSliderProp
       </div>
 
       <div className="slider-nav flex items-center justify-between absolute inset-x-0 top-1/2 -translate-y-1/2 px-4 pointer-events-none">
-        <button className="slider-arrow w-10 h-10 rounded-full border border-white/10 bg-[#050f1f]/80 text-white cursor-pointer grid place-items-center hover:border-[#1a73e8] hover:text-[#1a73e8] transition-all pointer-events-auto" onClick={() => handleSlide(-1)} aria-label="Previous testimonials"><ChevronLeft size={20} /></button>
-        <button className="slider-arrow w-10 h-10 rounded-full border border-white/10 bg-[#050f1f]/80 text-white cursor-pointer grid place-items-center hover:border-[#1a73e8] hover:text-[#1a73e8] transition-all pointer-events-auto" onClick={() => handleSlide(1)} aria-label="Next testimonials"><ChevronRight size={20} /></button>
+        <button className="slider-arrow w-10 h-10 rounded-full border border-[#E2E8F0] bg-white text-[#1E293B] shadow-sm cursor-pointer grid place-items-center hover:border-[#2563EB] hover:text-[#2563EB] transition-all pointer-events-auto" onClick={() => handleSlide(-1)} aria-label="Previous testimonials"><ChevronLeft size={20} /></button>
+        <button className="slider-arrow w-10 h-10 rounded-full border border-[#E2E8F0] bg-white text-[#1E293B] shadow-sm cursor-pointer grid place-items-center hover:border-[#2563EB] hover:text-[#2563EB] transition-all pointer-events-auto" onClick={() => handleSlide(1)} aria-label="Next testimonials"><ChevronRight size={20} /></button>
       </div>
 
       <div className="slider-dots flex items-center justify-center gap-2.5 mt-8">
         {slides.map((_, idx) => (
           <button 
             key={idx} 
-            className={`dot h-1.5 rounded-full border-none cursor-pointer p-0 transition-all duration-300 ${idx === currentIdx ? "bg-[#1a73e8] w-8" : "bg-white/10 w-2 hover:bg-white/20"}`} 
+            className={`dot h-1.5 rounded-full border-none cursor-pointer p-0 transition-all duration-300 ${idx === currentIdx ? "bg-[#2563EB] w-8" : "bg-slate-300 w-2 hover:bg-slate-400"}`} 
             onClick={() => setCurrentIdx(idx)} 
           />
         ))}

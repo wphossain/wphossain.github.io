@@ -18,8 +18,8 @@ export function ZcalEmbed() {
 
   if (!mounted) {
     return (
-      <div className="zcal-embed-wrap bg-[rgba(5,13,26,0.55)] border border-[var(--line-soft)] rounded-xl p-1.5 min-h-[400px]">
-        <div className="flex items-center justify-center text-center min-h-[400px] p-3.5 rounded-lg text-[#aebcda] font-medium text-[13.5px]">
+      <div className="zcal-embed-wrap bg-white border border-[#E2E8F0] rounded-xl p-1.5 min-h-[400px]">
+        <div className="flex items-center justify-center text-center min-h-[400px] p-3.5 rounded-lg text-[#64748B] font-medium text-[13.5px]">
           <div className="animate-pulse">Loading Calendar...</div>
         </div>
       </div>
@@ -27,7 +27,7 @@ export function ZcalEmbed() {
   }
 
   return (
-    <div className="zcal-embed-wrap bg-[rgba(5,13,26,0.55)] border border-[var(--line-soft)] rounded-xl p-1.5 min-h-[500px]">
+    <div className="zcal-embed-wrap bg-white border border-[#E2E8F0] rounded-xl p-1.5 min-h-[500px]">
       <div className="zcal-inline-widget w-full h-[600px]">
         <iframe 
           src={zcalLink} 

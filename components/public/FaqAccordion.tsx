@@ -33,17 +33,17 @@ export function FaqAccordion({ faqs = [] }: FaqAccordionProps) {
         return (
           <div
             key={idx}
-            className={`group faq-item border rounded-2xl bg-[#050f1f]/40 px-6 transition-all duration-300 hover:border-white/10 hover:bg-[#050f1f]/60 ${
-              isOpen ? 'border-white/20' : 'border-white/5'
+            className={`group faq-item border rounded-2xl bg-white px-6 transition-all duration-300 shadow-sm hover:shadow-md ${
+              isOpen ? 'border-[#2563EB]/40' : 'border-[#E2E8F0]'
             }`}
           >
             <button
               onClick={() => setOpenIndex(isOpen ? null : idx)}
-              className="cursor-pointer w-full py-5 relative font-bold text-[16px] text-white flex items-center justify-between gap-4"
+              className="cursor-pointer w-full py-5 relative font-bold text-[16px] text-[#1E293B] flex items-center justify-between gap-4"
               aria-expanded={isOpen}
             >
               <span className="flex-1 text-left">{item.question}</span>
-              <span className={`w-6 h-6 rounded-lg bg-[#1a73e8]/10 text-[#1a73e8] flex items-center justify-center shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}>
+              <span className={`w-6 h-6 rounded-lg bg-[#2563EB]/10 text-[#2563EB] flex items-center justify-center shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}>
                 <Plus size={16} />
               </span>
             </button>
@@ -56,7 +56,7 @@ export function FaqAccordion({ faqs = [] }: FaqAccordionProps) {
                   transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                   className="overflow-hidden"
                 >
-                  <p className="pb-5 text-[#aebcda] text-[14.5px] leading-relaxed max-w-3xl border-t border-white/5 pt-4 mt-1">
+                  <p className="pb-5 text-[#475569] text-[14.5px] leading-relaxed max-w-3xl border-t border-[#E2E8F0] pt-4 mt-1">
                     {item.answer}
                   </p>
                 </motion.div>

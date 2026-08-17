@@ -73,15 +73,15 @@ export default async function SingleBlogPostPage({ params }: { params: Promise<{
       <MobileHeader />
       <MobileCtaBar />
 
-      <main className="content p-6.5 max-lg:p-4.5 min-h-screen bg-[#050f1f] pb-24 lg:pb-0">
+      <main className="content p-6.5 max-lg:p-4.5 min-h-screen bg-[#F8FAFC] pb-24 lg:pb-0">
         <div className="content-inner max-w-4xl mx-auto w-full flex flex-col gap-6">
-          <Link href="/blog" className="text-[14px] text-[var(--ink-faint)] hover:text-[var(--gold)] font-bold flex items-center gap-2 transition-colors">
+          <Link href="/blog" className="text-[14px] text-[var(--ink-faint)] hover:text-[#2563EB] font-bold flex items-center gap-2 transition-colors">
             ← Back to Blog Index
           </Link>
 
-          <article className="panel p-10 max-sm:p-6">
+          <article className="panel p-10 max-sm:p-6 shadow-sm">
             <span className="eyebrow">{post.category || 'HVAC PPC Strategy'}</span>
-            <h1 className="text-4xl font-display font-bold text-white mb-4 leading-tight">
+            <h1 className="text-4xl font-display font-bold text-[#1E293B] mb-4 leading-tight">
               {post.title}
             </h1>
             
@@ -94,17 +94,17 @@ export default async function SingleBlogPostPage({ params }: { params: Promise<{
             </div>
 
             {post.og_image && (
-              <div className="mb-8 rounded-2xl overflow-hidden border border-white/5">
+              <div className="mb-8 rounded-2xl overflow-hidden border border-[#E2E8F0]">
                 <img src={post.og_image} alt={post.title} className="w-full h-auto object-cover" loading="lazy" />
               </div>
             )}
 
             <div 
-              className="blog-content prose prose-invert prose-lg max-w-none text-[var(--ink-dim)] leading-relaxed
-                prose-headings:text-white prose-headings:font-display prose-headings:font-bold
-                prose-a:text-[var(--blue-light)] prose-a:font-bold prose-a:no-underline hover:prose-a:underline
-                prose-strong:text-white prose-strong:font-bold
-                prose-img:rounded-2xl prose-img:border prose-img:border-white/10"
+              className="blog-content prose prose-lg max-w-none text-[#475569] leading-relaxed
+                prose-headings:text-[#1E293B] prose-headings:font-display prose-headings:font-bold
+                prose-a:text-[#2563EB] prose-a:font-bold prose-a:no-underline hover:prose-a:underline
+                prose-strong:text-[#1E293B] prose-strong:font-bold
+                prose-img:rounded-2xl prose-img:border prose-img:border-[#E2E8F0]"
               dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content_html) }}
             />
           </article>
