@@ -450,9 +450,9 @@ export default async function Home() {
                 <p className="text-[#475569] text-[17px]">Select a time that works for you. I&apos;ll prepare a custom review of your current setup before we talk.</p>
               </Reveal>
 
-              <div className="flex flex-col gap-10">
-                {/* Zcal Embed - 100% Full Width */}
-                <div className="w-full rounded-[32px] overflow-hidden border border-[#E2E8F0] shadow-md bg-white p-2">
+              <div className="flex flex-col gap-12">
+                {/* Zcal Embed - Seamless Full Width directly in section */}
+                <div className="w-full">
                   <ZcalEmbed />
                 </div>
                 
