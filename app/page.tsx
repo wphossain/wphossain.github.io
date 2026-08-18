@@ -452,12 +452,12 @@ export default async function Home() {
 
               <div className="flex gap-10 max-xl:flex-col items-start">
                 {/* Zcal Embed */}
-                <div className="flex-[0.65] w-full rounded-[32px] overflow-hidden border border-[#E2E8F0] shadow-md bg-white p-2">
+                <div className="flex-[0.70] w-full rounded-[32px] overflow-hidden border border-[#E2E8F0] shadow-md bg-white p-2">
                   <ZcalEmbed />
                 </div>
                 
                 {/* What to Expect */}
-                <div className="flex-[0.35] w-full space-y-4">
+                <div className="flex-[0.30] w-full space-y-4">
                   <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#64748B] block mb-6">What to expect on the call</span>
                   {[
                     { title: "Campaign Audit", desc: "A focused review of your actual search term quality and lead flow." },
