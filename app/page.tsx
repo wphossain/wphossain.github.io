@@ -321,15 +321,15 @@ export default async function Home() {
             ============================================================ */}
         <section className="w-full bg-[#F8FAFC] border-b border-[#CBD5E1] py-20 relative overflow-hidden" id="services">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
-            <Reveal className="max-w-[760px] mb-12">
-              <span className="eyebrow">Trade Specialization</span>
+            <div className="max-w-[760px] mb-12 text-left">
+              <span className="eyebrow mb-3.5">Trade Specialization</span>
               <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-[#0F172A] font-bold">
                 Google Ads Architecture Built for Local Contractors
               </h2>
               <p className="text-[#475569] text-[17px] leading-relaxed">
                 HVAC, plumbing, roofing, electrical, landscaping, and trade home services — built to turn search clicks into booked jobs.
               </p>
-            </Reveal>
+            </div>
             <ServiceGrid items={services.content_json?.services_list || []} />
           </div>
         </section>
@@ -359,31 +359,37 @@ export default async function Home() {
         <PackagesSection />
 
         {/* ============================================================
-            9. TESTIMONIALS & VERIFIED REVIEWS
+            9. TESTIMONIALS & VERIFIED REVIEWS (Left-Aligned)
             ============================================================ */}
         <section className="w-full bg-white border-b border-[#CBD5E1] py-20 relative overflow-hidden" id="testimonials">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-10 relative z-10">
-            <Reveal className="max-w-[760px] mb-14 text-center mx-auto">
-              <span className="eyebrow mx-auto">Verified Feedback</span>
-              <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-[#0F172A] font-bold">
+            <div className="max-w-[760px] mb-12 text-left">
+              <span className="eyebrow mb-3.5">Verified Feedback</span>
+              <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-3 text-[#0F172A] font-bold">
                 What Business Owners Say Once The Calls Start Rolling In
               </h2>
-            </Reveal>
+              <p className="text-[#475569] text-[16.5px] leading-relaxed">
+                Real feedback from verified contractors across the US.
+              </p>
+            </div>
             <TestimonialsSlider testimonials={testimonials} />
           </div>
         </section>
 
         {/* ============================================================
-            10. CERTIFICATIONS & BADGES
+            10. CERTIFICATIONS & BADGES (Left-Aligned)
             ============================================================ */}
         <section className="w-full bg-[#F8FAFC] border-b border-[#CBD5E1] py-20 relative overflow-hidden" id="certifications">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
-            <Reveal className="max-w-[760px] mb-12">
-              <span className="eyebrow">Official Accreditations</span>
-              <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-[#0F172A] font-bold">
+            <div className="max-w-[760px] mb-12 text-left">
+              <span className="eyebrow mb-3.5">Official Accreditations</span>
+              <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-3 text-[#0F172A] font-bold">
                 Official Google Partner &amp; Certified Accreditations
               </h2>
-            </Reveal>
+              <p className="text-[#475569] text-[16.5px] leading-relaxed">
+                Verified credentials across Google Ads, Analytics, Tag Manager, and Meta conversion tracking.
+              </p>
+            </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
               {activeCerts.map((cert: any, i: number) => {
                 const brandTopColor = 
@@ -411,16 +417,19 @@ export default async function Home() {
         </section>
 
         {/* ============================================================
-            11. FAQ ACCORDION
+            11. FAQ ACCORDION (Left-Aligned)
             ============================================================ */}
         <section className="w-full bg-white border-b border-[#CBD5E1] py-20 relative overflow-hidden" id="faq">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
-            <Reveal className="max-w-[760px] mb-12 text-center mx-auto">
-              <span className="eyebrow mx-auto">Frequently Asked Questions</span>
-              <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-[#0F172A] font-bold">
+            <div className="max-w-[760px] mb-10 text-left">
+              <span className="eyebrow mb-3.5">Frequently Asked Questions</span>
+              <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-3 text-[#0F172A] font-bold">
                 Everything You Need to Know Before Booking a Call
               </h2>
-            </Reveal>
+              <p className="text-[#475569] text-[16.5px] leading-relaxed">
+                Direct answers regarding ad budgets, timelines, contracts, and tracking setups.
+              </p>
+            </div>
             <FaqAccordion />
           </div>
         </section>

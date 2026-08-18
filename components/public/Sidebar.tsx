@@ -20,31 +20,32 @@ const SERVICE_ITEMS = [
     href: '/#services'
   },
   {
-    title: 'Negative Keyword Fortresses',
-    icon: '🛡️',
+    title: 'SEO Strategy',
+    icon: '📈',
     color: '#EA4335',
     href: '/#services'
   },
   {
-    title: 'CallRail & Call Tracking DNI',
-    icon: '📞',
-    color: '#34A853',
-    href: '/#services'
-  },
-  {
-    title: 'Click-to-Call Landing Pages',
+    title: 'Performance Marketing',
     icon: '⚡',
     color: '#FBBC04',
     href: '/#services'
   },
   {
-    title: 'GA4 & GTM Attribution',
+    title: 'Analytics & CRO',
     icon: '🔬',
     color: '#1A73E8',
+    href: '/#services',
+    hasDividerTop: true
+  },
+  {
+    title: 'Web Development',
+    icon: '💻',
+    color: '#6366F1',
     href: '/#services'
   },
   {
-    title: 'Local Service Ads (LSA)',
+    title: 'Growth Consulting',
     icon: '🚀',
     color: '#059669',
     href: '/#services'
@@ -201,26 +202,30 @@ export function Sidebar({
               </svg>
             </Link>
 
-            {/* Dropdown Popup Card (Crisp White Theme matching site) */}
+            {/* Dropdown Popup Card (Crisp White Light Theme matching site) */}
             {isDropdownOpen && (
               <div 
-                className="absolute top-full left-0 mt-2 w-[280px] bg-white border border-[#CBD5E1] rounded-[20px] p-2 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150"
+                className="absolute top-full left-0 mt-2 w-[270px] bg-white border border-[#CBD5E1] rounded-[22px] p-2.5 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150"
               >
                 <div className="flex flex-col gap-1">
                   {SERVICE_ITEMS.map((item, i) => (
-                    <Link
-                      key={i}
-                      href={item.href}
-                      onClick={() => setIsDropdownOpen(false)}
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 border border-transparent hover:border-[#E2E8F0] transition-all group"
-                    >
-                      <div className="w-8 h-8 rounded-lg bg-slate-50 border border-[#CBD5E1] flex items-center justify-center text-sm shrink-0 group-hover:scale-105 group-hover:border-[#1A73E8] transition-all shadow-2xs">
-                        {item.icon}
-                      </div>
-                      <span className="text-[13px] font-semibold text-[#0F172A] group-hover:text-[#1A73E8] transition-colors">
-                        {item.title}
-                      </span>
-                    </Link>
+                    <React.Fragment key={i}>
+                      {item.hasDividerTop && (
+                        <div className="my-1.5 border-t border-[#E2E8F0]" />
+                      )}
+                      <Link
+                        href={item.href}
+                        onClick={() => setIsDropdownOpen(false)}
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 border border-transparent hover:border-[#E2E8F0] transition-all group"
+                      >
+                        <div className="w-9 h-9 rounded-xl bg-slate-50 border border-[#CBD5E1] flex items-center justify-center text-[15px] shrink-0 group-hover:scale-105 group-hover:border-[#1A73E8] transition-all shadow-2xs">
+                          {item.icon}
+                        </div>
+                        <span className="text-[13.5px] font-semibold text-[#0F172A] group-hover:text-[#1A73E8] transition-colors">
+                          {item.title}
+                        </span>
+                      </Link>
+                    </React.Fragment>
                   ))}
                 </div>
               </div>

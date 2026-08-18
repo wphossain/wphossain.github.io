@@ -97,13 +97,9 @@ export function ServiceGrid({ items }: { items?: Service[] }) {
       {services.map((s: Service, i: number) => {
         const { Icon, color } = getIconDef(s);
         return (
-          <motion.article
+          <article
             key={i}
             className="group p-7 bg-white border border-[#CBD5E1] rounded-[24px] shadow-xs hover:border-[#0F172A] hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col gap-4"
-            initial={reduce ? false : { opacity: 0, y: 16 }}
-            whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.4, delay: i * 0.06 }}
           >
             <div
               className="w-12 h-12 rounded-2xl grid place-items-center border border-[#E2E8F0] bg-slate-50 shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-2xs"
@@ -125,7 +121,7 @@ export function ServiceGrid({ items }: { items?: Service[] }) {
               </h3>
               <p className="text-[13.5px] text-[#475569] leading-relaxed">{s.desc}</p>
             </div>
-          </motion.article>
+          </article>
         );
       })}
     </div>

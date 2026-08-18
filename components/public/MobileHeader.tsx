@@ -19,27 +19,27 @@ const SERVICE_ITEMS = [
     href: '/#services'
   },
   {
-    title: 'Negative Keyword Fortresses',
-    icon: '🛡️',
+    title: 'SEO Strategy',
+    icon: '📈',
     href: '/#services'
   },
   {
-    title: 'CallRail & Call Tracking DNI',
-    icon: '📞',
-    href: '/#services'
-  },
-  {
-    title: 'Click-to-Call Landing Pages',
+    title: 'Performance Marketing',
     icon: '⚡',
     href: '/#services'
   },
   {
-    title: 'GA4 & GTM Attribution',
+    title: 'Analytics & CRO',
     icon: '🔬',
     href: '/#services'
   },
   {
-    title: 'Local Service Ads (LSA)',
+    title: 'Web Development',
+    icon: '💻',
+    href: '/#services'
+  },
+  {
+    title: 'Growth Consulting',
     icon: '🚀',
     href: '/#services'
   }

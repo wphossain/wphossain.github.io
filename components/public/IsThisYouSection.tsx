@@ -34,15 +34,15 @@ export function IsThisYouSection() {
     <section className="w-full bg-white border-b border-[#CBD5E1] py-20 relative overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
         
-        {/* Section Header */}
-        <div className="text-center max-w-[760px] mx-auto mb-14">
-          <span className="eyebrow mx-auto">
+        {/* Section Header (Unified Left Alignment) */}
+        <div className="max-w-[760px] mb-12 text-left">
+          <span className="eyebrow mb-3.5">
             Diagnostic Check
           </span>
-          <h2 className="text-[clamp(28px,4vw,42px)] font-bold text-[#0F172A] leading-tight mb-4 font-display">
+          <h2 className="text-[clamp(28px,4vw,42px)] font-bold text-[#0F172A] leading-tight mb-3 font-display">
             Is This You Right Now?
           </h2>
-          <p className="text-[17px] text-[#475569] leading-relaxed">
+          <p className="text-[16.5px] text-[#475569] leading-relaxed">
             Every local service business faces different growth bottlenecks. Choose the scenario that matches your current situation:
           </p>
         </div>

@@ -60,15 +60,15 @@ export function PackagesSection() {
     <section id="packages" className="w-full bg-[#F8FAFC] border-b border-[#CBD5E1] py-20 relative overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
         
-        {/* Section Header */}
-        <div className="text-center max-w-[760px] mx-auto mb-14">
-          <span className="eyebrow mx-auto">
+        {/* Section Header (Unified Left Alignment) */}
+        <div className="max-w-[760px] mb-12 text-left">
+          <span className="eyebrow mb-3.5">
             Transparent Engagement
           </span>
-          <h2 className="text-[clamp(28px,4vw,42px)] font-bold text-[#0F172A] leading-tight mb-4 font-display">
+          <h2 className="text-[clamp(28px,4vw,42px)] font-bold text-[#0F172A] leading-tight mb-3 font-display">
             Simple, No-Fluff Growth Packages
           </h2>
-          <p className="text-[17px] text-[#475569] leading-relaxed">
+          <p className="text-[16.5px] text-[#475569] leading-relaxed">
             Flat-rate specialist management tailored to your local service business. No percentage-of-spend traps, no long lock-in contracts, cancel anytime.
           </p>
         </div>

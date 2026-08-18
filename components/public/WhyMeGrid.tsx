@@ -122,13 +122,9 @@ export function WhyMeGrid({
           const accentColor = card.color || "#0F172A";
 
           return (
-            <motion.article
+            <article
               key={i}
               className="group p-7 bg-white border border-[#CBD5E1] shadow-xs rounded-[24px] flex flex-col gap-4 hover:border-[#0F172A] hover:shadow-md hover:-translate-y-1 transition-all duration-300"
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.4, delay: i * 0.06 }}
             >
               {/* Icon Container */}
               <div
@@ -146,7 +142,7 @@ export function WhyMeGrid({
                   {card.desc}
                 </p>
               </div>
-            </motion.article>
+            </article>
           );
         })}
       </div>

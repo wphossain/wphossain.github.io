@@ -627,9 +627,9 @@ export function GrowthEcosystemHero() {
 
       <div className="max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Heading */}
-        <div className="text-center max-w-[800px] mx-auto mb-8 lg:mb-12">
-          <span className="eyebrow mx-auto">
+        {/* Section Heading (Unified Left Alignment) */}
+        <div className="max-w-[760px] mb-8 lg:mb-10 text-left">
+          <span className="eyebrow mb-3.5">
             The Complete Growth Engine
           </span>
           <h2 className="text-[clamp(28px,4vw,44px)] font-bold text-[#0F172A] leading-tight mb-3 font-display">
