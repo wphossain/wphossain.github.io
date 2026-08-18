@@ -114,7 +114,7 @@ function Dot({ color = "bg-emerald-500", className = "" }: { color?: string; cla
 }
 
 const SLOT_CLASS = "flex flex-1 basis-0 min-w-0";
-const GAP_CLASS = "w-2.5 xl:w-4 shrink-0";
+const GAP_CLASS = "w-2 xl:w-3.5 shrink-0";
 
 function MetricCard({
   label,
@@ -128,9 +128,9 @@ function MetricCard({
   decimals?: number;
 }) {
   return (
-    <div className="min-w-0 flex-1 rounded-lg border border-[#CBD5E1] bg-slate-50 px-2 py-2 shadow-2xs">
+    <div className="min-w-0 flex-1 rounded-lg border border-[#CBD5E1] bg-slate-50 px-2 py-1.5 shadow-2xs">
       <p className="text-[9px] font-bold text-[#64748B] uppercase tracking-wider whitespace-nowrap">{label}</p>
-      <p className="text-[13.5px] font-bold text-[#0F172A] leading-tight font-display mt-0.5">
+      <p className="text-[13px] font-bold text-[#0F172A] leading-tight font-display mt-0.5">
         <CountUp to={countTo} suffix={suffix} decimals={decimals} />
       </p>
     </div>
@@ -164,22 +164,18 @@ function WorkflowCard({
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay }}
-      className="group relative flex w-[172px] sm:w-[180px] lg:w-auto lg:min-w-0 lg:flex-1 lg:basis-0 shrink-0 flex-col justify-between min-h-[385px] sm:min-h-[395px] rounded-[22px] border border-[#CBD5E1] bg-white p-4 sm:p-4.5 shadow-xs transition-all duration-300 hover:border-[#1A73E8] hover:shadow-xl hover:-translate-y-1.5"
+      className="group relative flex w-[170px] sm:w-[178px] lg:w-auto lg:min-w-0 lg:flex-1 lg:basis-0 shrink-0 flex-col min-h-[355px] sm:min-h-[365px] rounded-[22px] border border-[#CBD5E1] bg-white p-3.5 sm:p-4 shadow-xs transition-all duration-300 hover:border-[#1A73E8] hover:shadow-xl hover:-translate-y-1.5"
     >
-      <div className="flex flex-col h-full justify-between">
-        <div>
-          <div className="flex items-start gap-2 mb-3">
-            <span className="flex h-5.5 w-5.5 shrink-0 items-center justify-center rounded-full bg-[#0F172A] text-[11px] font-bold text-white shadow-2xs group-hover:bg-[#1A73E8] transition-colors">
-              {step}
-            </span>
-            <div className="min-w-0 min-h-[38px]">
-              <p className="text-[12.5px] xl:text-[13px] font-bold leading-[1.2] text-[#0F172A] font-display">{title}</p>
-              {subtitle && <p className="text-[9.5px] xl:text-[10px] font-semibold leading-tight text-[#059669] mt-0.5">{subtitle}</p>}
-            </div>
-          </div>
+      <div className="flex items-start gap-1.5 mb-2.5">
+        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#0F172A] text-[10.5px] font-bold text-white shadow-2xs group-hover:bg-[#1A73E8] transition-colors">
+          {step}
+        </span>
+        <div className="min-w-0 min-h-[36px]">
+          <p className="text-[12.5px] xl:text-[13px] font-bold leading-[1.2] text-[#0F172A] font-display">{title}</p>
+          {subtitle && <p className="text-[9.5px] xl:text-[10px] font-semibold leading-tight text-[#059669] mt-0.5">{subtitle}</p>}
         </div>
-        <div className="flex flex-col gap-2.5 flex-1 justify-between">{children}</div>
       </div>
+      <div className="flex flex-col gap-2 flex-1 justify-between">{children}</div>
     </motion.div>
   );
 }
@@ -189,13 +185,13 @@ function Connector({ orientation = "horizontal", delay = 0 }: { orientation?: "h
   const isH = orientation === "horizontal";
   return (
     <div
-      className={isH ? `hidden lg:flex items-center justify-center ${GAP_CLASS}` : "flex lg:hidden items-center justify-center h-8 w-full"}
+      className={isH ? `hidden lg:flex items-center justify-center ${GAP_CLASS}` : "flex lg:hidden items-center justify-center h-7 w-full"}
       aria-hidden="true"
     >
-      <svg width={24} height={16} viewBox="0 0 24 16" fill="none" className="overflow-visible">
+      <svg width={20} height={16} viewBox="0 0 20 16" fill="none" className="overflow-visible">
         {isH ? (
           <path
-            d="M2 8 H18 M18 8 L13 3 M18 8 L13 13"
+            d="M1 8 H16 M16 8 L12 4 M16 8 L12 12"
             stroke="#0F172A"
             strokeOpacity="0.4"
             strokeWidth="2"
@@ -204,7 +200,7 @@ function Connector({ orientation = "horizontal", delay = 0 }: { orientation?: "h
           />
         ) : (
           <path
-            d="M8 2 V18 M8 18 L3 13 M8 18 L13 13"
+            d="M8 1 V16 M8 16 L4 12 M8 16 L12 12"
             stroke="#0F172A"
             strokeOpacity="0.4"
             strokeWidth="2"
@@ -213,10 +209,10 @@ function Connector({ orientation = "horizontal", delay = 0 }: { orientation?: "h
           />
         )}
         <motion.circle
-          r="3.5"
+          r="3"
           fill="#059669"
-          style={{ filter: "drop-shadow(0 0 6px rgba(5,150,105,0.9))" }}
-          animate={isH ? { cx: [2, 18], cy: 8, opacity: [0, 1, 1, 0] } : { cx: 8, cy: [2, 18], opacity: [0, 1, 1, 0] }}
+          style={{ filter: "drop-shadow(0 0 5px rgba(5,150,105,0.9))" }}
+          animate={isH ? { cx: [1, 16], cy: 8, opacity: [0, 1, 1, 0] } : { cx: 8, cy: [1, 16], opacity: [0, 1, 1, 0] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut", delay, repeatDelay: 0.4 }}
         />
       </svg>
@@ -231,7 +227,7 @@ const BR = {
   cCard: "50%",
   lEdge: "24%",
   rEdge: "76%",
-  GAP: 42,
+  GAP: 40,
 } as const;
 
 function BracketLine({ style }: { style: CSSProperties }) {
@@ -318,7 +314,7 @@ function TopRail() {
     nodes.push(
       <div key={s.step} className={`${SLOT_CLASS} flex-col items-center`}>
         <span className="relative z-10 h-2.5 w-2.5 shrink-0 rounded-full border-2 border-[#0F172A] bg-white shadow-2xs" />
-        <span className="w-[1.5px] h-3.5 bg-gradient-to-b from-slate-400 to-slate-200" />
+        <span className="w-[1.5px] h-3 bg-gradient-to-b from-slate-400 to-slate-200" />
       </div>
     );
     if (i < STEPS.length - 1) {
@@ -327,7 +323,7 @@ function TopRail() {
   });
 
   return (
-    <div className="relative hidden h-5 w-full lg:flex lg:flex-nowrap lg:items-stretch lg:justify-between mb-5" aria-hidden="true">
+    <div className="relative hidden h-5 w-full lg:flex lg:flex-nowrap lg:items-stretch lg:justify-between mb-4" aria-hidden="true">
       <div className="absolute top-[4px] h-[1.5px] -translate-y-1/2 bg-slate-300" style={{ left: BR.lCard, right: BR.lCard }} />
       {/* Traveling Energy Packet across Top Rail */}
       <motion.span
@@ -348,7 +344,7 @@ function TopRail() {
 function GoogleAdsCampaignsStep() {
   return (
     <>
-      <div className="flex justify-center py-0.5">
+      <div className="flex justify-center py-1">
         <GoogleAdsIcon className="h-9 w-9" />
       </div>
       <div className="flex items-center justify-between gap-1 rounded-lg border border-[#CBD5E1] bg-slate-50 px-2.5 py-1.5">
@@ -362,18 +358,17 @@ function GoogleAdsCampaignsStep() {
         <MetricCard label="Impressions" countTo={248} suffix="K" />
         <MetricCard label="Clicks" countTo={12.4} suffix="K" decimals={1} />
       </div>
-      <div className="rounded-lg border border-[#CBD5E1] bg-slate-50 px-2.5 py-2">
+      <div className="rounded-lg border border-[#CBD5E1] bg-slate-50 px-2.5 py-1.5">
         <div className="flex items-center justify-between">
-          <p className="text-[9.5px] font-bold uppercase tracking-wider text-[#64748B]">CTR</p>
-          <span className="text-[10px] font-bold text-[#059669]">▲ 32.5%</span>
+          <p className="text-[9px] font-bold uppercase tracking-wider text-[#64748B]">CTR</p>
+          <span className="text-[9.5px] font-bold text-[#059669]">▲ 32.5%</span>
         </div>
-        <p className="text-[13.5px] font-bold leading-tight text-[#0F172A] font-display mt-0.5">
+        <p className="text-[13px] font-bold leading-tight text-[#0F172A] font-display mt-0.5">
           <CountUp to={8.57} suffix="%" decimals={2} />
         </p>
-        {/* Two-Tone Vibrant Drawing Graph (Amber Impressions + Emerald Conversions) */}
         <svg viewBox="0 0 120 36" className="mt-1 h-9 w-full" preserveAspectRatio="none">
           <motion.polyline
-            points="0,32 15,28 30,30 45,23 60,25 75,17 90,19 105,11 120,13"
+            points="0,30 15,26 30,28 45,21 60,23 75,15 90,17 105,9 120,11"
             fill="none"
             stroke="#F59E0B"
             strokeWidth="2"
@@ -384,7 +379,7 @@ function GoogleAdsCampaignsStep() {
             transition={{ duration: 1.6, ease: "easeInOut", delay: 0.15 }}
           />
           <motion.polyline
-            points="0,25 15,20 30,22 45,13 60,15 75,7 90,9 105,2 120,4"
+            points="0,24 15,19 30,21 45,12 60,14 75,6 90,8 105,2 120,3"
             fill="none"
             stroke="#059669"
             strokeWidth="2.5"
@@ -403,7 +398,7 @@ function GoogleAdsCampaignsStep() {
 function LandingPageStep() {
   return (
     <>
-      <div className="relative h-[126px] w-full overflow-hidden rounded-xl border border-[#CBD5E1] bg-slate-100 shadow-2xs">
+      <div className="relative h-[116px] w-full overflow-hidden rounded-xl border border-[#CBD5E1] bg-slate-100 shadow-2xs">
         <Image src="/landing-page.png" alt="HVAC landing page preview" fill sizes="220px" className="object-cover object-top" />
       </div>
       <div className="flex items-center justify-between rounded-xl border border-[#CBD5E1] bg-slate-50 px-2.5 py-1.5">
@@ -415,27 +410,28 @@ function LandingPageStep() {
       </div>
       <div className="flex flex-col gap-1">
         <StatusRow label="Mobile Tap-to-Call" />
-        <StatusRow label="0.8s Load Time" />
+        <StatusRow label="0.8s Fast Load" />
+        <StatusRow label="Clear Converting CTA" />
       </div>
     </>
   );
 }
 
 function ScoreDonut({ value }: { value: number }) {
-  const R = 18;
+  const R = 16;
   const C = 2 * Math.PI * R;
   const target = C * (1 - value / 100);
   return (
-    <div className="relative h-[44px] w-[44px]">
-      <svg viewBox="0 0 48 48" className="h-full w-full -rotate-90">
-        <circle cx="24" cy="24" r={R} fill="none" stroke="#E2E8F0" strokeWidth="4" />
+    <div className="relative h-[38px] w-[38px]">
+      <svg viewBox="0 0 44 44" className="h-full w-full -rotate-90">
+        <circle cx="22" cy="22" r={R} fill="none" stroke="#E2E8F0" strokeWidth="3.5" />
         <motion.circle
-          cx="24"
-          cy="24"
+          cx="22"
+          cy="22"
           r={R}
           fill="none"
           stroke="#059669"
-          strokeWidth="4"
+          strokeWidth="3.5"
           strokeLinecap="round"
           strokeDasharray={C}
           initial={{ strokeDashoffset: C }}
@@ -444,10 +440,10 @@ function ScoreDonut({ value }: { value: number }) {
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center leading-none">
-        <span className="text-[13px] font-bold text-[#059669] font-display">
+        <span className="text-[12px] font-bold text-[#059669] font-display">
           <CountUp to={value} />
         </span>
-        <span className="text-[6.5px] font-bold text-[#64748B]">/100</span>
+        <span className="text-[6px] font-bold text-[#64748B]">/100</span>
       </div>
     </div>
   );
@@ -456,26 +452,26 @@ function ScoreDonut({ value }: { value: number }) {
 function PhoneCallsStep() {
   return (
     <>
-      <div className="rounded-xl border border-[#CBD5E1] bg-slate-50 px-2.5 py-2">
-        <p className="text-[9px] font-bold uppercase tracking-wider text-[#64748B]">Incoming Call</p>
-        <p className="text-[13.5px] font-bold text-[#0F172A] font-display mt-0.5 tracking-tight">(214) 555-0187</p>
+      <div className="rounded-xl border border-[#CBD5E1] bg-slate-50 px-2.5 py-1.5">
+        <p className="text-[8.5px] font-bold uppercase tracking-wider text-[#64748B]">Incoming Call</p>
+        <p className="text-[13px] font-bold text-[#0F172A] font-display mt-0.5 tracking-tight">(214) 555-0187</p>
         <div className="flex items-center gap-1 mt-0.5">
           <LiveDot color="bg-[#059669]" />
-          <p className="text-[10px] text-[#059669] font-semibold truncate">Dallas, TX · AC Failure</p>
+          <p className="text-[9.5px] text-[#059669] font-semibold truncate">Dallas, TX · AC Failure</p>
         </div>
       </div>
-      <div className="flex items-center justify-center gap-3.5 py-1.5">
-        <span className="flex h-8.5 w-8.5 items-center justify-center rounded-full bg-rose-500 text-white shadow-xs">
+      <div className="flex items-center justify-center gap-3.5 py-1">
+        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-rose-500 text-white shadow-xs">
           <PhoneHangUpIcon className="h-4 w-4" />
         </span>
-        <span className="relative flex h-8.5 w-8.5 items-center justify-center">
+        <span className="relative flex h-9 w-9 items-center justify-center">
           <motion.span
             className="absolute inset-0 rounded-full bg-emerald-500/40"
             animate={{ scale: [1, 2.1], opacity: [0.7, 0] }}
             transition={{ duration: 1.4, repeat: Infinity, ease: "easeOut" }}
           />
           <motion.span
-            className="relative flex h-8.5 w-8.5 items-center justify-center rounded-full bg-emerald-600 text-white shadow-xs"
+            className="relative flex h-9 w-9 items-center justify-center rounded-full bg-emerald-600 text-white shadow-xs"
             animate={{ rotate: [0, -12, 12, -12, 12, 0] }}
             transition={{ duration: 1, repeat: Infinity, repeatDelay: 1.2 }}
           >
@@ -483,8 +479,11 @@ function PhoneCallsStep() {
           </motion.span>
         </span>
       </div>
-      <div className="flex flex-col gap-1 pt-0.5">
-        <p className="text-[10.5px] font-bold text-[#0F172A]">CallRail Attribution</p>
+      <div className="flex flex-col gap-1">
+        <div className="flex items-center justify-between mb-0.5">
+          <p className="text-[10px] font-bold text-[#0F172A]">Call Tracking</p>
+          <span className="text-[8px] font-bold text-[#059669] bg-emerald-50 border border-emerald-200 rounded-full px-1.5 py-0.2">Active</span>
+        </div>
         <StatusRow label="Keyword Recorded" />
         <StatusRow label="Dynamic Swap" />
         <StatusRow label="Whisper Tone" />
@@ -498,31 +497,32 @@ function CrmStep() {
     ["Homeowner", "David Miller"],
     ["Phone", "(214) 555-0187"],
     ["Job Type", "Emergency AC Install"],
+    ["Location", "Dallas, TX"],
     ["Source", "Google Search Ads"],
   ];
   return (
     <>
       <div className="flex items-center justify-between">
-        <span className="text-[11px] font-bold text-[#0F172A]">New Lead Alert!</span>
+        <span className="text-[10.5px] font-bold text-[#0F172A]">New Lead Alert!</span>
         <motion.span
-          className="rounded-full border border-rose-200 bg-rose-50 px-2 py-0.5 text-[9px] font-extrabold text-rose-600 uppercase"
+          className="rounded-full border border-rose-200 bg-rose-50 px-2 py-0.5 text-[8.5px] font-extrabold text-rose-600 uppercase"
           animate={{ opacity: [1, 0.45, 1], scale: [1, 1.05, 1] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
         >
           High Intent
         </motion.span>
       </div>
-      <div className="flex flex-col gap-1.5 rounded-xl border border-[#CBD5E1] bg-slate-50 px-2.5 py-2">
+      <div className="flex flex-col gap-1 rounded-xl border border-[#CBD5E1] bg-slate-50 px-2.5 py-1.5">
         {fields.map(([label, value]) => (
           <div key={label} className="flex flex-col leading-tight">
-            <span className="text-[8.5px] font-bold uppercase tracking-wider text-[#64748B]">{label}</span>
-            <span className="text-[10.5px] font-semibold text-[#0F172A] truncate">{value}</span>
+            <span className="text-[8px] font-bold uppercase tracking-wider text-[#64748B]">{label}</span>
+            <span className="text-[9.5px] font-semibold text-[#0F172A] truncate">{value}</span>
           </div>
         ))}
       </div>
-      <div className="flex items-center justify-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 py-1.5">
-        <CheckCircleIcon className="h-3.5 w-3.5" />
-        <span className="text-[9.5px] font-bold text-[#059669] whitespace-nowrap">Instant SMS Dispatched</span>
+      <div className="flex items-center justify-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 py-1">
+        <CheckCircleIcon className="h-3 w-3" />
+        <span className="text-[9px] font-bold text-[#059669] whitespace-nowrap">Instant SMS Dispatched</span>
       </div>
     </>
   );
@@ -532,20 +532,23 @@ function TechnicianStep() {
   return (
     <>
       <div className="flex items-center justify-between">
-        <span className="flex items-center gap-1 text-[10.5px] font-bold text-[#059669]">
-          <CheckCircleIcon className="h-3.5 w-3.5" />
-          Tech Dispatched
+        <span className="flex items-center gap-1 text-[10px] font-bold text-[#059669]">
+          <CheckCircleIcon className="h-3 w-3" />
+          Job Assigned
         </span>
-        <span className="text-[9px] font-bold text-[#059669] bg-emerald-50 border border-emerald-200 rounded-full px-1.5 py-0.5">
+        <span className="text-[8.5px] font-bold text-[#059669] bg-emerald-50 border border-emerald-200 rounded-full px-1.5 py-0.2">
           ETA 22m
         </span>
       </div>
-      <div className="relative h-[126px] w-full overflow-hidden rounded-xl border border-[#CBD5E1] bg-slate-100 shadow-2xs">
+      <div className="relative h-[110px] w-full overflow-hidden rounded-xl border border-[#CBD5E1] bg-slate-100 shadow-2xs">
         <Image src="/technician.png" alt="Dispatched HVAC technician" fill sizes="220px" className="object-cover object-top" />
       </div>
-      <div className="rounded-xl border border-[#CBD5E1] bg-slate-50 p-2 flex items-center justify-between">
-        <span className="text-[9.5px] font-bold uppercase text-[#64748B]">Truck Stock</span>
-        <span className="text-[10px] font-bold text-[#059669]">100% Ready</span>
+      <div className="flex items-center justify-between text-[9.5px] text-[#475569] font-medium px-0.5">
+        <span>Route Map</span>
+        <span className="font-bold text-[#059669]">22 mins</span>
+      </div>
+      <div className="relative h-[74px] w-full overflow-hidden rounded-xl border border-[#CBD5E1] bg-slate-100 shadow-2xs">
+        <Image src="/technician-map.png" alt="Technician live GPS route map" fill sizes="220px" className="object-cover" />
       </div>
     </>
   );
@@ -555,8 +558,8 @@ function CustomerStep() {
   return (
     <>
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1 text-[10.5px] font-bold text-[#059669]">
-          <CheckCircleIcon className="h-3.5 w-3.5" />
+        <div className="flex items-center gap-1 text-[10px] font-bold text-[#059669]">
+          <CheckCircleIcon className="h-3 w-3" />
           Job Completed
         </div>
         <div className="flex gap-0.5">
@@ -566,14 +569,14 @@ function CustomerStep() {
               animate={{ opacity: [1, 0.35, 1], scale: [1, 1.15, 1] }}
               transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut", delay: i * 0.15 }}
             >
-              <StarIcon className="h-3.5 w-3.5" />
+              <StarIcon className="h-3 w-3" />
             </motion.span>
           ))}
         </div>
       </div>
-      <p className="text-[10px] xl:text-[10.5px] italic leading-snug text-[#334155]">&ldquo;They arrived in 25 mins and had our AC cooling again. Lifesaver!&rdquo;</p>
-      <p className="text-[9px] font-bold text-[#64748B]">— Michael T. (Verified)</p>
-      <div className="relative h-[126px] w-full overflow-hidden rounded-xl border border-[#CBD5E1] bg-slate-100 shadow-2xs">
+      <p className="text-[9.5px] xl:text-[10px] italic leading-snug text-[#334155]">&ldquo;They arrived in 22 mins and had our AC cooling again. Lifesaver!&rdquo;</p>
+      <p className="text-[8.5px] font-bold text-[#64748B]">— Michael T. (Verified)</p>
+      <div className="relative h-[128px] w-full overflow-hidden rounded-xl border border-[#CBD5E1] bg-slate-100 shadow-2xs">
         <Image src="/customer-house.png" alt="Customer's home" fill sizes="220px" className="object-cover" />
       </div>
     </>
@@ -589,12 +592,12 @@ function RevenueCard() {
       className="relative z-10 mx-auto inline-flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4.5 rounded-2xl border-2 border-[#0F172A] bg-white p-3.5 sm:p-4 shadow-xl max-w-[740px] w-auto"
     >
       <div className="flex items-center gap-2.5 shrink-0">
-        <span className="flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-full bg-[#0F172A] text-[14px] font-bold text-white shadow-2xs">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0F172A] text-[13px] font-bold text-white shadow-2xs">
           7
         </span>
         <div className="pr-1">
-          <p className="text-[14.5px] font-bold leading-tight text-[#0F172A] font-display whitespace-nowrap">More Revenue</p>
-          <p className="text-[11px] font-bold leading-tight text-[#059669] whitespace-nowrap">Compounding ROI</p>
+          <p className="text-[14px] font-bold leading-tight text-[#0F172A] font-display whitespace-nowrap">More Revenue</p>
+          <p className="text-[10.5px] font-bold leading-tight text-[#059669] whitespace-nowrap">Compounding ROI</p>
         </div>
       </div>
 
@@ -650,7 +653,7 @@ export function GrowthEcosystemHero() {
   return (
     <section 
       id="ecosystem"
-      className="relative w-full overflow-hidden bg-white border-b border-[#CBD5E1] py-14 lg:py-16"
+      className="relative w-full overflow-hidden bg-white border-b border-[#CBD5E1] pt-12 lg:pt-14 pb-16 lg:pb-20"
     >
       {/* Background Ambient Radial Lights (Clean Solid White Foundation) */}
       <div className="absolute top-6 left-1/4 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(5,150,105,0.03),transparent_70%)] pointer-events-none" />
@@ -659,15 +662,15 @@ export function GrowthEcosystemHero() {
       {/* Standard Container */}
       <div className="max-w-[1440px] mx-auto px-6 lg:px-10 relative z-10">
         
-        {/* Section Heading - Centered with balanced margin */}
+        {/* Section Heading - Centered with +5px balanced margin */}
         <div className="max-w-3xl mx-auto mb-8 lg:mb-9 text-center">
-          <h2 className="text-[clamp(28px,3.8vw,42px)] font-bold text-[#0F172A] leading-tight font-display tracking-tight">
+          <h2 className="text-[clamp(26px,3.5vw,38px)] font-bold text-[#0F172A] leading-tight font-display tracking-tight">
             Local Service Growth Ecosystem
           </h2>
         </div>
 
-        {/* 6-Step Workflow Rail Centered & Tightly Inset (max-w-[1180px]) */}
-        <div className="relative w-full max-w-[1180px] xl:max-w-[1220px] mx-auto flex flex-col items-center justify-center">
+        {/* 6-Step Workflow Rail Centered & Tightly Inset (max-w-[1160px]) */}
+        <div className="relative w-full max-w-[1160px] xl:max-w-[1200px] mx-auto flex flex-col items-center justify-center">
           
           {/* Top Rail with balanced bottom spacing */}
           <TopRail />
@@ -683,8 +686,8 @@ export function GrowthEcosystemHero() {
             ))}
           </div>
 
-          {/* Revenue Acceleration Bottom Section with snug 42px bracket spacing */}
-          <div className="relative mt-10 lg:mt-11 w-full flex flex-col items-center">
+          {/* Revenue Acceleration Bottom Section with +5px top spacing (GAP: 40px) */}
+          <div className="relative mt-9 lg:mt-10 w-full flex flex-col items-center">
             <BottomConnectors />
 
             <div className="mb-2 flex justify-center lg:hidden">
