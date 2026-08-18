@@ -450,27 +450,29 @@ export default async function Home() {
                 <p className="text-[#475569] text-[17px]">Select a time that works for you. I&apos;ll prepare a custom review of your current setup before we talk.</p>
               </Reveal>
 
-              <div className="flex gap-10 max-xl:flex-col items-start">
-                {/* Zcal Embed */}
-                <div className="flex-[0.70] w-full rounded-[32px] overflow-hidden border border-[#E2E8F0] shadow-md bg-white p-2">
+              <div className="flex flex-col gap-10">
+                {/* Zcal Embed - 100% Full Width */}
+                <div className="w-full rounded-[32px] overflow-hidden border border-[#E2E8F0] shadow-md bg-white p-2">
                   <ZcalEmbed />
                 </div>
                 
-                {/* What to Expect */}
-                <div className="flex-[0.30] w-full space-y-4">
-                  <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#64748B] block mb-6">What to expect on the call</span>
-                  {[
-                    { title: "Campaign Audit", desc: "A focused review of your actual search term quality and lead flow." },
-                    { title: "Structure Check", desc: "Feedback on campaign segmentation and search intent mapping." },
-                    { title: "Tracking Review", desc: "Detailed check on call-swap and form tracking attribution quality." },
-                    { title: "Landing Page CRO", desc: "Actionable observations for better conversion rate optimization." },
-                    { title: "Next Steps Plan", desc: "A clear, no-fluff action plan for account growth and better ROI." }
-                  ].map((item, i) => (
-                    <div key={i} className="p-5 rounded-2xl border border-[#E2E8F0] bg-white shadow-sm flex flex-col gap-2 hover:border-slate-300 hover:shadow-md transition-all group">
-                      <span className="text-[10px] font-extrabold text-[#25D366] uppercase tracking-[0.1em] group-hover:translate-x-1 transition-transform inline-block">0{i+1}. {item.title}</span>
-                      <p className="text-[13px] text-[#475569] leading-relaxed">{item.desc}</p>
-                    </div>
-                  ))}
+                {/* What to Expect - Positioned Below */}
+                <div className="w-full">
+                  <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#64748B] block mb-5">What to expect on the call</span>
+                  <div className="grid grid-cols-5 max-xl:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-4">
+                    {[
+                      { title: "Campaign Audit", desc: "A focused review of your actual search term quality and lead flow." },
+                      { title: "Structure Check", desc: "Feedback on campaign segmentation and search intent mapping." },
+                      { title: "Tracking Review", desc: "Detailed check on call-swap and form tracking attribution quality." },
+                      { title: "Landing Page CRO", desc: "Actionable observations for better conversion rate optimization." },
+                      { title: "Next Steps Plan", desc: "A clear, no-fluff action plan for account growth and better ROI." }
+                    ].map((item, i) => (
+                      <div key={i} className="p-5 rounded-2xl border border-[#E2E8F0] bg-white shadow-sm flex flex-col gap-2 hover:border-slate-300 hover:shadow-md transition-all group">
+                        <span className="text-[10px] font-extrabold text-[#25D366] uppercase tracking-[0.1em] group-hover:translate-x-1 transition-transform inline-block">0{i+1}. {item.title}</span>
+                        <p className="text-[13px] text-[#475569] leading-relaxed">{item.desc}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
