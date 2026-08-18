@@ -172,12 +172,12 @@
 }
 
 .card {
-  background: #FFFFFF; border: 1px solid #E2E8F0;
+  background: #FFFFFF; border: 1px solid #CBD5E1;
   border-radius: var(--radius-md); padding: 22px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.03);
   transition: transform 0.28s var(--ease-out), border-color 0.28s ease, background 0.28s ease, box-shadow 0.28s var(--ease-out);
 }
-.card:hover { border-color: #CBD5E1; background: #FFFFFF; transform: translateY(-3px); box-shadow: 0 12px 24px -4px rgba(0,0,0,0.08); }
+.card:hover { border-color: #94A3B8; background: #FFFFFF; transform: translateY(-4px); box-shadow: 0 14px 28px -4px rgba(0, 0, 0, 0.08), 0 4px 10px -2px rgba(0,0,0,0.03); }
 .card h3 { transition: color 0.2s ease; }
 .card:hover h3 { color: var(--blue); }
 
@@ -267,25 +267,25 @@
 
 /* ---------------- Testimonials ---------------- */
 .testi-card {
-  background: #FFFFFF; border: 1px solid #E2E8F0;
+  background: #FFFFFF; border: 1px solid #CBD5E1;
   border-radius: var(--radius-md); padding: 22px;
   display: flex; flex-direction: column; gap: 14px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.03);
   transition: transform 0.28s var(--ease-out), border-color 0.25s ease, box-shadow 0.28s ease;
 }
-.testi-card:hover { border-color: #CBD5E1; transform: translateY(-3px); box-shadow: 0 12px 24px -4px rgba(0,0,0,0.08); }
+.testi-card:hover { border-color: #94A3B8; transform: translateY(-4px); box-shadow: 0 14px 28px -4px rgba(0, 0, 0, 0.08), 0 4px 10px -2px rgba(0,0,0,0.03); }
 .testi-quote { font-size: 14.5px; color: #475569; font-style: italic; }
 .stars { color: var(--gold); font-size: 13px; letter-spacing: 2px; }
 
 /* ---------------- FAQ ---------------- */
 .faq-item {
-  border: 1px solid #E2E8F0; border-radius: 15px;
+  border: 1px solid #CBD5E1; border-radius: 15px;
   background: #FFFFFF; padding: 4px 20px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.02);
   transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
 }
 .faq-item + .faq-item { margin-top: 10px; }
-.faq-item:hover { border-color: #CBD5E1; box-shadow: 0 6px 16px rgba(0,0,0,0.04); }
+.faq-item:hover { border-color: #94A3B8; box-shadow: 0 8px 18px rgba(0,0,0,0.04); }
 .faq-item summary {
   cursor: pointer; list-style: none; padding: 16px 26px 16px 0;
   position: relative; font-weight: 700; font-size: 15.5px; color: #1E293B;

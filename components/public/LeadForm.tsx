@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle2, User, Mail, Globe, Linkedin } from 'lucide-react';
 
-export function LeadForm() {
+export function LeadForm({ isDark = false }: { isDark?: boolean }) {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -48,12 +48,16 @@ export function LeadForm() {
 
   if (status === 'success') {
     return (
-      <div className="bg-white border border-emerald-500/30 rounded-3xl p-10 text-center flex flex-col items-center justify-center min-h-[400px] shadow-lg animate-in fade-in zoom-in duration-500">
-        <div className="w-20 h-20 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-500 mb-6 shadow-sm border border-emerald-200">
+      <div className={`border rounded-3xl p-10 text-center flex flex-col items-center justify-center min-h-[400px] shadow-lg animate-in fade-in zoom-in duration-500 ${
+        isDark ? 'bg-[#132A4E]/60 border-[#25D366]/30' : 'bg-white border-emerald-500/30'
+      }`}>
+        <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 shadow-sm border ${
+          isDark ? 'bg-[#25D366]/10 text-[#25D366] border-[#25D366]/30' : 'bg-emerald-50 text-emerald-500 border-emerald-200'
+        }`}>
           <CheckCircle2 size={40} />
         </div>
-        <h3 className="text-2xl font-display font-bold text-[#1E293B] mb-3">Audit Request Sent!</h3>
-        <p className="text-[#475569] text-[16px] max-w-sm leading-relaxed">
+        <h3 className={`text-2xl font-display font-bold mb-3 ${isDark ? 'text-white' : 'text-[#1E293B]'}`}>Audit Request Sent!</h3>
+        <p className={`text-[16px] max-w-sm leading-relaxed ${isDark ? 'text-[#aebcda]' : 'text-[#475569]'}`}>
           Thanks for reaching out. I&apos;ll personally review your site and tracking setup and get back to you within 24 hours.
         </p>
       </div>
@@ -62,24 +66,36 @@ export function LeadForm() {
 
   const InputField = ({ icon: Icon, label, ...props }: any) => (
     <div className="space-y-2 group">
-      <label className="text-[11px] font-bold text-[#475569] uppercase tracking-[0.1em] ml-1 flex items-center gap-2 group-focus-within:text-[#2563EB] transition-colors">
+      <label className={`text-[11px] font-bold uppercase tracking-[0.1em] ml-1 flex items-center gap-2 transition-colors ${
+        isDark 
+          ? 'text-[#aebcda] group-focus-within:text-[#4c9bff]' 
+          : 'text-[#475569] group-focus-within:text-[#2563EB]'
+      }`}>
         <Icon size={12} />
         {label}
       </label>
       <div className="relative">
         <input 
           {...props}
-          className="w-full bg-white border border-[#CBD5E1] rounded-xl px-4 py-3.5 text-[#1E293B] text-[14px] focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] outline-none transition-all placeholder:text-[#94A3B8]"
+          className={`w-full rounded-xl px-4 py-3.5 text-[14px] outline-none transition-all ${
+            isDark 
+              ? 'bg-[#050f1f]/80 border border-white/10 text-white placeholder:text-[#64748B] focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB]'
+              : 'bg-white border border-[#CBD5E1] text-[#1E293B] placeholder:text-[#94A3B8] focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB]'
+          }`}
         />
       </div>
     </div>
   );
 
   return (
-    <div className="bg-white border border-[#E2E8F0] rounded-3xl p-8 max-sm:p-6 shadow-lg">
+    <div className={`rounded-3xl p-8 max-sm:p-6 shadow-xl ${
+      isDark 
+        ? 'bg-[#132A4E]/40 border border-[#2563EB]/25 backdrop-blur-xl' 
+        : 'bg-white border border-[#CBD5E1]'
+    }`}>
       <div className="mb-8">
-        <h3 className="text-2xl font-display font-bold text-[#1E293B] mb-2">Get Your Free Audit</h3>
-        <p className="text-[#475569] text-[14px]">Enter your details and I&apos;ll send a custom audit report to your inbox.</p>
+        <h3 className={`text-2xl font-display font-bold mb-2 ${isDark ? 'text-white' : 'text-[#1E293B]'}`}>Get Your Free Audit</h3>
+        <p className={`text-[14px] ${isDark ? 'text-[#aebcda]' : 'text-[#475569]'}`}>Enter your details and I&apos;ll send a custom audit report to your inbox.</p>
       </div>
       
       <form onSubmit={handleSubmit} className="space-y-6">

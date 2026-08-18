@@ -136,9 +136,9 @@ export function WhyMeGrid({
           return (
             <motion.article
               key={i}
-              className="group p-8 bg-white border border-[#E2E8F0] shadow-sm rounded-[28px] flex flex-col gap-5 hover:shadow-md transition-all duration-300"
+              className="group p-8 bg-white border border-[#CBD5E1] shadow-sm rounded-[28px] flex flex-col gap-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
               whileHover={!reduce ? { 
-                y: -3,
+                y: -4,
                 borderColor: `${accentColor}88`
               } : {}}
               initial={{ opacity: 0, y: 16 }}
@@ -148,10 +148,10 @@ export function WhyMeGrid({
             >
               {/* Icon Container */}
               <div
-                className="w-12 h-12 rounded-2xl grid place-items-center border shrink-0 transition-all duration-300"
+                className="w-13 h-13 rounded-full grid place-items-center border shrink-0 transition-all duration-300 shadow-sm"
                 style={{ 
-                  backgroundColor: `${accentColor}14`, 
-                  borderColor: `${accentColor}33`, 
+                  backgroundColor: `${accentColor}18`, 
+                  borderColor: `${accentColor}40`, 
                   color: accentColor 
                 }}
               >

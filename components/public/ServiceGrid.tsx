@@ -99,9 +99,9 @@ export function ServiceGrid({ items }: { items?: Service[] }) {
         return (
           <motion.article
             key={i}
-            className={`group p-8 bg-white border border-[#E2E8F0] rounded-[28px] shadow-sm hover:shadow-md transition-all duration-300 flex flex-col gap-5`}
+            className={`group p-8 bg-white border border-[#CBD5E1] rounded-[28px] shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col gap-5`}
             whileHover={!reduce ? { 
-              y: -3,
+              y: -4,
               borderColor: `${color}88`
             } : {}}
             initial={reduce ? false : { opacity: 0, y: 16 }}
@@ -110,10 +110,10 @@ export function ServiceGrid({ items }: { items?: Service[] }) {
             transition={{ duration: 0.4, delay: i * 0.08 }}
           >
             <div
-              className="w-12 h-12 rounded-2xl grid place-items-center border shrink-0 transition-all duration-300"
+              className="w-13 h-13 rounded-full grid place-items-center border shrink-0 transition-all duration-300 shadow-sm"
               style={{ 
-                backgroundColor: `${color}14`, 
-                borderColor: `${color}33`, 
+                backgroundColor: `${color}18`, 
+                borderColor: `${color}40`, 
                 color 
               }}
             >
