@@ -15,50 +15,50 @@ export interface Service {
 type IconDef = { Icon: LucideIcon; color: string };
 
 const ICON_MAP: Record<string, IconDef> = {
-  hvac: { Icon: Thermometer, color: '#15803D' },
-  plumbing: { Icon: Droplets, color: '#B45309' },
-  roofing: { Icon: Home, color: '#B45309' },
-  electrical: { Icon: Zap, color: '#2563EB' },
-  landscaping: { Icon: Leaf, color: '#15803D' },
-  other: { Icon: Wrench, color: '#2563EB' },
+  hvac: { Icon: Thermometer, color: '#059669' },
+  plumbing: { Icon: Droplets, color: '#0F172A' },
+  roofing: { Icon: Home, color: '#2563EB' },
+  electrical: { Icon: Zap, color: '#D97706' },
+  landscaping: { Icon: Leaf, color: '#059669' },
+  other: { Icon: Wrench, color: '#0F172A' },
 };
 
 const DEFAULT_SERVICES: Service[] = [
   {
     icon: 'hvac',
-    title: 'HVAC',
-    tag: 'Heating & Cooling',
-    desc: '24/7 emergency repair searches, seasonal campaigns, and local radius targeting that fills your schedule year-round.',
+    title: 'HVAC & AC Repair',
+    tag: 'Emergency & Replacement',
+    desc: 'Capture homeowners facing sudden AC failures in heatwaves or furnace breakdowns in winter. Geotargeted campaigns built for immediate dispatch calls.',
   },
   {
     icon: 'plumbing',
-    title: 'Plumbing',
-    tag: 'Plumbing',
-    desc: "Dominate 'plumber near me' searches with tight local targeting and call-tracked campaigns built for booked jobs, not just clicks.",
+    title: 'Plumbing & Drain Cleaning',
+    tag: 'High-Intent Search',
+    desc: "Dominate 'plumber near me' and emergency water heater leak searches. Dynamic call tracking ensures zero missed leads from emergency callers.",
   },
   {
     icon: 'roofing',
-    title: 'Roofing',
-    tag: 'Roofing',
-    desc: 'Capture homeowners actively searching for roof repair, storm damage, and reroofing — filtered for high-intent buyers only.',
+    title: 'Roofing & Storm Damage',
+    tag: 'High-Ticket Installs',
+    desc: 'Target homeowners in storm-damaged zip codes searching for hail damage roof replacements and insurance claims with high-margin ROI.',
   },
   {
     icon: 'electrical',
-    title: 'Electrical Services',
-    tag: 'Electrical',
-    desc: 'Target emergency electrical searches and panel upgrade leads with campaigns tuned for licensed, high-ticket electrical work.',
+    title: 'Licensed Master Electricians',
+    tag: 'Commercial & Home',
+    desc: 'Generate inquiries for 200A electrical panel upgrades, commercial rewiring, EV charger installs, and urgent emergency power fixes.',
   },
   {
     icon: 'landscaping',
-    title: 'Landscaping & Lawn Care',
-    tag: 'Landscaping',
-    desc: 'Recurring-client campaigns for lawn care, landscaping design, and seasonal cleanup — built to keep your crew booked week after week.',
+    title: 'Landscaping & Tree Service',
+    tag: 'Recurring Contracts',
+    desc: 'High-value tree removal, hardscaping design, and recurring commercial lawn maintenance contracts across affluent neighborhoods.',
   },
   {
     icon: 'other',
-    title: 'Other Home Services',
-    tag: 'Home Services',
-    desc: 'Pest control, garage doors, locksmith, handyman — any local service business can dominate Google Search with the right strategy and campaign structure.',
+    title: 'Other Trade Services',
+    tag: 'Local Home Services',
+    desc: 'Garage door repair, pest control, restoration, and locksmiths — custom Google Search & LSA architectures tailored to your service territory.',
   },
 ];
 
@@ -85,7 +85,7 @@ function getIconDef(s: Service): IconDef {
   if (match && ICON_MAP[match[1]]) {
     return { ...ICON_MAP[match[1]], color: s.color || ICON_MAP[match[1]].color };
   }
-  return { Icon: Wrench, color: s.color || '#4c9bff' };
+  return { Icon: Wrench, color: s.color || '#0F172A' };
 }
 
 export function ServiceGrid({ items }: { items?: Service[] }) {
@@ -93,47 +93,37 @@ export function ServiceGrid({ items }: { items?: Service[] }) {
   const services = items && items.length > 0 ? items : DEFAULT_SERVICES;
 
   return (
-    <div className="grid grid-cols-3 max-sm:grid-cols-1 gap-5">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {services.map((s: Service, i: number) => {
         const { Icon, color } = getIconDef(s);
         return (
           <motion.article
             key={i}
-            className={`group p-8 bg-white border border-[#CBD5E1] rounded-[28px] shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col gap-5`}
-            whileHover={!reduce ? { 
-              y: -4,
-              borderColor: `${color}88`
-            } : {}}
+            className="group p-7 bg-white border border-[#CBD5E1] rounded-[24px] shadow-xs hover:border-[#0F172A] hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col gap-4"
             initial={reduce ? false : { opacity: 0, y: 16 }}
             whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.4, delay: i * 0.08 }}
+            transition={{ duration: 0.4, delay: i * 0.06 }}
           >
             <div
-              className="w-13 h-13 rounded-full grid place-items-center border shrink-0 transition-all duration-300 shadow-sm"
-              style={{ 
-                backgroundColor: `${color}18`, 
-                borderColor: `${color}40`, 
-                color 
-              }}
+              className="w-12 h-12 rounded-2xl grid place-items-center border border-[#E2E8F0] bg-slate-50 shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-2xs"
+              style={{ color }}
             >
-              <div className="transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[8deg]">
-                <Icon size={24} strokeWidth={2.2} />
-              </div>
+              <Icon size={22} strokeWidth={2.2} />
             </div>
+
             <div>
               {s.tag && (
                 <span
-                  className="inline-block text-[10px] font-extrabold tracking-widest uppercase px-2.5 py-1 rounded-full mb-3 border"
-                  style={{ color, backgroundColor: `${color}14`, borderColor: `${color}33` }}
+                  className="inline-block text-[10px] font-extrabold tracking-widest uppercase px-2.5 py-0.5 rounded-full mb-2.5 border border-[#E2E8F0] bg-slate-100 text-[#475569]"
                 >
                   {s.tag}
                 </span>
               )}
-              <h3 className="text-[19px] mb-2 font-bold text-[#1E293B] font-display group-hover:text-[#2563EB] transition-colors">
+              <h3 className="text-[18px] mb-2 font-bold text-[#0F172A] font-display group-hover:text-[#059669] transition-colors leading-snug">
                 {s.title}
               </h3>
-              <p className="text-[14px] text-[#475569] leading-relaxed">{s.desc}</p>
+              <p className="text-[13.5px] text-[#475569] leading-relaxed">{s.desc}</p>
             </div>
           </motion.article>
         );

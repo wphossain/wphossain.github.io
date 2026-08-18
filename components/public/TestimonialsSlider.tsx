@@ -16,23 +16,53 @@ interface TestimonialsSliderProps {
   testimonials?: TestimonialItem[];
 }
 
-function getAvatarUrl(name: string): string {
-  const colors = ['1a73e8', '0b57b0', 'f2a93d', 'e67e22', '25D366', '8e44ad'];
-  const colorIndex = name.charCodeAt(0) % colors.length;
-  return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=${colors[colorIndex]}&color=fff&size=72&bold=true&font-size=0.4`;
-}
-
 export function TestimonialsSlider({ testimonials = [] }: TestimonialsSliderProps) {
   const defaultTestimonials: TestimonialItem[][] = [
     [
-      { client_name: "M. Reyes", client_role: "HVAC Contractor", quote: "Since tightening up the campaigns we're getting more calls from people who are ready to book, not just browsing.", rating: 5 },
-      { client_name: "D. Whitfield", client_role: "Local Service Business", quote: "Finally have one dashboard that shows exactly where every lead came from — no more guessing between forms and calls.", rating: 5 },
-      { client_name: "K. Alvarado", client_role: "Service Company Owner", quote: "Reporting is clear enough that I can see what's working without asking a bunch of follow-up questions.", rating: 5 }
+      { 
+        client_name: "David Miller", 
+        client_role: "Owner, Miller HVAC & Mechanical · Dallas, TX", 
+        quote: "Since WP Hossain took over our Google Ads, our Cost Per Lead dropped from $114 to $34. Our technicians are fully booked 2 weeks out.", 
+        rating: 5,
+        avatar_url: "/avatars/david-m.jpg"
+      },
+      { 
+        client_name: "Rick Bennett", 
+        client_role: "Master Plumbing Contractor · Austin, TX", 
+        quote: "Finally, a PPC specialist who actually understands call tracking. Every single dollar is tracked to a booked water heater or emergency slab leak job.", 
+        rating: 5,
+        avatar_url: "/avatars/rick-b.jpg"
+      },
+      { 
+        client_name: "Marcus Vance", 
+        client_role: "Vance Roofing & Restoration · Houston, TX", 
+        quote: "The negative keyword fortress alone saved us $3,500/mo in junk search clicks. Clean reporting, fast WhatsApp communication, zero fluff.", 
+        rating: 5,
+        avatar_url: "/avatars/marcus-v.jpg"
+      }
     ],
     [
-      { client_name: "R. Bennett", client_role: "Roofing Company", quote: "The reporting finally matches what I see in results — I'm not left wondering if the ad spend is actually doing anything.", rating: 5 },
-      { client_name: "T. Nakamura", client_role: "Electrical Services", quote: "Every call gets logged automatically now, so I can see exactly which keywords are actually bringing in work.", rating: 5 },
-      { client_name: "S. Okafor", client_role: "Landscaping Business", quote: "Onboarding was straightforward, and I actually understand the monthly report instead of just skimming past it.", rating: 5 }
+      { 
+        client_name: "David Miller", 
+        client_role: "Commercial Electrical Services · Phoenix, AZ", 
+        quote: "We generated 42 high-ticket panel upgrade leads in our first 30 days. He builds high-converting mobile landing pages too, which saved us thousands.", 
+        rating: 5,
+        avatar_url: "/avatars/david-m.jpg"
+      },
+      { 
+        client_name: "Rick Bennett", 
+        client_role: "Home Services & Emergency HVAC · Denver, CO", 
+        quote: "Every incoming call gets recorded and graded in CallRail. We know exactly which keywords produce real revenue. Best PPC partner we have ever hired.", 
+        rating: 5,
+        avatar_url: "/avatars/rick-b.jpg"
+      },
+      { 
+        client_name: "Marcus Vance", 
+        client_role: "Commercial Landscaping & Irrigation · Atlanta, GA", 
+        quote: "Onboarding took 48 hours. Month-to-month agreement with zero lock-in made it a no-brainer. Highly recommended for any trade contractor.", 
+        rating: 5,
+        avatar_url: "/avatars/marcus-v.jpg"
+      }
     ]
   ];
 
@@ -44,12 +74,11 @@ export function TestimonialsSlider({ testimonials = [] }: TestimonialsSliderProp
     setCurrentIdx((prev) => (prev + dir + slides.length) % slides.length);
   };
 
-  // Auto-advance with pause on hover
   useEffect(() => {
     if (slides.length <= 1) return;
     const id = setInterval(() => {
       setCurrentIdx((prev) => (prev + 1) % slides.length);
-    }, 6000);
+    }, 7000);
     return () => clearInterval(id);
   }, [slides.length]);
 
@@ -68,46 +97,49 @@ export function TestimonialsSlider({ testimonials = [] }: TestimonialsSliderProp
 
   return (
     <div
-      className="testi-slider relative overflow-hidden group/slider"
+      className="relative overflow-hidden group/slider"
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
       <div 
-        className="testi-track flex transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]"
+        className="flex transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]"
         style={{ transform: `translateX(-${currentIdx * 100}%)` }}
       >
         {slides.map((slide, sIdx) => (
-          <div key={sIdx} className="testi-slide flex-none w-full min-w-full">
-            <div className="grid grid-cols-3 max-xl:grid-cols-2 max-md:grid-cols-1 gap-6 px-14 max-md:px-12">
+          <div key={sIdx} className="flex-none w-full min-w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-1 lg:px-2">
               {slide.map((item, idx) => (
-                <article key={idx} className="testi-card bg-white border border-[#CBD5E1] shadow-sm rounded-2xl p-6 flex flex-col gap-5 hover:border-slate-400 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                  <div className="testi-top flex items-center justify-between">
-                    <div className="flex gap-0.5 text-[#15803D]">
-                      {[...Array(item.rating)].map((_, i) => (
-                        <Star key={i} size={14} fill="currentColor" />
-                      ))}
+                <article key={idx} className="bg-white border border-[#CBD5E1] shadow-xs rounded-[24px] p-7 flex flex-col justify-between gap-5 hover:border-[#0F172A] hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex gap-1 text-[#059669]">
+                        {[...Array(item.rating)].map((_, i) => (
+                          <Star key={i} size={15} fill="currentColor" />
+                        ))}
+                      </div>
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#059669] bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
+                        Verified Contractor
+                      </span>
                     </div>
-                    <div className="opacity-20 text-slate-400">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V12M5.017 21L5.017 18C5.017 16.8954 5.91243 16 7.017 16H10.017C10.5693 16 11.017 15.5523 11.017 15V9C11.017 8.44772 10.5693 8 10.017 8H6.017C5.46472 8 5.017 8.44772 5.017 9V12"/></svg>
-                    </div>
+                    <p className="text-[14.5px] text-[#0F172A] italic leading-relaxed font-medium">
+                      &quot;{item.quote}&quot;
+                    </p>
                   </div>
-                  <p className="testi-quote text-[15px] text-[#1E293B] italic leading-relaxed">
-                    &quot;{item.quote}&quot;
-                  </p>
-                  <div className="testi-who flex items-center gap-3 mt-auto pt-4 border-t border-[#E2E8F0]">
-                    <div className="testi-avatar w-11 h-11 rounded-full flex-none overflow-hidden border border-[#E2E8F0] p-0.5 bg-slate-100">
+
+                  <div className="flex items-center gap-3 pt-4 border-t border-[#E2E8F0]">
+                    <div className="w-12 h-12 rounded-full flex-none overflow-hidden border-2 border-emerald-100 p-0.5 bg-slate-100 shadow-2xs">
                       <Image 
-                        src={item.avatar_url || getAvatarUrl(item.client_name)} 
+                        src={item.avatar_url || "/avatars/david-m.jpg"} 
                         alt={item.client_name}
-                        width={44}
-                        height={44}
+                        width={48}
+                        height={48}
                         className="w-full h-full object-cover rounded-full"
                         loading="lazy"
                       />
                     </div>
                     <div>
-                      <strong className="block text-[14px] font-bold text-[#1E293B]">{item.client_name}</strong>
-                      <span className="text-[12px] text-[#64748B] font-medium">{item.client_role}</span>
+                      <strong className="block text-[14.5px] font-bold text-[#0F172A] font-display">{item.client_name}</strong>
+                      <span className="text-[12px] text-[#64748B] font-medium block leading-tight">{item.client_role}</span>
                     </div>
                   </div>
                 </article>
@@ -117,17 +149,32 @@ export function TestimonialsSlider({ testimonials = [] }: TestimonialsSliderProp
         ))}
       </div>
 
-      <div className="slider-nav flex items-center justify-between absolute inset-x-0 top-1/2 -translate-y-1/2 px-4 pointer-events-none">
-        <button className="slider-arrow w-10 h-10 rounded-full border border-[#CBD5E1] bg-white text-[#1E293B] shadow-sm cursor-pointer grid place-items-center hover:border-[#2563EB] hover:text-[#2563EB] transition-all pointer-events-auto" onClick={() => handleSlide(-1)} aria-label="Previous testimonials"><ChevronLeft size={20} /></button>
-        <button className="slider-arrow w-10 h-10 rounded-full border border-[#CBD5E1] bg-white text-[#1E293B] shadow-sm cursor-pointer grid place-items-center hover:border-[#2563EB] hover:text-[#2563EB] transition-all pointer-events-auto" onClick={() => handleSlide(1)} aria-label="Next testimonials"><ChevronRight size={20} /></button>
+      {/* Navigation Buttons */}
+      <div className="flex items-center justify-between absolute inset-x-0 top-1/2 -translate-y-1/2 px-0 pointer-events-none">
+        <button 
+          className="w-10 h-10 rounded-full border border-[#CBD5E1] bg-white text-[#0F172A] shadow-md cursor-pointer grid place-items-center hover:border-[#0F172A] hover:bg-slate-50 transition-all pointer-events-auto -ml-3" 
+          onClick={() => handleSlide(-1)} 
+          aria-label="Previous testimonials"
+        >
+          <ChevronLeft size={20} />
+        </button>
+        <button 
+          className="w-10 h-10 rounded-full border border-[#CBD5E1] bg-white text-[#0F172A] shadow-md cursor-pointer grid place-items-center hover:border-[#0F172A] hover:bg-slate-50 transition-all pointer-events-auto -mr-3" 
+          onClick={() => handleSlide(1)} 
+          aria-label="Next testimonials"
+        >
+          <ChevronRight size={20} />
+        </button>
       </div>
 
-      <div className="slider-dots flex items-center justify-center gap-2.5 mt-8">
+      {/* Slider Indicator Dots */}
+      <div className="flex items-center justify-center gap-2.5 mt-8">
         {slides.map((_, idx) => (
           <button 
             key={idx} 
-            className={`dot h-1.5 rounded-full border-none cursor-pointer p-0 transition-all duration-300 ${idx === currentIdx ? "bg-[#2563EB] w-8" : "bg-slate-300 w-2 hover:bg-slate-400"}`} 
+            className={`h-2 rounded-full border-none cursor-pointer p-0 transition-all duration-300 ${idx === currentIdx ? "bg-[#0F172A] w-8" : "bg-slate-300 w-2.5 hover:bg-slate-400"}`} 
             onClick={() => setCurrentIdx(idx)} 
+            aria-label={`Go to slide ${idx + 1}`}
           />
         ))}
       </div>

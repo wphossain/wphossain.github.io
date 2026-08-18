@@ -31,40 +31,40 @@ interface WhyMeGridProps {
 
 const DEFAULT_WHY_CARDS: WhyCard[] = [
   {
-    title: "HVAC-first focus",
+    title: "100% Local Contractor Focus",
     icon: "target",
-    desc: "Only local service businesses — so keywords and ad copy stay specific, not generic.",
-    color: "#dc2626"
+    desc: "Exclusively HVAC, plumbing, roofing, and home services. I know your exact negative keywords, seasonal peaks, and high-ticket job economics.",
+    color: "#059669"
   },
   {
-    title: "Tracking that reports the truth",
+    title: "Call-Level Verified Attribution",
     icon: "bar-chart",
-    desc: "Calls, forms, and chat unified in GTM and GA4 — one accurate lead count, not guesswork.",
-    color: "#15803D"
+    desc: "Calls, forms, and chat unified via CallRail & GA4. Every dollar spent is tied directly to a real homeowner call, not vanity clicks.",
+    color: "#0F172A"
   },
   {
-    title: "Landing page background",
+    title: "Full-Funnel Landing Pages Included",
     icon: "layout",
-    desc: "I build the page the click lands on too, not just the campaign that sends it there.",
+    desc: "I build the high-converting mobile click-to-call pages that convert your clicks into booked jobs. No extra web developer fees.",
     color: "#2563EB"
   },
   {
-    title: "Search-term discipline",
+    title: "Weekly Negative Keyword Fortresses",
     icon: "search",
-    desc: "Weekly search-term audits cut wasted spend before it eats into your budget.",
-    color: "#0891b2"
+    desc: "Continuous pruning of search term reports to block DIYers, job hunters, and low-margin searches before they eat into your budget.",
+    color: "#059669"
   },
   {
-    title: "Reporting you can read",
+    title: "Plain-English Executive Reports",
     icon: "file-text",
-    desc: "Monthly reports in plain language — spend, calls, and cost per booked job.",
-    color: "#B45309"
+    desc: "Monthly reports in plain numbers: Ad spend, booked calls, and Cost Per Lead. No 40-page confusing PDFs.",
+    color: "#0F172A"
   },
   {
-    title: "No lock-in",
+    title: "Zero Long-Term Lock-in",
     icon: "unlock",
-    desc: "Month-to-month. If results stop, you're free to walk — no long contracts.",
-    color: "#15803D"
+    desc: "Month-to-month partnership. I earn your business every 30 days based on booked calls, not a 12-month hostage contract.",
+    color: "#059669"
   }
 ];
 
@@ -88,80 +88,58 @@ function getIconComponent(iconName: string): LucideIcon {
 export function WhyMeGrid({ 
   title, 
   subtitle, 
-  eyebrow = "WHY CHOOSE ME", 
+  eyebrow = "WHY SPECIALISTS WIN", 
   cards 
 }: WhyMeGridProps) {
   const reduce = useReducedMotion();
   const activeCards = (cards && cards.length > 0) ? cards : DEFAULT_WHY_CARDS;
-  const activeTitle = title || "A specialist who also understands the page the click lands on.";
-  const activeSubtitle = subtitle || "I don't just run ads. I build systems that turn clicks into customers and keep them coming back long-term.";
+  const activeTitle = title || "Why Working With a Dedicated Specialist Beats Big Agencies";
+  const activeSubtitle = subtitle || "You get direct access to a seasoned PPC partner who understands contractor operations, margins, and lead dispatch.";
 
   return (
     <div className="w-full">
       {/* HEADER AREA */}
-      <div className="flex flex-col items-start max-w-[720px] mb-12 text-left">
-        <span className="eyebrow inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#2563EB]/10 border border-[#2563EB]/25 text-[#2563EB] text-[11px] font-extrabold uppercase tracking-widest mb-5 shadow-sm">
-          <span className="w-2 h-2 rounded-full bg-[#2563EB] animate-pulse" />
+      <div className="flex flex-col items-start max-w-[760px] mb-12 text-left">
+        <span className="eyebrow mb-4">
           {eyebrow}
         </span>
         
-        <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-[1.15] mb-4 text-[#1E293B] font-bold">
+        <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-[1.15] mb-4 text-[#0F172A] font-bold">
           {activeTitle}
         </h2>
 
-        {/* Animated Accent Bar */}
-        <div className="relative w-full h-[3px] rounded-full overflow-hidden bg-slate-200 mb-6">
-          <motion.div 
-            className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#2563EB] via-[#25D366] to-transparent"
-            initial={{ width: "0%" }}
-            whileInView={{ width: "100%" }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          />
-        </div>
-
         {activeSubtitle && (
-          <p className="text-[#475569] text-[16px] lg:text-[17px] leading-relaxed max-w-[640px]">
+          <p className="text-[#475569] text-[16px] lg:text-[17px] leading-relaxed max-w-[660px]">
             {activeSubtitle}
           </p>
         )}
       </div>
 
       {/* GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {activeCards.map((card, i) => {
           const IconComponent = getIconComponent(card.icon);
-          const accentColor = card.color || "#2563EB";
+          const accentColor = card.color || "#0F172A";
 
           return (
             <motion.article
               key={i}
-              className="group p-8 bg-white border border-[#CBD5E1] shadow-sm rounded-[28px] flex flex-col gap-5 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-              whileHover={!reduce ? { 
-                y: -4,
-                borderColor: `${accentColor}88`
-              } : {}}
+              className="group p-7 bg-white border border-[#CBD5E1] shadow-xs rounded-[24px] flex flex-col gap-4 hover:border-[#0F172A] hover:shadow-md hover:-translate-y-1 transition-all duration-300"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
+              transition={{ duration: 0.4, delay: i * 0.06 }}
             >
               {/* Icon Container */}
               <div
-                className="w-13 h-13 rounded-full grid place-items-center border shrink-0 transition-all duration-300 shadow-sm"
-                style={{ 
-                  backgroundColor: `${accentColor}18`, 
-                  borderColor: `${accentColor}40`, 
-                  color: accentColor 
-                }}
+                className="w-12 h-12 rounded-2xl grid place-items-center border border-[#E2E8F0] bg-slate-50 shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-2xs"
+                style={{ color: accentColor }}
               >
-                <div className="transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[8deg]">
-                  <IconComponent size={24} strokeWidth={2.2} />
-                </div>
+                <IconComponent size={22} strokeWidth={2.2} />
               </div>
 
               <div>
-                <h3 className="text-[18px] lg:text-[19px] font-bold text-[#1E293B] mb-2 font-display group-hover:text-[#2563EB] transition-colors leading-snug">
+                <h3 className="text-[18px] font-bold text-[#0F172A] mb-2 font-display leading-snug group-hover:text-[#059669] transition-colors">
                   {card.title}
                 </h3>
                 <p className="text-[14px] text-[#475569] leading-relaxed">

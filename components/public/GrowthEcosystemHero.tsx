@@ -1,14 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import {
-  motion,
-  useMotionValue,
-  useTransform,
-  animate,
-  useReducedMotion,
-  type Transition,
-} from "framer-motion";
 import { useEffect, useState, type ReactNode, type SVGProps, type CSSProperties } from "react";
 
 /* ============================================================
@@ -44,15 +36,15 @@ function PhoneHangUpIcon(props: SVGProps<SVGSVGElement>) {
 function CheckCircleIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" {...props}>
-      <circle cx="12" cy="12" r="10" fill="#22C55E" />
-      <path d="M7.5 12.5l3 3 6-6.5" stroke="#030712" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="12" cy="12" r="10" fill="#10B981" />
+      <path d="M7.5 12.5l3 3 6-6.5" stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
 function StarIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg viewBox="0 0 20 20" fill="#FBBF24" {...props}>
+    <svg viewBox="0 0 20 20" fill="#F59E0B" {...props}>
       <path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.6-4.1 6.1-.6z" />
     </svg>
   );
@@ -62,13 +54,13 @@ function StarIcon(props: SVGProps<SVGSVGElement>) {
    ANIMATION HELPERS
    ============================================================ */
 
-/** Count-up number, fires once when scrolled into view. */
+/** Count-up number that animates on load */
 function CountUp({
   to,
   suffix = "",
   prefix = "",
   decimals = 0,
-  duration = 1.4,
+  duration = 1500,
   className,
 }: {
   to: number;
@@ -78,70 +70,48 @@ function CountUp({
   duration?: number;
   className?: string;
 }) {
-  const reduce = useReducedMotion();
-  const mv = useMotionValue(0);
-  const rounded = useTransform(
-    mv,
-    (v) => prefix + v.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + suffix
-  );
-  const [text, setText] = useState(prefix + (0).toFixed(decimals) + suffix);
+  const [val, setVal] = useState(0);
 
   useEffect(() => {
-    const unsub = rounded.on("change", (v) => setText(v));
-    if (reduce) {
-      mv.set(to);
-      return () => unsub();
-    }
-    const controls = animate(mv, to, { duration, ease: "easeOut" });
-    return () => {
-      controls.stop();
-      unsub();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [to]);
+    let startTimestamp: number | null = null;
+    let frameId: number;
 
-  return <span className={className}>{text}</span>;
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      // easeOutExpo
+      const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      setVal(ease * to);
+
+      if (progress < 1) {
+        frameId = window.requestAnimationFrame(step);
+      }
+    };
+
+    frameId = window.requestAnimationFrame(step);
+    return () => window.cancelAnimationFrame(frameId);
+  }, [to, duration]);
+
+  const formatted = prefix + val.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + suffix;
+  return <span className={className}>{formatted}</span>;
 }
 
-/** Soft pulsing "live" dot. */
-function LiveDot({ color = "bg-emerald-400", className = "" }: { color?: string; className?: string }) {
-  const reduce = useReducedMotion();
+/** Pulsing "live" radar blip */
+function LiveDot({ color = "bg-emerald-500", className = "" }: { color?: string; className?: string }) {
   return (
-    <span className={"relative inline-flex h-1.5 w-1.5 " + className}>
-      {!reduce && (
-        <motion.span
-          className={"absolute inset-0 rounded-full " + color}
-          animate={{ scale: [1, 2.6], opacity: [0.6, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
-        />
-      )}
-      <span className={"relative inline-flex h-1.5 w-1.5 rounded-full " + color} />
+    <span className={"relative inline-flex h-2.5 w-2.5 " + className}>
+      <span className={"animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 " + color} />
+      <span className={"relative inline-flex h-2.5 w-2.5 rounded-full " + color} />
     </span>
   );
 }
 
-/** Plain static dot — used for checklist-style bullets that should NOT pulse. */
-function Dot({ color = "bg-emerald-400", className = "" }: { color?: string; className?: string }) {
+function Dot({ color = "bg-emerald-500", className = "" }: { color?: string; className?: string }) {
   return <span className={"inline-flex h-1.5 w-1.5 shrink-0 rounded-full " + color + " " + className} />;
 }
 
-const loop = (extra: Partial<Transition> = {}): Transition => ({
-  duration: 2.4,
-  repeat: Infinity,
-  ease: "easeInOut",
-  ...extra,
-});
-
-/* ============================================================
-   SHARED LAYOUT CONSTANTS
-   ============================================================ */
-
 const SLOT_CLASS = "flex flex-1 basis-0 min-w-0";
-const GAP_CLASS = "w-7 shrink-0 xl:w-9";
-
-/* ============================================================
-   SHARED PRIMITIVES
-   ============================================================ */
+const GAP_CLASS = "w-6 shrink-0 xl:w-8";
 
 function MetricCard({
   label,
@@ -155,19 +125,18 @@ function MetricCard({
   decimals?: number;
 }) {
   return (
-    <div className="min-w-0 flex-1 rounded-lg border border-[#CBD5E1] bg-slate-50 px-2 py-1.5 shadow-inner">
-      <p className="truncate text-[9px] text-[#64748B]">{label}</p>
-      <p className="text-[13px] font-bold text-[#1E293B] leading-tight">
+    <div className="min-w-0 flex-1 rounded-lg border border-[#CBD5E1] bg-slate-50 px-2 py-1.5 shadow-2xs">
+      <p className="truncate text-[9.5px] font-bold text-[#64748B] uppercase tracking-wider">{label}</p>
+      <p className="text-[13px] font-bold text-[#0F172A] leading-tight font-display">
         <CountUp to={countTo} suffix={suffix} decimals={decimals} />
       </p>
     </div>
   );
 }
 
-/** Static status row (no per-row slide-in — kept calm on purpose). */
 function StatusRow({ label, icon }: { label: string; icon?: ReactNode }) {
   return (
-    <div className="flex items-center gap-1.5 text-[10.5px] text-[#475569]">
+    <div className="flex items-center gap-1.5 text-[11px] font-medium text-[#475569]">
       {icon ?? <Dot />}
       <span className="truncate">{label}</span>
     </div>
@@ -179,102 +148,106 @@ function WorkflowCard({
   title,
   subtitle,
   children,
-  delay = 0,
 }: {
   step: number;
   title: string;
   subtitle: string;
   children: ReactNode;
-  delay?: number;
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, delay }}
-      className="group relative flex w-[172px] shrink-0 flex-col gap-3 rounded-2xl border border-[#CBD5E1] bg-white p-3.5 shadow-sm transition-all duration-300 hover:border-[#2563EB]/40 hover:shadow-md hover:-translate-y-1 sm:w-[184px] lg:w-auto lg:min-w-0 lg:flex-1 lg:basis-0"
-    >
+    <div className="group relative flex w-[176px] shrink-0 flex-col gap-3 rounded-2xl border border-[#CBD5E1] bg-white p-3.5 shadow-xs transition-all duration-300 hover:border-[#0F172A] hover:shadow-lg hover:-translate-y-1 sm:w-[188px] lg:w-auto lg:min-w-0 lg:flex-1 lg:basis-0">
       <div className="flex items-start gap-2">
-        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-blue-500/30 bg-[#2563EB]/15 text-[11px] font-semibold text-blue-600">
+        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#0F172A] text-[11px] font-bold text-white shadow-2xs group-hover:bg-[#059669] transition-colors">
           {step}
         </span>
-        <div className="min-w-0 min-h-[40px]">
-          <p className="text-[12.5px] font-semibold leading-[1.15] text-[#1E293B]">{title}</p>
-          {subtitle && <p className="text-[10.5px] leading-tight text-blue-600/80">{subtitle}</p>}
+        <div className="min-w-0 min-h-[38px]">
+          <p className="text-[13px] font-bold leading-[1.15] text-[#0F172A] font-display">{title}</p>
+          {subtitle && <p className="text-[10.5px] font-semibold leading-tight text-[#059669]">{subtitle}</p>}
         </div>
       </div>
       <div className="flex flex-col gap-2">{children}</div>
-    </motion.div>
+    </div>
   );
 }
 
-/* ---- Connector between cards: a light packet flows card → card ---- */
-
-function Connector({ orientation = "horizontal", delay = 0 }: { orientation?: "horizontal" | "vertical"; delay?: number }) {
-  const reduce = useReducedMotion();
+/* Connector between cards with continuous animated traveling pulse dot */
+function Connector({ orientation = "horizontal" }: { orientation?: "horizontal" | "vertical" }) {
   const isH = orientation === "horizontal";
   return (
     <div
       className={isH ? `hidden lg:flex items-center justify-center ${GAP_CLASS}` : "flex lg:hidden items-center justify-center h-7 w-full"}
       aria-hidden="true"
     >
-      <svg width={isH ? 40 : 16} height={isH ? 16 : 40} viewBox={isH ? "0 0 40 16" : "0 0 16 40"} fill="none" className="overflow-visible">
+      <svg width={isH ? 36 : 16} height={isH ? 16 : 36} viewBox={isH ? "0 0 36 16" : "0 0 16 36"} fill="none" className="overflow-visible">
         {isH ? (
-          <path
-            d="M2 8 H30 M30 8 L23 2.5 M30 8 L23 13.5"
-            stroke="#2563EB"
-            strokeOpacity="0.8"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
+          <>
+            <path
+              d="M2 8 H28 M28 8 L22 3 M28 8 L22 13"
+              stroke="#0F172A"
+              strokeOpacity="0.35"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            {/* Animated Packet */}
+            <circle
+              r="3.5"
+              fill="#059669"
+              className="animate-flow-h"
+              style={{
+                filter: "drop-shadow(0 0 5px #059669)",
+                animation: "flow-h 2.2s infinite ease-in-out"
+              }}
+              cx="2"
+              cy="8"
+            />
+          </>
         ) : (
-          <path
-            d="M8 2 V30 M8 30 L2.5 23 M8 30 L13.5 23"
-            stroke="#2563EB"
-            strokeOpacity="0.8"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        )}
-        {!reduce && (
-          <motion.circle
-            r="2.4"
-            fill="#2563EB"
-            style={{ filter: "drop-shadow(0 0 3px #2563EB)" }}
-            animate={isH ? { cx: [2, 30], cy: 8, opacity: [0, 1, 1, 0] } : { cx: 8, cy: [2, 30], opacity: [0, 1, 1, 0] }}
-            transition={{ duration: 1.7, repeat: Infinity, ease: "easeInOut", delay, repeatDelay: 0.7 }}
-          />
+          <>
+            <path
+              d="M8 2 V28 M8 28 L3 22 M8 28 L13 22"
+              stroke="#0F172A"
+              strokeOpacity="0.35"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <circle
+              r="3.5"
+              fill="#059669"
+              style={{
+                filter: "drop-shadow(0 0 5px #059669)",
+                animation: "pulse 1.8s infinite"
+              }}
+              cx="8"
+              cy="15"
+            />
+          </>
         )}
       </svg>
     </div>
   );
 }
 
-/* ============================================================
-   BOTTOM BRACKET
-   ============================================================ */
-
+/* Bottom bracket layout coordinates */
 const BR = {
-  lCard: "7%", // card 1 center-x
-  rCard: "93%", // card 6 center-x
-  cCard: "58.6%", // card 4 (CRM) center-x
-  lEdge: "25%", // revenue card LEFT edge
-  rEdge: "75%", // revenue card RIGHT edge
-  GAP: 36, // px between cards-row bottom and revenue card top
+  lCard: "7%",
+  rCard: "93%",
+  cCard: "58.6%",
+  lEdge: "25%",
+  rEdge: "75%",
+  GAP: 36,
 } as const;
 
 function BracketLine({ style }: { style: CSSProperties }) {
-  return <span className="absolute bg-[#2563EB]/40" style={style} aria-hidden="true" />;
+  return <span className="absolute bg-slate-300" style={style} aria-hidden="true" />;
 }
 
 function ArrowSide({ left, dir }: { left: string; dir: "right" | "left" }) {
   const tip =
     dir === "right"
-      ? "-translate-x-full border-l-[7px] border-l-[#2563EB]"
-      : "border-r-[7px] border-r-[#2563EB]";
+      ? "-translate-x-full border-l-[7px] border-l-[#0F172A]"
+      : "border-r-[7px] border-r-[#0F172A]";
   return (
     <span
       className={`absolute h-0 w-0 -translate-y-1/2 border-b-[5px] border-t-[5px] border-b-transparent border-t-transparent ${tip}`}
@@ -287,77 +260,49 @@ function ArrowSide({ left, dir }: { left: string; dir: "right" | "left" }) {
 function ArrowDown({ left }: { left: string }) {
   return (
     <span
-      className="absolute h-0 w-0 -translate-x-1/2 border-l-[4px] border-r-[4px] border-t-[6px] border-l-transparent border-r-transparent border-t-[#2563EB]"
+      className="absolute h-0 w-0 -translate-x-1/2 border-l-[4px] border-r-[4px] border-t-[6px] border-l-transparent border-r-transparent border-t-[#0F172A]"
       style={{ left, top: -6 }}
       aria-hidden="true"
     />
   );
 }
 
-function FlowDot({ left, top, delay }: { left: string[]; top: string[]; delay: number }) {
-  return (
-    <motion.span
-      className="absolute h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2563EB]"
-      style={{ boxShadow: "0 0 4px 1px rgba(37,99,235,0.6)" }}
-      animate={{ left, top, opacity: [0, 1, 1, 0] }}
-      transition={{
-        duration: 2.2,
-        repeat: Infinity,
-        ease: "easeInOut",
-        repeatDelay: 0.4,
-        delay,
-        times: [0, 0.45, 0.9, 1],
-      }}
-      aria-hidden="true"
-    />
-  );
-}
-
 function BottomConnectors() {
-  const reduce = useReducedMotion();
   const dropH = `calc(50% + ${BR.GAP}px)`;
   const top = -BR.GAP;
   return (
     <div className="pointer-events-none absolute inset-0 hidden lg:block" aria-hidden="true">
-      {/* LEFT: under card 1 → down → RIGHT into the revenue card's left edge */}
       <BracketLine style={{ left: BR.lCard, top, width: "1.5px", height: dropH, transform: "translateX(-50%)" }} />
       <BracketLine
         style={{ left: BR.lCard, top: "50%", height: "1.5px", width: `calc(${BR.lEdge} - ${BR.lCard})`, transform: "translateY(-50%)" }}
       />
       <ArrowSide left={BR.lEdge} dir="right" />
 
-      {/* RIGHT: under card 6 → down → LEFT into the revenue card's right edge */}
       <BracketLine style={{ left: BR.rCard, top, width: "1.5px", height: dropH, transform: "translateX(-50%)" }} />
       <BracketLine
         style={{ left: BR.rEdge, top: "50%", height: "1.5px", width: `calc(${BR.rCard} - ${BR.rEdge})`, transform: "translateY(-50%)" }}
       />
       <ArrowSide left={BR.rEdge} dir="left" />
 
-      {/* CENTER: card 4 (CRM) → straight down into the revenue card's top edge */}
       <BracketLine style={{ left: BR.cCard, top, width: "1.5px", height: BR.GAP, transform: "translateX(-50%)" }} />
       <ArrowDown left={BR.cCard} />
 
-      {/* flowing packets down each side branch */}
-      {!reduce && (
-        <>
-          <FlowDot left={[BR.lCard, BR.lCard, BR.lEdge, BR.lEdge]} top={[`${top}px`, "50%", "50%", "50%"]} delay={0} />
-          <FlowDot left={[BR.rCard, BR.rCard, BR.rEdge, BR.rEdge]} top={[`${top}px`, "50%", "50%", "50%"]} delay={0.5} />
-        </>
-      )}
+      {/* Continuously Pulsing Energy Node */}
+      <span 
+        className="absolute h-2.5 w-2.5 rounded-full bg-[#059669] shadow-[0_0_8px_#059669] animate-ping"
+        style={{ left: BR.cCard, top: -3, transform: 'translateX(-50%)' }}
+      />
     </div>
   );
 }
 
-/* ---- Top rail ---- */
-
 function TopRail() {
-  const reduce = useReducedMotion();
   const nodes: ReactNode[] = [];
   STEPS.forEach((s, i) => {
     nodes.push(
       <div key={s.step} className={`${SLOT_CLASS} flex-col items-center`}>
-        <span className="relative z-10 h-2 w-2 shrink-0 rounded-full border border-blue-500 bg-white" />
-        <span className="w-[1.5px] flex-1 bg-gradient-to-b from-[#2563EB]/60 to-[#2563EB]/20" />
+        <span className="relative z-10 h-2 w-2 shrink-0 rounded-full border-2 border-[#0F172A] bg-white" />
+        <span className="w-[1.5px] flex-1 bg-gradient-to-b from-slate-400 to-slate-200" />
       </div>
     );
     if (i < STEPS.length - 1) {
@@ -366,16 +311,12 @@ function TopRail() {
   });
 
   return (
-    <div className="relative hidden h-5 w-full lg:flex lg:flex-nowrap lg:items-stretch lg:justify-between" aria-hidden="true">
-      <div className="absolute top-[4px] h-[1.5px] -translate-y-1/2 bg-[#2563EB]/30" style={{ left: BR.lCard, right: BR.lCard }} />
-      {!reduce && (
-        <motion.span
-          className="absolute top-[4px] h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-[#2563EB]"
-          style={{ boxShadow: "0 0 4px 1px rgba(37,99,235,0.6)" }}
-          animate={{ left: [BR.lCard, BR.rCard] }}
-          transition={{ duration: 3.2, repeat: Infinity, ease: "linear" }}
-        />
-      )}
+    <div className="relative hidden h-5 w-full lg:flex lg:flex-nowrap lg:items-stretch lg:justify-between mb-1" aria-hidden="true">
+      <div className="absolute top-[4px] h-[1.5px] -translate-y-1/2 bg-slate-300" style={{ left: BR.lCard, right: BR.lCard }} />
+      {/* Traveling Energy Packet across Top Rail */}
+      <span
+        className="absolute top-[4px] h-3 w-3 -translate-y-1/2 rounded-full bg-[#059669] shadow-[0_0_8px_2px_rgba(5,150,105,0.9)] animate-flow-rail"
+      />
       {nodes}
     </div>
   );
@@ -386,16 +327,15 @@ function TopRail() {
    ============================================================ */
 
 function GoogleAdsCampaignsStep() {
-  const reduce = useReducedMotion();
   return (
     <>
       <div className="flex justify-center py-0.5">
         <GoogleAdsIcon className="h-9 w-9" />
       </div>
       <div className="flex items-center justify-between gap-1 rounded-lg border border-[#CBD5E1] bg-slate-50 px-2 py-1">
-        <p className="min-w-0 truncate text-[10px] text-[#475569]">Search Campaigns</p>
-        <span className="flex shrink-0 items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-50 px-1.5 py-0.5 text-[8.5px] font-semibold text-emerald-600">
-          <LiveDot color="bg-emerald-500" />
+        <p className="min-w-0 truncate text-[10.5px] font-semibold text-[#0F172A]">Search Ads</p>
+        <span className="flex shrink-0 items-center gap-1.5 rounded-full border border-emerald-300 bg-emerald-50 px-2 py-0.5 text-[9px] font-bold text-[#059669]">
+          <LiveDot color="bg-[#059669]" />
           Active
         </span>
       </div>
@@ -405,36 +345,29 @@ function GoogleAdsCampaignsStep() {
       </div>
       <div className="rounded-lg border border-[#CBD5E1] bg-slate-50 px-2 py-1.5">
         <div className="flex items-center justify-between">
-          <p className="text-[9.5px] uppercase tracking-wide text-[#64748B]">CTR</p>
-          <span className="text-[9.5px] font-medium text-[#15803D]">▲ 32.5%</span>
+          <p className="text-[9.5px] font-bold uppercase tracking-wider text-[#64748B]">CTR</p>
+          <span className="text-[10px] font-bold text-[#059669]">▲ 32.5%</span>
         </div>
-        <p className="text-[13px] font-bold leading-tight text-[#1E293B]">
+        <p className="text-[13px] font-bold leading-tight text-[#0F172A] font-display">
           <CountUp to={8.57} suffix="%" decimals={2} />
         </p>
-        <svg viewBox="0 0 120 40" className="mt-1 h-10 w-full" preserveAspectRatio="none">
-          <motion.polyline
+        <svg viewBox="0 0 120 40" className="mt-1 h-9 w-full" preserveAspectRatio="none">
+          <polyline
             points="0,34 15,30 30,32 45,25 60,27 75,19 90,21 105,13 120,15"
             fill="none"
-            stroke="#B45309"
+            stroke="#94A3B8"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={reduce ? undefined : { pathLength: 0, opacity: 0.4 }}
-            whileInView={reduce ? undefined : { pathLength: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.6, ease: "easeInOut", delay: 0.15 }}
+            opacity="0.6"
           />
-          <motion.polyline
+          <polyline
             points="0,28 15,23 30,25 45,15 60,18 75,9 90,11 105,3 120,5"
             fill="none"
-            stroke="#2563EB"
-            strokeWidth="2"
+            stroke="#059669"
+            strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={reduce ? undefined : { pathLength: 0, opacity: 0.4 }}
-            whileInView={reduce ? undefined : { pathLength: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.6, ease: "easeInOut" }}
           />
         </svg>
       </div>
@@ -446,92 +379,76 @@ function LandingPageStep() {
   return (
     <>
       <div className="relative h-[92px] w-full overflow-hidden rounded-lg border border-[#CBD5E1] bg-slate-100">
-        <Image src="/landing-page.webp" alt="HVAC landing page preview" fill sizes="184px" className="object-cover object-top" />
+        <Image src="/landing-page.png" alt="HVAC landing page preview" fill sizes="188px" className="object-cover object-top" />
       </div>
       <div className="flex flex-col items-center gap-1 rounded-lg border border-[#CBD5E1] bg-slate-50 px-2 py-2">
-        <span className="text-[9.5px] uppercase tracking-wide text-[#64748B]">Page Score</span>
-        <ScoreDonut value={92} />
+        <span className="text-[9.5px] font-bold uppercase tracking-wider text-[#64748B]">PageSpeed Score</span>
+        <ScoreDonut value={96} />
       </div>
       <div className="flex flex-col gap-1">
-        <StatusRow label="Fast Loading" />
-        <StatusRow label="Mobile Friendly" />
-        <StatusRow label="Clear CTA" />
+        <StatusRow label="Mobile Tap-to-Call" />
+        <StatusRow label="0.8s Load Time" />
+        <StatusRow label="Trust Badges" />
       </div>
     </>
   );
 }
 
-/* ---- Circular page-score gauge ---- */
-
 function ScoreDonut({ value }: { value: number }) {
-  const reduce = useReducedMotion();
   const R = 26;
   const C = 2 * Math.PI * R;
   const target = C * (1 - value / 100);
   return (
-    <div className="relative h-[62px] w-[62px]">
+    <div className="relative h-[60px] w-[60px]">
       <svg viewBox="0 0 64 64" className="h-full w-full -rotate-90">
         <circle cx="32" cy="32" r={R} fill="none" stroke="#E2E8F0" strokeWidth="5" />
-        <motion.circle
+        <circle
           cx="32"
           cy="32"
           r={R}
           fill="none"
-          stroke="#15803D"
+          stroke="#059669"
           strokeWidth="5"
           strokeLinecap="round"
           strokeDasharray={C}
-          initial={reduce ? { strokeDashoffset: target } : { strokeDashoffset: C }}
-          whileInView={{ strokeDashoffset: target }}
-          viewport={{ once: true }}
-          transition={reduce ? { duration: 0 } : { duration: 1.4, ease: "easeOut" }}
+          strokeDashoffset={target}
+          style={{ transition: 'stroke-dashoffset 1.5s ease-out' }}
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center leading-none">
-        <span className="text-[17px] font-bold text-[#15803D]">
+        <span className="text-[16px] font-bold text-[#059669] font-display">
           <CountUp to={value} />
         </span>
-        <span className="text-[8px] text-[#64748B]">/100</span>
+        <span className="text-[8px] font-bold text-[#64748B]">/100</span>
       </div>
     </div>
   );
 }
 
 function PhoneCallsStep() {
-  const reduce = useReducedMotion();
   return (
     <>
       <div className="rounded-lg border border-[#CBD5E1] bg-slate-50 px-2 py-1.5">
-        <p className="text-[9.5px] uppercase tracking-wide text-[#64748B]">Incoming Call</p>
-        <p className="text-[12.5px] font-bold text-[#1E293B]">214-555-0187</p>
-        <p className="text-[10px] text-[#64748B]">Dallas, TX</p>
+        <p className="text-[9px] font-bold uppercase tracking-wider text-[#64748B]">Incoming Call</p>
+        <p className="text-[12.5px] font-bold text-[#0F172A] font-display">(214) 555-0187</p>
+        <p className="text-[10px] text-[#059669] font-semibold">Dallas, TX · AC Failure</p>
       </div>
       <div className="flex items-center justify-center gap-3 py-1">
-        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-rose-500 text-white shadow-md">
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-rose-500 text-white shadow-xs">
           <PhoneHangUpIcon className="h-4 w-4" />
         </span>
         <span className="relative flex h-8 w-8 items-center justify-center">
-          {!reduce && (
-            <motion.span
-              className="absolute inset-0 rounded-full bg-emerald-500/20"
-              animate={{ scale: [1, 1.9], opacity: [0.5, 0] }}
-              transition={{ duration: 1.4, repeat: Infinity, ease: "easeOut" }}
-            />
-          )}
-          <motion.span
-            className="relative flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500 text-white shadow-sm"
-            animate={reduce ? undefined : { rotate: [0, -12, 12, -12, 12, 0] }}
-            transition={{ duration: 1, repeat: Infinity, repeatDelay: 1.2 }}
-          >
+          <span className="animate-ping absolute inset-0 rounded-full bg-emerald-500/40 opacity-80" />
+          <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-emerald-600 text-white shadow-xs animate-ring-shake">
             <PhoneIcon className="h-4 w-4" />
-          </motion.span>
+          </span>
         </span>
       </div>
       <div className="flex flex-col gap-1">
-        <p className="text-[10px] font-semibold text-[#1E293B]">Call Tracking</p>
-        <StatusRow label="Recording" />
-        <StatusRow label="Duration" />
-        <StatusRow label="Source" />
+        <p className="text-[10.5px] font-bold text-[#0F172A]">CallRail Attribution</p>
+        <StatusRow label="Keyword Recorded" />
+        <StatusRow label="Dynamic Swap" />
+        <StatusRow label="Whisper Tone" />
       </div>
     </>
   );
@@ -539,35 +456,30 @@ function PhoneCallsStep() {
 
 function CrmStep() {
   const fields: Array<[string, string]> = [
-    ["Name", "John Smith"],
+    ["Homeowner", "David Miller"],
     ["Phone", "(214) 555-0187"],
-    ["Service", "AC Repair"],
-    ["Location", "Dallas, TX"],
-    ["Source", "Google Ads"],
+    ["Job Type", "Emergency AC Install"],
+    ["Source", "Google Search Ads"],
   ];
   return (
     <>
       <div className="flex items-center justify-between">
-        <span className="text-[11px] font-semibold text-[#1E293B]">New Lead!</span>
-        <motion.span
-          className="rounded-full border border-rose-500/30 bg-rose-50 px-2 py-0.5 text-[9px] font-semibold text-rose-600"
-          animate={{ opacity: [1, 0.5, 1] }}
-          transition={loop({ duration: 1.6 })}
-        >
-          Hot
-        </motion.span>
+        <span className="text-[11px] font-bold text-[#0F172A]">New Lead Alert!</span>
+        <span className="rounded-full border border-rose-200 bg-rose-50 px-2 py-0.5 text-[9px] font-extrabold text-rose-600 uppercase animate-pulse">
+          High Intent
+        </span>
       </div>
       <div className="flex flex-col gap-1 rounded-lg border border-[#CBD5E1] bg-slate-50 px-2 py-1.5">
         {fields.map(([label, value]) => (
           <div key={label} className="flex flex-col leading-tight">
-            <span className="text-[8.5px] uppercase tracking-wide text-[#64748B]">{label}</span>
-            <span className="truncate text-[10.5px] font-medium text-[#1E293B]">{value}</span>
+            <span className="text-[8.5px] font-bold uppercase tracking-wider text-[#64748B]">{label}</span>
+            <span className="truncate text-[10.5px] font-semibold text-[#0F172A]">{value}</span>
           </div>
         ))}
       </div>
-      <div className="flex items-center justify-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-50 py-1">
+      <div className="flex items-center justify-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 py-1">
         <CheckCircleIcon className="h-3.5 w-3.5" />
-        <span className="text-[10px] font-semibold text-emerald-600">Lead Saved</span>
+        <span className="text-[10px] font-bold text-[#059669]">Instant SMS Dispatched</span>
       </div>
     </>
   );
@@ -576,46 +488,42 @@ function CrmStep() {
 function TechnicianStep() {
   return (
     <>
-      <span className="flex items-center gap-1 text-[10px] font-semibold text-emerald-600">
+      <span className="flex items-center gap-1 text-[10.5px] font-bold text-[#059669]">
         <CheckCircleIcon className="h-3.5 w-3.5" />
-        Job Assigned
+        Tech Dispatched
       </span>
-      <div className="relative h-[74px] w-full overflow-hidden rounded-lg border border-[#CBD5E1] bg-slate-100">
-        <Image src="/technician.webp" alt="Dispatched HVAC technician" fill sizes="184px" className="object-cover object-top" />
+      <div className="relative h-[78px] w-full overflow-hidden rounded-lg border border-[#CBD5E1] bg-slate-100">
+        <Image src="/technician.png" alt="Dispatched HVAC technician" fill sizes="188px" className="object-cover object-top" />
       </div>
-      <p className="text-[10px] text-[#64748B]">
-        ETA <span className="font-semibold text-[#1E293B]">25 mins</span>
+      <p className="text-[10.5px] text-[#475569] font-medium">
+        On Route · ETA <span className="font-bold text-[#0F172A]">22 mins</span>
       </p>
-      <div className="relative h-[58px] w-full overflow-hidden rounded-lg border border-[#CBD5E1] bg-slate-50">
-        <Image src="/technician-map.webp" alt="Technician route map" fill sizes="184px" className="object-cover" />
+      <div className="rounded-lg border border-[#CBD5E1] bg-slate-50 p-1.5 flex items-center justify-between">
+        <span className="text-[9.5px] font-bold uppercase text-[#64748B]">Truck Stock</span>
+        <span className="text-[10px] font-bold text-[#059669]">100% Ready</span>
       </div>
     </>
   );
 }
 
 function CustomerStep() {
-  const reduce = useReducedMotion();
   return (
     <>
-      <div className="flex items-center gap-1 text-[10px] font-semibold text-emerald-600">
+      <div className="flex items-center gap-1 text-[10.5px] font-bold text-[#059669]">
         <CheckCircleIcon className="h-3.5 w-3.5" />
-        Service Completed
+        Job Completed
       </div>
       <div className="flex gap-0.5">
         {Array.from({ length: 5 }).map((_, i) => (
-          <motion.span
-            key={i}
-            animate={reduce ? undefined : { opacity: [1, 0.35, 1] }}
-            transition={reduce ? undefined : { duration: 1.8, repeat: Infinity, ease: "easeInOut", delay: i * 0.15 }}
-          >
-            <StarIcon className="h-3 w-3" />
-          </motion.span>
+          <span key={i} className="animate-pulse" style={{ animationDelay: `${i * 200}ms` }}>
+            <StarIcon className="h-3.5 w-3.5" />
+          </span>
         ))}
       </div>
-      <p className="text-[10.5px] italic leading-snug text-[#475569]">&ldquo;Great service, very professional. Highly recommended!&rdquo;</p>
-      <p className="text-[9.5px] font-medium text-[#64748B]">— Michael T.</p>
-      <div className="relative h-[78px] w-full overflow-hidden rounded-lg border border-[#CBD5E1] bg-slate-100">
-        <Image src="/customer-house.webp" alt="Customer's home" fill sizes="184px" className="object-cover" />
+      <p className="text-[10.5px] italic leading-snug text-[#334155]">&ldquo;They arrived in 25 mins and had our AC cooling again. Lifesaver!&rdquo;</p>
+      <p className="text-[9.5px] font-bold text-[#64748B]">— Michael T. (Verified Homeowner)</p>
+      <div className="relative h-[72px] w-full overflow-hidden rounded-lg border border-[#CBD5E1] bg-slate-100">
+        <Image src="/customer-house.png" alt="Customer's home" fill sizes="188px" className="object-cover" />
       </div>
     </>
   );
@@ -623,24 +531,20 @@ function CustomerStep() {
 
 function RevenueCard() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: 0.1 }}
-      className="relative z-10 mx-auto flex w-full flex-col gap-2.5 rounded-2xl border border-[#CBD5E1] bg-white p-3.5 shadow-md sm:flex-row sm:items-center sm:gap-4 lg:w-[50%] lg:min-w-[430px]"
-    >
-      <div className="flex items-center gap-2 sm:w-[150px] sm:shrink-0">
-        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-blue-500/30 bg-[#2563EB]/15 text-[12px] font-semibold text-blue-600">7</span>
+    <div className="relative z-10 mx-auto flex w-full flex-col gap-3 rounded-2xl border border-[#0F172A] bg-white p-4 shadow-xl sm:flex-row sm:items-center sm:gap-5 lg:w-[60%] lg:min-w-[480px]">
+      <div className="flex items-center gap-2.5 sm:w-[160px] sm:shrink-0">
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0F172A] text-[13px] font-bold text-white shadow-2xs">
+          7
+        </span>
         <div>
-          <p className="text-[13.5px] font-semibold leading-tight text-[#1E293B]">More Revenue</p>
-          <p className="text-[10.5px] leading-tight text-blue-600/85">(Business Growth)</p>
+          <p className="text-[14px] font-bold leading-tight text-[#0F172A] font-display">More Revenue</p>
+          <p className="text-[11px] font-bold leading-tight text-[#059669]">Compounding ROI</p>
         </div>
       </div>
 
-      <div className="relative aspect-[300/64] w-full flex-1 overflow-hidden rounded-lg sm:aspect-auto sm:h-[52px]">
+      <div className="relative aspect-[300/64] w-full flex-1 overflow-hidden rounded-lg sm:aspect-auto sm:h-[54px] border border-[#CBD5E1] bg-slate-50 p-1">
         <Image
-          src="/revenue-stats.webp"
+          src="/revenue-stats.png"
           alt="Clicks 530K · Conversions 364K · Conv. rate 37.44% · Cost $33.5K"
           fill
           sizes="(min-width: 640px) 480px, 100vw"
@@ -649,146 +553,130 @@ function RevenueCard() {
       </div>
 
       <GrowthBars />
-    </motion.div>
+    </div>
   );
 }
 
 function GrowthBars() {
-  const reduce = useReducedMotion();
-  const bars = [40, 55, 68, 82, 100];
   return (
-    <div className="flex h-[44px] w-[68px] shrink-0 items-end gap-1 self-center rounded-lg border border-emerald-400/10 bg-emerald-500/5 p-1.5 sm:h-[52px] sm:w-[76px]">
-      {bars.map((h, i) => (
-        <motion.span
-          key={i}
-          className="flex-1 origin-bottom rounded-sm bg-gradient-to-t from-emerald-600 to-emerald-400"
-          initial={{ height: `${h}%` }}
-          animate={
-            reduce
-              ? undefined
-              : { height: ["18%", `${h}%`, `${h}%`, "18%"] }
-          }
-          transition={
-            reduce
-              ? undefined
-              : {
-                  duration: 2.8,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  times: [0, 0.4, 0.75, 1],
-                  delay: 0.15 + i * 0.08,
-                }
-          }
-        />
-      ))}
+    <div className="flex h-[44px] w-[68px] shrink-0 items-end gap-1.5 self-center rounded-lg border border-emerald-300 bg-emerald-50 p-1.5 sm:h-[52px] sm:w-[76px]">
+      <span className="flex-1 origin-bottom rounded-xs bg-gradient-to-t from-[#047857] to-[#10B981]" style={{ animation: 'eq-bounce-1 1.8s infinite ease-in-out' }} />
+      <span className="flex-1 origin-bottom rounded-xs bg-gradient-to-t from-[#047857] to-[#10B981]" style={{ animation: 'eq-bounce-2 1.8s infinite ease-in-out 0.2s' }} />
+      <span className="flex-1 origin-bottom rounded-xs bg-gradient-to-t from-[#047857] to-[#10B981]" style={{ animation: 'eq-bounce-3 1.8s infinite ease-in-out 0.4s' }} />
+      <span className="flex-1 origin-bottom rounded-xs bg-gradient-to-t from-[#047857] to-[#10B981]" style={{ animation: 'eq-bounce-4 1.8s infinite ease-in-out 0.6s' }} />
+      <span className="flex-1 origin-bottom rounded-xs bg-gradient-to-t from-[#047857] to-[#10B981]" style={{ animation: 'eq-bounce-5 1.8s infinite ease-in-out 0.8s' }} />
     </div>
   );
 }
 
 /* ============================================================
-   FOUNDER PANEL
+   FOUNDER PANEL (Full Standing Specialist Image)
    ============================================================ */
 
 function FounderPanel() {
   return (
-    <div className="relative w-full shrink-0 lg:w-[36%] lg:min-h-[640px] lg:shrink-0">
-      <div className="relative aspect-[3/4] w-full sm:aspect-[4/5] lg:absolute lg:inset-0 lg:aspect-auto">
+    <div className="relative w-full shrink-0 lg:w-[32%] xl:w-[34%] lg:min-h-[620px] lg:shrink-0 flex items-end justify-center">
+      {/* Background Soft Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(5,150,105,0.12),transparent_70%)] pointer-events-none" />
+      
+      <div className="relative aspect-[3/4] w-full max-w-[420px] sm:aspect-[4/5] lg:absolute lg:inset-0 lg:aspect-auto lg:max-w-none">
         <Image
           src="/founder.webp"
-          alt="Founder — Google Ads specialist for HVAC companies. I Build Google Ads Systems That Generate More Booked Calls."
+          alt="WP Hossain — Google Ads specialist for Local Contractors & Service Businesses"
           fill
           priority
-          sizes="(min-width: 1024px) 36vw, 100vw"
-          className="object-contain object-right-bottom"
+          sizes="(min-width: 1024px) 34vw, 100vw"
+          className="object-contain object-right-bottom drop-shadow-xl"
         />
+      </div>
+
+      {/* Floating Trust Pill on Founder */}
+      <div className="absolute bottom-6 left-6 z-20 hidden lg:flex items-center gap-2.5 bg-white/95 backdrop-blur-md border border-[#CBD5E1] py-2 px-3.5 rounded-2xl shadow-lg">
+        <span className="w-2.5 h-2.5 rounded-full bg-[#059669] animate-pulse" />
+        <div className="flex flex-col">
+          <span className="text-[12px] font-bold text-[#0F172A] leading-tight">WP Hossain</span>
+          <span className="text-[10px] font-semibold text-[#64748B]">Google Ads Specialist</span>
+        </div>
       </div>
     </div>
   );
 }
 
-/* ============================================================
-   MAIN HERO
-   ============================================================ */
-
 const STEPS = [
-  { step: 1, title: "Google Ads Campaigns", subtitle: "", Content: GoogleAdsCampaignsStep },
-  { step: 2, title: "Landing Page", subtitle: "(High Converting)", Content: LandingPageStep },
-  { step: 3, title: "Phone Calls", subtitle: "(Tracked)", Content: PhoneCallsStep },
-  { step: 4, title: "CRM", subtitle: "(Lead Management)", Content: CrmStep },
-  { step: 5, title: "Technician", subtitle: "(Dispatched)", Content: TechnicianStep },
-  { step: 6, title: "Customer", subtitle: "(Happy)", Content: CustomerStep },
+  { step: 1, title: "Google Ads Campaigns", subtitle: "(High Intent)", Content: GoogleAdsCampaignsStep },
+  { step: 2, title: "Landing Page", subtitle: "(96 PageSpeed CRO)", Content: LandingPageStep },
+  { step: 3, title: "Phone Calls", subtitle: "(Tracked CallRail)", Content: PhoneCallsStep },
+  { step: 4, title: "CRM Lead Capture", subtitle: "(Instant Alert)", Content: CrmStep },
+  { step: 5, title: "Technician", subtitle: "(Dispatched & Routed)", Content: TechnicianStep },
+  { step: 6, title: "Happy Customer", subtitle: "(5-Star Google Review)", Content: CustomerStep },
 ];
 
 export function GrowthEcosystemHero() {
   return (
     <section 
-      id="new-hero"
-      className="relative w-full overflow-hidden bg-[#FFFFFF] border-b border-[#CBD5E1]"
+      id="ecosystem"
+      className="relative w-full overflow-hidden bg-white border-b border-[#CBD5E1] pt-12 lg:pt-16 pb-12"
       style={{ 
-        backgroundImage: 'linear-gradient(rgba(37,99,235,0.01) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.01) 1px, transparent 1px)', 
-        backgroundSize: '40px 40px' 
+        backgroundImage: 'linear-gradient(rgba(15,23,42,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.02) 1px, transparent 1px)', 
+        backgroundSize: '48px 48px' 
       }}
     >
-      <BackgroundGlow />
+      {/* Background Ambient Radial Lights */}
+      <div className="absolute top-10 left-1/4 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(5,150,105,0.05),transparent_70%)] pointer-events-none" />
+      <div className="absolute bottom-0 right-10 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(37,99,235,0.04),transparent_70%)] pointer-events-none" />
 
-      <div className="relative mx-auto flex w-full max-w-[1680px] flex-col lg:flex-row lg:items-end lg:gap-x-[1.5%]">
-        <FounderPanel />
+      <div className="max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Heading */}
+        <div className="text-center max-w-[800px] mx-auto mb-8 lg:mb-12">
+          <span className="eyebrow mx-auto">
+            The Complete Growth Engine
+          </span>
+          <h2 className="text-[clamp(28px,4vw,44px)] font-bold text-[#0F172A] leading-tight mb-3 font-display">
+            Local Service Growth Ecosystem
+          </h2>
+          <p className="text-[16.5px] text-[#475569] leading-relaxed">
+            How we turn targeted local search clicks into high-ticket dispatched jobs, 5-star Google reviews, and predictable recurring revenue.
+          </p>
+        </div>
 
-        <div className="relative flex w-full min-w-0 flex-col px-4 py-8 sm:px-6 lg:flex-1 lg:justify-center lg:py-10 lg:pl-0 lg:pr-6 xl:pr-8">
-          <TopRail />
+        {/* Master Flex: Founder on Left + 6-Step Workflow Rail on Right */}
+        <div className="relative mx-auto flex w-full flex-col lg:flex-row lg:items-end lg:gap-x-4">
+          
+          {/* Founder Panel on the Left */}
+          <FounderPanel />
 
-          <div className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:gap-2 sm:overflow-visible sm:px-0 lg:mt-0 lg:flex-nowrap lg:justify-between lg:gap-0">
-            {STEPS.map(({ step, title, subtitle, Content }, i) => (
-              <div key={step} className="flex shrink-0 snap-start items-stretch sm:contents">
-                <WorkflowCard step={step} title={title} subtitle={subtitle} delay={i * 0.09}>
-                  <Content />
-                </WorkflowCard>
-                {i < STEPS.length - 1 && <Connector delay={i * 0.12} />}
-              </div>
-            ))}
-          </div>
+          {/* Interactive Workflow Rail on the Right */}
+          <div className="relative flex w-full min-w-0 flex-col px-2 py-4 sm:px-4 lg:flex-1 lg:justify-center lg:py-6">
+            <TopRail />
 
-          <div className="relative mt-6 lg:mt-9">
-            <BottomConnectors />
-
-            <div className="mb-2 flex justify-center lg:hidden">
-              <Connector orientation="vertical" />
+            <div className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:gap-2 sm:overflow-visible sm:px-0 lg:mt-0 lg:flex-nowrap lg:justify-between lg:gap-0">
+              {STEPS.map(({ step, title, subtitle, Content }) => (
+                <div key={step} className="flex shrink-0 snap-start items-stretch sm:contents">
+                  <WorkflowCard step={step} title={title} subtitle={subtitle}>
+                    <Content />
+                  </WorkflowCard>
+                  {step < STEPS.length && <Connector />}
+                </div>
+              ))}
             </div>
 
-            <RevenueCard />
+            {/* Revenue Acceleration Bottom Section */}
+            <div className="relative mt-7 lg:mt-9">
+              <BottomConnectors />
+
+              <div className="mb-2 flex justify-center lg:hidden">
+                <Connector orientation="vertical" />
+              </div>
+
+              <RevenueCard />
+            </div>
           </div>
 
-          <motion.h2
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative mt-7 text-center text-xl font-medium tracking-tight text-[#1E293B] sm:text-2xl lg:mt-8 lg:text-[32px]"
-          >
-            Local Service Growth Ecosystem
-          </motion.h2>
         </div>
+
       </div>
     </section>
-  );
-}
-
-function BackgroundGlow() {
-  const reduce = useReducedMotion();
-  if (reduce) return null;
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      <motion.div
-        className="absolute -top-1/4 right-[10%] h-[420px] w-[420px] rounded-full bg-blue-600/5 blur-[120px]"
-        animate={{ opacity: [0.4, 0.7, 0.4], scale: [1, 1.12, 1] }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-0 left-[35%] h-[360px] w-[360px] rounded-full bg-emerald-500/3 blur-[120px]"
-        animate={{ opacity: [0.3, 0.55, 0.3], scale: [1.1, 1, 1.1] }}
-        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
-      />
-    </div>
   );
 }
 

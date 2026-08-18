@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Send, CheckCircle2, User, Mail, Globe, Linkedin } from 'lucide-react';
+import { Send, CheckCircle2, User, Mail, Globe, Phone } from 'lucide-react';
 
 export function LeadForm({ isDark = false }: { isDark?: boolean }) {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    websiteUrl: '',
-    linkedinUrl: ''
+    phone: '',
+    websiteUrl: ''
   });
   const [honeypot, setHoneypot] = useState('');
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -24,8 +24,8 @@ export function LeadForm({ isDark = false }: { isDark?: boolean }) {
         body: JSON.stringify({
           fullName: formData.fullName,
           email: formData.email,
+          phone: formData.phone,
           websiteUrl: formData.websiteUrl,
-          linkedinUrl: formData.linkedinUrl,
           formType: 'audit_request',
           website_hp: honeypot
         })
@@ -37,7 +37,7 @@ export function LeadForm({ isDark = false }: { isDark?: boolean }) {
       }
 
       setStatus('success');
-      setFormData({ fullName: '', email: '', websiteUrl: '', linkedinUrl: '' });
+      setFormData({ fullName: '', email: '', phone: '', websiteUrl: '' });
       setHoneypot('');
       setTimeout(() => setStatus('idle'), 6000);
     } catch (err) {
@@ -48,58 +48,45 @@ export function LeadForm({ isDark = false }: { isDark?: boolean }) {
 
   if (status === 'success') {
     return (
-      <div className={`border rounded-3xl p-10 text-center flex flex-col items-center justify-center min-h-[400px] shadow-lg animate-in fade-in zoom-in duration-500 ${
-        isDark ? 'bg-[#132A4E]/60 border-[#25D366]/30' : 'bg-white border-emerald-500/30'
-      }`}>
-        <div className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 shadow-sm border ${
-          isDark ? 'bg-[#25D366]/10 text-[#25D366] border-[#25D366]/30' : 'bg-emerald-50 text-emerald-500 border-emerald-200'
-        }`}>
-          <CheckCircle2 size={40} />
+      <div className="bg-white border-2 border-emerald-500/40 rounded-3xl p-10 text-center flex flex-col items-center justify-center min-h-[400px] shadow-lg animate-in fade-in zoom-in duration-500">
+        <div className="w-18 h-18 rounded-full bg-emerald-50 text-[#059669] border border-emerald-200 flex items-center justify-center mb-6 shadow-xs">
+          <CheckCircle2 size={38} />
         </div>
-        <h3 className={`text-2xl font-display font-bold mb-3 ${isDark ? 'text-white' : 'text-[#1E293B]'}`}>Audit Request Sent!</h3>
-        <p className={`text-[16px] max-w-sm leading-relaxed ${isDark ? 'text-[#aebcda]' : 'text-[#475569]'}`}>
-          Thanks for reaching out. I&apos;ll personally review your site and tracking setup and get back to you within 24 hours.
+        <h3 className="text-2xl font-display font-bold mb-3 text-[#0F172A]">Audit Request Sent!</h3>
+        <p className="text-[15.5px] text-[#475569] max-w-sm leading-relaxed">
+          Thanks for reaching out! I will personally review your search campaign, negative keywords, and tracking setup, then follow up within 24 hours.
         </p>
       </div>
     );
   }
 
   const InputField = ({ icon: Icon, label, ...props }: any) => (
-    <div className="space-y-2 group">
-      <label className={`text-[11px] font-bold uppercase tracking-[0.1em] ml-1 flex items-center gap-2 transition-colors ${
-        isDark 
-          ? 'text-[#aebcda] group-focus-within:text-[#4c9bff]' 
-          : 'text-[#475569] group-focus-within:text-[#2563EB]'
-      }`}>
-        <Icon size={12} />
+    <div className="space-y-1.5 group">
+      <label className="text-[11.5px] font-bold uppercase tracking-wider text-[#0F172A] flex items-center gap-1.5">
+        <Icon size={13} className="text-[#64748B] group-focus-within:text-[#0F172A]" />
         {label}
       </label>
       <div className="relative">
         <input 
           {...props}
-          className={`w-full rounded-xl px-4 py-3.5 text-[14px] outline-none transition-all ${
-            isDark 
-              ? 'bg-[#050f1f]/80 border border-white/10 text-white placeholder:text-[#64748B] focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB]'
-              : 'bg-white border border-[#CBD5E1] text-[#1E293B] placeholder:text-[#94A3B8] focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB]'
-          }`}
+          className="w-full rounded-xl px-4 py-3 text-[14px] bg-slate-50 border border-[#CBD5E1] text-[#0F172A] placeholder:text-[#94A3B8] focus:bg-white focus:border-[#0F172A] focus:ring-1 focus:ring-[#0F172A] outline-none transition-all"
         />
       </div>
     </div>
   );
 
   return (
-    <div className={`rounded-3xl p-8 max-sm:p-6 shadow-xl ${
-      isDark 
-        ? 'bg-[#132A4E]/40 border border-[#2563EB]/25 backdrop-blur-xl' 
-        : 'bg-white border border-[#CBD5E1]'
-    }`}>
-      <div className="mb-8">
-        <h3 className={`text-2xl font-display font-bold mb-2 ${isDark ? 'text-white' : 'text-[#1E293B]'}`}>Get Your Free Audit</h3>
-        <p className={`text-[14px] ${isDark ? 'text-[#aebcda]' : 'text-[#475569]'}`}>Enter your details and I&apos;ll send a custom audit report to your inbox.</p>
+    <div className="bg-white border border-[#CBD5E1] rounded-[28px] p-7 lg:p-8 shadow-sm">
+      <div className="mb-6">
+        <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#059669] bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full inline-block mb-3">
+          100% Free · No Commitment
+        </span>
+        <h3 className="text-2xl font-display font-bold mb-2 text-[#0F172A]">Request a Free PPC Audit</h3>
+        <p className="text-[14px] text-[#475569]">Enter your details and I will run a personalized audit of your current Google Ads & search terms.</p>
       </div>
       
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-2 gap-5 max-md:grid-cols-1">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <InputField 
             icon={User}
             label="Full Name"
@@ -107,7 +94,7 @@ export function LeadForm({ isDark = false }: { isDark?: boolean }) {
             required
             value={formData.fullName}
             onChange={(e: any) => setFormData({...formData, fullName: e.target.value})}
-            placeholder="John Smith"
+            placeholder="David Miller"
           />
           <InputField 
             icon={Mail}
@@ -116,29 +103,29 @@ export function LeadForm({ isDark = false }: { isDark?: boolean }) {
             required
             value={formData.email}
             onChange={(e: any) => setFormData({...formData, email: e.target.value})}
-            placeholder="john@company.com"
+            placeholder="david@contractor.com"
+          />
+          <InputField 
+            icon={Phone}
+            label="Phone Number"
+            type="tel" 
+            value={formData.phone}
+            onChange={(e: any) => setFormData({...formData, phone: e.target.value})}
+            placeholder="(214) 555-0187"
           />
           <InputField 
             icon={Globe}
-            label="Website URL"
-            type="url" 
+            label="Website or Business Name"
+            type="text" 
             value={formData.websiteUrl}
             onChange={(e: any) => setFormData({...formData, websiteUrl: e.target.value})}
-            placeholder="https://yourwebsite.com"
-          />
-          <InputField 
-            icon={Linkedin}
-            label="LinkedIn URL"
-            type="url" 
-            value={formData.linkedinUrl}
-            onChange={(e: any) => setFormData({...formData, linkedinUrl: e.target.value})}
-            placeholder="https://linkedin.com/in/..."
+            placeholder="yourcompany.com"
           />
         </div>
         
-        {/* Honeypot field — hidden from humans, catches bots */}
+        {/* Honeypot field */}
         <div className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
-          <label htmlFor="website_hp">Leave this field empty</label>
+          <label htmlFor="website_hp">Leave empty</label>
           <input
             id="website_hp"
             type="text"
@@ -152,15 +139,15 @@ export function LeadForm({ isDark = false }: { isDark?: boolean }) {
         <button 
           type="submit" 
           disabled={status === 'submitting'}
-          className="w-full py-4.5 rounded-xl bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold text-[15px] flex items-center justify-center gap-2.5 hover:shadow-xl hover:shadow-[#2563EB]/25 transition-all active:scale-[0.98] disabled:opacity-50 mt-4 shadow-lg shadow-[#2563EB]/20 cursor-pointer"
+          className="btn btn-primary btn-block py-4 rounded-xl text-[14.5px] font-bold flex items-center justify-center gap-2.5 mt-4 shadow-md cursor-pointer"
         >
-          {status === 'submitting' ? 'Analyzing Details...' : 'Request My Free Audit'}
-          <Send size={18} className={status === 'submitting' ? 'animate-pulse' : ''} />
+          {status === 'submitting' ? 'Preparing Audit Request...' : 'Send Audit Request →'}
+          <Send size={16} className={status === 'submitting' ? 'animate-pulse' : ''} />
         </button>
         
         {status === 'error' && (
-          <div className="flex items-center gap-2 justify-center text-red-500 text-xs mt-4 bg-red-50 p-3 rounded-lg border border-red-200">
-            <span>Something went wrong. Please try again or email directly.</span>
+          <div className="text-rose-600 text-xs text-center bg-rose-50 p-2.5 rounded-lg border border-rose-200">
+            Something went wrong. Please try again or reach out on WhatsApp.
           </div>
         )}
       </form>
