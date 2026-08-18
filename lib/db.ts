@@ -273,36 +273,51 @@ const INITIAL_LEADS = [
 const INITIAL_CASE_STUDIES = [
   {
     id: '1',
-    title: 'AC Repair Cost Reduction',
-    slug: 'ac-repair-cost-reduction',
-    client_niche: 'HVAC',
-    challenge: 'Cost-per-lead had crept up as broad-match keywords pulled in low-intent clicks.',
-    strategy: 'Rebuilt the account around tightly themed ad groups, added call tracking.',
-    result_summary: 'Example pattern: cost-per-call trending down while booked-job volume holds steady.',
+    title: 'Dallas Emergency HVAC: -70% Cost Per Lead & +166% Monthly Jobs',
+    slug: 'dallas-emergency-hvac-lead-generation',
+    client_niche: 'HVAC Contractor · Dallas, TX',
+    challenge: 'Paying $114 per lead from low-intent DIY searches, job seekers, and broad-match keyword bleed during peak summer heatwaves.',
+    strategy: 'Pruned 1,200+ negative keywords, built high-speed 0.8s mobile click-to-call landing pages, and shifted budget to high-intent emergency AC replacement clusters.',
+    result_summary: 'Cost Per Lead dropped from $114 to $34.20 (-70%), booked monthly jobs jumped from 18 to 48 (+166%).',
+    metrics_json: {
+      "Cost_Per_Lead": "$34.20 (-70%)",
+      "Booked_Jobs": "48/mo (+166%)",
+      "CTR": "3.34%"
+    },
     featured_image: '',
     display_order: 0,
     created_at: '2026-08-01T10:00:00.000Z'
   },
   {
     id: '2',
-    title: 'Plumbing Lead Unification',
-    slug: 'plumbing-lead-unification',
-    client_niche: 'Plumbing',
-    challenge: 'Conversions were technically live, but forms, calls, and chat weren\'t unified.',
-    strategy: 'Rebuilt GTM and GA4 from scratch with unified call, form, and chat tracking.',
-    result_summary: 'Example pattern: one accurate lead count across every channel.',
+    title: 'Austin Master Plumber: 60% Conversion Rate via CallRail DNI',
+    slug: 'austin-emergency-plumbing-callrail-tracking',
+    client_niche: 'Master Plumber · Austin, TX',
+    challenge: 'Unverified call tracking with massive click waste during non-operational weekend and overnight hours.',
+    strategy: 'Integrated CallRail dynamic number insertion with GA4 offline conversion tracking and scheduled daypart bidding during peak dispatch hours.',
+    result_summary: 'Generated 62 booked calls/mo at $28.50 CPL with 6.1x verified revenue return on ad spend.',
+    metrics_json: {
+      "Conv_Rate": "60.00%",
+      "Cost_Per_Lead": "$28.50",
+      "ROAS": "6.1x"
+    },
     featured_image: '',
     display_order: 1,
     created_at: '2026-08-02T11:00:00.000Z'
   },
   {
     id: '3',
-    title: 'Roofing Landing Page Lift',
-    slug: 'roofing-landing-page-lift',
-    client_niche: 'Roofing',
-    challenge: 'Paid traffic was landing on a generic homepage, most visitors left without quoting.',
-    strategy: 'Built a dedicated landing page matched to the ad message with a shorter form.',
-    result_summary: 'Example pattern: higher share of visitors requesting a quote from the same ad spend.',
+    title: 'Houston Storm Damage Roofing: $148K Closed Revenue Pipeline',
+    slug: 'houston-storm-damage-roofing-lead-funnel',
+    client_niche: 'Roofing & Storm Damage · Houston, TX',
+    challenge: 'High competition during storm seasons and slow lead follow-up losing bids to competitors.',
+    strategy: 'Deployed geotargeted storm radius campaigns paired with instant automated SMS lead routing to sales estimators.',
+    result_summary: '$148,000 in closed residential roof replacement contracts generated within 60 days.',
+    metrics_json: {
+      "Closed_Pipeline": "$148,000",
+      "Conv_Rate": "45.45%",
+      "Timeframe": "60 Days"
+    },
     featured_image: '',
     display_order: 2,
     created_at: '2026-08-03T12:00:00.000Z'
