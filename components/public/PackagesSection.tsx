@@ -49,7 +49,7 @@ export function PackagesSection() {
         "Daily Account Monitoring & Live Bid Adjustments",
         "Priority VIP WhatsApp & Phone Access",
         "Custom Live Data Studio Performance Dashboard",
-        "Dedicated Dedicated A/B Creative Testing"
+        "Dedicated A/B Creative Testing"
       ],
       popular: false,
       cta: "Schedule Enterprise Call →"
