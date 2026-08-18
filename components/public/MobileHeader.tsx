@@ -92,32 +92,32 @@ export function MobileHeader({
       {/* Top Header Bar for Mobile & Tablet */}
       <header className={`mobile-bar sticky top-0 z-50 transition-all duration-300 lg:hidden ${
         isScrolled 
-          ? 'bg-[#050f1f]/95 backdrop-blur-xl border-b border-[#1E293B] shadow-md shadow-black/20' 
-          : 'bg-[#050f1f] border-b border-transparent'
+          ? 'bg-white/95 backdrop-blur-xl border-b border-[#E2E8F0] shadow-sm' 
+          : 'bg-white border-b border-transparent'
       }`}>
         <div className="flex items-center justify-between gap-3 px-4 py-3">
           <Link href="/#home" className="mobile-brand flex items-center gap-2.5 group">
             <div className="relative">
               {imgError ? (
-                <div className="w-9 h-9 rounded-full bg-[#2563EB] grid place-items-center border-2 border-[#050f1f] text-white text-xs font-bold shrink-0">
+                <div className="w-9 h-9 rounded-full bg-[#2563EB] grid place-items-center border-2 border-white text-white text-xs font-bold shrink-0">
                   WH
                 </div>
               ) : (
                 <img 
                   src={avatarUrl} 
                   alt={ownerName} 
-                  className="w-9 h-9 rounded-full object-cover border-2 border-[#050f1f] shrink-0" 
+                  className="w-9 h-9 rounded-full object-cover border-2 border-white shrink-0" 
                   onError={() => setImgError(true)} 
                 />
               )}
               {/* Green Blinking Status Dot */}
               <span className="absolute -top-0.5 -right-0.5 flex h-3 w-3 pointer-events-none">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-80" />
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#25D366] border-2 border-[#050f1f]" />
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#25D366] border-2 border-white" />
               </span>
             </div>
             <div>
-              <strong className="block text-[14px] font-display text-white font-bold leading-tight group-hover:text-[#3B82F6] transition-colors">{ownerName}</strong>
+              <strong className="block text-[14px] font-display text-[#1E293B] font-bold leading-tight group-hover:text-[#2563EB] transition-colors">{ownerName}</strong>
             </div>
           </Link>
 
@@ -132,7 +132,7 @@ export function MobileHeader({
             {/* Hamburger Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="w-9 h-9 rounded-xl border border-white/10 bg-white/5 flex flex-col items-center justify-center gap-1.5 text-white hover:bg-white/10 hover:border-white/20 transition-all focus:outline-none"
+              className="w-9 h-9 rounded-xl border border-[#E2E8F0] bg-slate-50 flex flex-col items-center justify-center gap-1.5 text-[#1E293B] hover:bg-slate-100 transition-all focus:outline-none"
               aria-label={isOpen ? "Close Navigation Menu" : "Open Navigation Menu"}
               aria-expanded={isOpen}
             >

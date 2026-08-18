@@ -155,9 +155,9 @@ function MetricCard({
   decimals?: number;
 }) {
   return (
-    <div className="min-w-0 flex-1 rounded-lg border border-white/5 bg-white/[0.03] px-2 py-1.5">
-      <p className="truncate text-[9px] text-slate-400">{label}</p>
-      <p className="text-[13px] font-bold text-white leading-tight">
+    <div className="min-w-0 flex-1 rounded-lg border border-[#CBD5E1] bg-slate-50 px-2 py-1.5 shadow-inner">
+      <p className="truncate text-[9px] text-[#64748B]">{label}</p>
+      <p className="text-[13px] font-bold text-[#1E293B] leading-tight">
         <CountUp to={countTo} suffix={suffix} decimals={decimals} />
       </p>
     </div>
@@ -167,7 +167,7 @@ function MetricCard({
 /** Static status row (no per-row slide-in — kept calm on purpose). */
 function StatusRow({ label, icon }: { label: string; icon?: ReactNode }) {
   return (
-    <div className="flex items-center gap-1.5 text-[10.5px] text-slate-300">
+    <div className="flex items-center gap-1.5 text-[10.5px] text-[#475569]">
       {icon ?? <Dot />}
       <span className="truncate">{label}</span>
     </div>
@@ -193,15 +193,15 @@ function WorkflowCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, delay }}
-      className="group relative flex w-[172px] shrink-0 flex-col gap-3 rounded-2xl border border-white/10 bg-[#0b1220]/90 p-3.5 backdrop-blur-sm transition-colors duration-300 hover:border-blue-400/40 hover:bg-[#0d1526] hover:shadow-[0_0_28px_-8px_rgba(59,130,246,0.5)] sm:w-[184px] lg:w-auto lg:min-w-0 lg:flex-1 lg:basis-0"
+      className="group relative flex w-[172px] shrink-0 flex-col gap-3 rounded-2xl border border-[#CBD5E1] bg-white p-3.5 shadow-sm transition-all duration-300 hover:border-[#2563EB]/40 hover:shadow-md hover:-translate-y-1 sm:w-[184px] lg:w-auto lg:min-w-0 lg:flex-1 lg:basis-0"
     >
       <div className="flex items-start gap-2">
-        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-blue-400/30 bg-blue-500/15 text-[11px] font-semibold text-blue-300">
+        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-blue-500/30 bg-[#2563EB]/15 text-[11px] font-semibold text-blue-600">
           {step}
         </span>
         <div className="min-w-0 min-h-[40px]">
-          <p className="text-[12.5px] font-semibold leading-[1.15] text-white">{title}</p>
-          {subtitle && <p className="text-[10.5px] leading-tight text-blue-300/70">{subtitle}</p>}
+          <p className="text-[12.5px] font-semibold leading-[1.15] text-[#1E293B]">{title}</p>
+          {subtitle && <p className="text-[10.5px] leading-tight text-blue-600/80">{subtitle}</p>}
         </div>
       </div>
       <div className="flex flex-col gap-2">{children}</div>
@@ -223,8 +223,8 @@ function Connector({ orientation = "horizontal", delay = 0 }: { orientation?: "h
         {isH ? (
           <path
             d="M2 8 H30 M30 8 L23 2.5 M30 8 L23 13.5"
-            stroke="#60A5FA"
-            strokeOpacity="0.7"
+            stroke="#2563EB"
+            strokeOpacity="0.8"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -232,8 +232,8 @@ function Connector({ orientation = "horizontal", delay = 0 }: { orientation?: "h
         ) : (
           <path
             d="M8 2 V30 M8 30 L2.5 23 M8 30 L13.5 23"
-            stroke="#60A5FA"
-            strokeOpacity="0.7"
+            stroke="#2563EB"
+            strokeOpacity="0.8"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -242,8 +242,8 @@ function Connector({ orientation = "horizontal", delay = 0 }: { orientation?: "h
         {!reduce && (
           <motion.circle
             r="2.4"
-            fill="#93C5FD"
-            style={{ filter: "drop-shadow(0 0 5px #60A5FA)" }}
+            fill="#2563EB"
+            style={{ filter: "drop-shadow(0 0 3px #2563EB)" }}
             animate={isH ? { cx: [2, 30], cy: 8, opacity: [0, 1, 1, 0] } : { cx: 8, cy: [2, 30], opacity: [0, 1, 1, 0] }}
             transition={{ duration: 1.7, repeat: Infinity, ease: "easeInOut", delay, repeatDelay: 0.7 }}
           />
@@ -267,14 +267,14 @@ const BR = {
 } as const;
 
 function BracketLine({ style }: { style: CSSProperties }) {
-  return <span className="absolute bg-blue-400/50" style={style} aria-hidden="true" />;
+  return <span className="absolute bg-[#2563EB]/40" style={style} aria-hidden="true" />;
 }
 
 function ArrowSide({ left, dir }: { left: string; dir: "right" | "left" }) {
   const tip =
     dir === "right"
-      ? "-translate-x-full border-l-[7px] border-l-blue-400"
-      : "border-r-[7px] border-r-blue-400";
+      ? "-translate-x-full border-l-[7px] border-l-[#2563EB]"
+      : "border-r-[7px] border-r-[#2563EB]";
   return (
     <span
       className={`absolute h-0 w-0 -translate-y-1/2 border-b-[5px] border-t-[5px] border-b-transparent border-t-transparent ${tip}`}
@@ -287,7 +287,7 @@ function ArrowSide({ left, dir }: { left: string; dir: "right" | "left" }) {
 function ArrowDown({ left }: { left: string }) {
   return (
     <span
-      className="absolute h-0 w-0 -translate-x-1/2 border-l-[4px] border-r-[4px] border-t-[6px] border-l-transparent border-r-transparent border-t-blue-400"
+      className="absolute h-0 w-0 -translate-x-1/2 border-l-[4px] border-r-[4px] border-t-[6px] border-l-transparent border-r-transparent border-t-[#2563EB]"
       style={{ left, top: -6 }}
       aria-hidden="true"
     />
@@ -297,8 +297,8 @@ function ArrowDown({ left }: { left: string }) {
 function FlowDot({ left, top, delay }: { left: string[]; top: string[]; delay: number }) {
   return (
     <motion.span
-      className="absolute h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-200"
-      style={{ boxShadow: "0 0 6px 2px rgba(96,165,250,0.7)" }}
+      className="absolute h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2563EB]"
+      style={{ boxShadow: "0 0 4px 1px rgba(37,99,235,0.6)" }}
       animate={{ left, top, opacity: [0, 1, 1, 0] }}
       transition={{
         duration: 2.2,
@@ -356,8 +356,8 @@ function TopRail() {
   STEPS.forEach((s, i) => {
     nodes.push(
       <div key={s.step} className={`${SLOT_CLASS} flex-col items-center`}>
-        <span className="relative z-10 h-2 w-2 shrink-0 rounded-full border border-blue-300 bg-[#060c18]" />
-        <span className="w-[1.5px] flex-1 bg-gradient-to-b from-blue-400/60 to-blue-400/35" />
+        <span className="relative z-10 h-2 w-2 shrink-0 rounded-full border border-blue-500 bg-white" />
+        <span className="w-[1.5px] flex-1 bg-gradient-to-b from-[#2563EB]/60 to-[#2563EB]/20" />
       </div>
     );
     if (i < STEPS.length - 1) {
@@ -367,11 +367,11 @@ function TopRail() {
 
   return (
     <div className="relative hidden h-5 w-full lg:flex lg:flex-nowrap lg:items-stretch lg:justify-between" aria-hidden="true">
-      <div className="absolute top-[4px] h-[1.5px] -translate-y-1/2 bg-blue-400/40" style={{ left: BR.lCard, right: BR.lCard }} />
+      <div className="absolute top-[4px] h-[1.5px] -translate-y-1/2 bg-[#2563EB]/30" style={{ left: BR.lCard, right: BR.lCard }} />
       {!reduce && (
         <motion.span
-          className="absolute top-[4px] h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-blue-300"
-          style={{ boxShadow: "0 0 6px 2px rgba(96,165,250,0.7)" }}
+          className="absolute top-[4px] h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-[#2563EB]"
+          style={{ boxShadow: "0 0 4px 1px rgba(37,99,235,0.6)" }}
           animate={{ left: [BR.lCard, BR.rCard] }}
           transition={{ duration: 3.2, repeat: Infinity, ease: "linear" }}
         />
@@ -392,10 +392,10 @@ function GoogleAdsCampaignsStep() {
       <div className="flex justify-center py-0.5">
         <GoogleAdsIcon className="h-9 w-9" />
       </div>
-      <div className="flex items-center justify-between gap-1 rounded-lg border border-white/5 bg-white/[0.03] px-2 py-1">
-        <p className="min-w-0 truncate text-[10px] text-slate-300">Search Campaigns</p>
-        <span className="flex shrink-0 items-center gap-1 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-1.5 py-0.5 text-[8.5px] font-semibold text-emerald-400">
-          <LiveDot />
+      <div className="flex items-center justify-between gap-1 rounded-lg border border-[#CBD5E1] bg-slate-50 px-2 py-1">
+        <p className="min-w-0 truncate text-[10px] text-[#475569]">Search Campaigns</p>
+        <span className="flex shrink-0 items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-50 px-1.5 py-0.5 text-[8.5px] font-semibold text-emerald-600">
+          <LiveDot color="bg-emerald-500" />
           Active
         </span>
       </div>
@@ -403,19 +403,19 @@ function GoogleAdsCampaignsStep() {
         <MetricCard label="Impressions" countTo={248} suffix="K" />
         <MetricCard label="Clicks" countTo={12.4} suffix="K" decimals={1} />
       </div>
-      <div className="rounded-lg border border-white/5 bg-white/[0.03] px-2 py-1.5">
+      <div className="rounded-lg border border-[#CBD5E1] bg-slate-50 px-2 py-1.5">
         <div className="flex items-center justify-between">
-          <p className="text-[9.5px] uppercase tracking-wide text-slate-400">CTR</p>
-          <span className="text-[9.5px] font-medium text-emerald-400">▲ 32.5%</span>
+          <p className="text-[9.5px] uppercase tracking-wide text-[#64748B]">CTR</p>
+          <span className="text-[9.5px] font-medium text-[#15803D]">▲ 32.5%</span>
         </div>
-        <p className="text-[13px] font-bold leading-tight text-white">
+        <p className="text-[13px] font-bold leading-tight text-[#1E293B]">
           <CountUp to={8.57} suffix="%" decimals={2} />
         </p>
         <svg viewBox="0 0 120 40" className="mt-1 h-10 w-full" preserveAspectRatio="none">
           <motion.polyline
             points="0,34 15,30 30,32 45,25 60,27 75,19 90,21 105,13 120,15"
             fill="none"
-            stroke="#F59E0B"
+            stroke="#B45309"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -427,7 +427,7 @@ function GoogleAdsCampaignsStep() {
           <motion.polyline
             points="0,28 15,23 30,25 45,15 60,18 75,9 90,11 105,3 120,5"
             fill="none"
-            stroke="#60A5FA"
+            stroke="#2563EB"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -445,11 +445,11 @@ function GoogleAdsCampaignsStep() {
 function LandingPageStep() {
   return (
     <>
-      <div className="relative h-[92px] w-full overflow-hidden rounded-lg border border-white/10 bg-slate-800">
+      <div className="relative h-[92px] w-full overflow-hidden rounded-lg border border-[#CBD5E1] bg-slate-100">
         <Image src="/landing-page.webp" alt="HVAC landing page preview" fill sizes="184px" className="object-cover object-top" />
       </div>
-      <div className="flex flex-col items-center gap-1 rounded-lg border border-white/5 bg-white/[0.03] px-2 py-2">
-        <span className="text-[9.5px] uppercase tracking-wide text-slate-400">Page Score</span>
+      <div className="flex flex-col items-center gap-1 rounded-lg border border-[#CBD5E1] bg-slate-50 px-2 py-2">
+        <span className="text-[9.5px] uppercase tracking-wide text-[#64748B]">Page Score</span>
         <ScoreDonut value={92} />
       </div>
       <div className="flex flex-col gap-1">
@@ -471,13 +471,13 @@ function ScoreDonut({ value }: { value: number }) {
   return (
     <div className="relative h-[62px] w-[62px]">
       <svg viewBox="0 0 64 64" className="h-full w-full -rotate-90">
-        <circle cx="32" cy="32" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="5" />
+        <circle cx="32" cy="32" r={R} fill="none" stroke="#E2E8F0" strokeWidth="5" />
         <motion.circle
           cx="32"
           cy="32"
           r={R}
           fill="none"
-          stroke="#34D399"
+          stroke="#15803D"
           strokeWidth="5"
           strokeLinecap="round"
           strokeDasharray={C}
@@ -488,10 +488,10 @@ function ScoreDonut({ value }: { value: number }) {
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center leading-none">
-        <span className="text-[17px] font-bold text-emerald-400">
+        <span className="text-[17px] font-bold text-[#15803D]">
           <CountUp to={value} />
         </span>
-        <span className="text-[8px] text-slate-500">/100</span>
+        <span className="text-[8px] text-[#64748B]">/100</span>
       </div>
     </div>
   );
@@ -501,25 +501,25 @@ function PhoneCallsStep() {
   const reduce = useReducedMotion();
   return (
     <>
-      <div className="rounded-lg border border-white/5 bg-white/[0.03] px-2 py-1.5">
-        <p className="text-[9.5px] uppercase tracking-wide text-slate-400">Incoming Call</p>
-        <p className="text-[12.5px] font-bold text-white">214-555-0187</p>
-        <p className="text-[10px] text-slate-400">Dallas, TX</p>
+      <div className="rounded-lg border border-[#CBD5E1] bg-slate-50 px-2 py-1.5">
+        <p className="text-[9.5px] uppercase tracking-wide text-[#64748B]">Incoming Call</p>
+        <p className="text-[12.5px] font-bold text-[#1E293B]">214-555-0187</p>
+        <p className="text-[10px] text-[#64748B]">Dallas, TX</p>
       </div>
       <div className="flex items-center justify-center gap-3 py-1">
-        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-rose-500/90 text-white shadow-[0_0_12px_-2px_rgba(244,63,94,0.7)]">
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-rose-500 text-white shadow-md">
           <PhoneHangUpIcon className="h-4 w-4" />
         </span>
         <span className="relative flex h-8 w-8 items-center justify-center">
           {!reduce && (
             <motion.span
-              className="absolute inset-0 rounded-full bg-emerald-400/50"
+              className="absolute inset-0 rounded-full bg-emerald-500/20"
               animate={{ scale: [1, 1.9], opacity: [0.5, 0] }}
               transition={{ duration: 1.4, repeat: Infinity, ease: "easeOut" }}
             />
           )}
           <motion.span
-            className="relative flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/90 text-white shadow-[0_0_12px_-2px_rgba(16,185,129,0.7)]"
+            className="relative flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500 text-white shadow-sm"
             animate={reduce ? undefined : { rotate: [0, -12, 12, -12, 12, 0] }}
             transition={{ duration: 1, repeat: Infinity, repeatDelay: 1.2 }}
           >
@@ -528,7 +528,7 @@ function PhoneCallsStep() {
         </span>
       </div>
       <div className="flex flex-col gap-1">
-        <p className="text-[10px] font-semibold text-slate-300">Call Tracking</p>
+        <p className="text-[10px] font-semibold text-[#1E293B]">Call Tracking</p>
         <StatusRow label="Recording" />
         <StatusRow label="Duration" />
         <StatusRow label="Source" />
@@ -548,26 +548,26 @@ function CrmStep() {
   return (
     <>
       <div className="flex items-center justify-between">
-        <span className="text-[11px] font-semibold text-white">New Lead!</span>
+        <span className="text-[11px] font-semibold text-[#1E293B]">New Lead!</span>
         <motion.span
-          className="rounded-full border border-rose-400/30 bg-rose-500/10 px-2 py-0.5 text-[9px] font-semibold text-rose-400"
+          className="rounded-full border border-rose-500/30 bg-rose-50 px-2 py-0.5 text-[9px] font-semibold text-rose-600"
           animate={{ opacity: [1, 0.5, 1] }}
           transition={loop({ duration: 1.6 })}
         >
           Hot
         </motion.span>
       </div>
-      <div className="flex flex-col gap-1 rounded-lg border border-white/5 bg-white/[0.03] px-2 py-1.5">
+      <div className="flex flex-col gap-1 rounded-lg border border-[#CBD5E1] bg-slate-50 px-2 py-1.5">
         {fields.map(([label, value]) => (
           <div key={label} className="flex flex-col leading-tight">
-            <span className="text-[8.5px] uppercase tracking-wide text-slate-500">{label}</span>
-            <span className="truncate text-[10.5px] font-medium text-slate-200">{value}</span>
+            <span className="text-[8.5px] uppercase tracking-wide text-[#64748B]">{label}</span>
+            <span className="truncate text-[10.5px] font-medium text-[#1E293B]">{value}</span>
           </div>
         ))}
       </div>
-      <div className="flex items-center justify-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-500/10 py-1">
+      <div className="flex items-center justify-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-50 py-1">
         <CheckCircleIcon className="h-3.5 w-3.5" />
-        <span className="text-[10px] font-semibold text-emerald-400">Lead Saved</span>
+        <span className="text-[10px] font-semibold text-emerald-600">Lead Saved</span>
       </div>
     </>
   );
@@ -576,17 +576,17 @@ function CrmStep() {
 function TechnicianStep() {
   return (
     <>
-      <span className="flex items-center gap-1 text-[10px] font-semibold text-emerald-400">
+      <span className="flex items-center gap-1 text-[10px] font-semibold text-emerald-600">
         <CheckCircleIcon className="h-3.5 w-3.5" />
         Job Assigned
       </span>
-      <div className="relative h-[74px] w-full overflow-hidden rounded-lg border border-white/10 bg-slate-800">
+      <div className="relative h-[74px] w-full overflow-hidden rounded-lg border border-[#CBD5E1] bg-slate-100">
         <Image src="/technician.webp" alt="Dispatched HVAC technician" fill sizes="184px" className="object-cover object-top" />
       </div>
-      <p className="text-[10px] text-slate-400">
-        ETA <span className="font-semibold text-white">25 mins</span>
+      <p className="text-[10px] text-[#64748B]">
+        ETA <span className="font-semibold text-[#1E293B]">25 mins</span>
       </p>
-      <div className="relative h-[58px] w-full overflow-hidden rounded-lg border border-white/10 bg-[#0a1526]">
+      <div className="relative h-[58px] w-full overflow-hidden rounded-lg border border-[#CBD5E1] bg-slate-50">
         <Image src="/technician-map.webp" alt="Technician route map" fill sizes="184px" className="object-cover" />
       </div>
     </>
@@ -597,7 +597,7 @@ function CustomerStep() {
   const reduce = useReducedMotion();
   return (
     <>
-      <div className="flex items-center gap-1 text-[10px] font-semibold text-emerald-400">
+      <div className="flex items-center gap-1 text-[10px] font-semibold text-emerald-600">
         <CheckCircleIcon className="h-3.5 w-3.5" />
         Service Completed
       </div>
@@ -612,9 +612,9 @@ function CustomerStep() {
           </motion.span>
         ))}
       </div>
-      <p className="text-[10.5px] italic leading-snug text-slate-300">&ldquo;Great service, very professional. Highly recommended!&rdquo;</p>
-      <p className="text-[9.5px] font-medium text-slate-500">— Michael T.</p>
-      <div className="relative h-[78px] w-full overflow-hidden rounded-lg border border-white/10 bg-slate-800">
+      <p className="text-[10.5px] italic leading-snug text-[#475569]">&ldquo;Great service, very professional. Highly recommended!&rdquo;</p>
+      <p className="text-[9.5px] font-medium text-[#64748B]">— Michael T.</p>
+      <div className="relative h-[78px] w-full overflow-hidden rounded-lg border border-[#CBD5E1] bg-slate-100">
         <Image src="/customer-house.webp" alt="Customer's home" fill sizes="184px" className="object-cover" />
       </div>
     </>
@@ -628,13 +628,13 @@ function RevenueCard() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: 0.1 }}
-      className="relative z-10 mx-auto flex w-full flex-col gap-2.5 rounded-2xl border border-white/10 bg-[#0b1220]/90 p-3.5 backdrop-blur-sm sm:flex-row sm:items-center sm:gap-4 lg:w-[50%] lg:min-w-[430px]"
+      className="relative z-10 mx-auto flex w-full flex-col gap-2.5 rounded-2xl border border-[#CBD5E1] bg-white p-3.5 shadow-md sm:flex-row sm:items-center sm:gap-4 lg:w-[50%] lg:min-w-[430px]"
     >
       <div className="flex items-center gap-2 sm:w-[150px] sm:shrink-0">
-        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-blue-400/30 bg-blue-500/15 text-[12px] font-semibold text-blue-300">7</span>
+        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-blue-500/30 bg-[#2563EB]/15 text-[12px] font-semibold text-blue-600">7</span>
         <div>
-          <p className="text-[13.5px] font-semibold leading-tight text-white">More Revenue</p>
-          <p className="text-[10.5px] leading-tight text-blue-300/70">(Business Growth)</p>
+          <p className="text-[13.5px] font-semibold leading-tight text-[#1E293B]">More Revenue</p>
+          <p className="text-[10.5px] leading-tight text-blue-600/85">(Business Growth)</p>
         </div>
       </div>
 
@@ -723,9 +723,9 @@ export function GrowthEcosystemHero() {
   return (
     <section 
       id="new-hero"
-      className="relative w-full overflow-hidden bg-[#050f1f] border-b border-white/5"
+      className="relative w-full overflow-hidden bg-[#FFFFFF] border-b border-[#CBD5E1]"
       style={{ 
-        backgroundImage: 'linear-gradient(rgba(26,115,232,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(26,115,232,0.03) 1px, transparent 1px)', 
+        backgroundImage: 'linear-gradient(rgba(37,99,235,0.01) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.01) 1px, transparent 1px)', 
         backgroundSize: '40px 40px' 
       }}
     >
@@ -763,7 +763,7 @@ export function GrowthEcosystemHero() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative mt-7 text-center text-xl font-medium tracking-tight text-white sm:text-2xl lg:mt-8 lg:text-[32px]"
+            className="relative mt-7 text-center text-xl font-medium tracking-tight text-[#1E293B] sm:text-2xl lg:mt-8 lg:text-[32px]"
           >
             Local Service Growth Ecosystem
           </motion.h2>
@@ -779,12 +779,12 @@ function BackgroundGlow() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
       <motion.div
-        className="absolute -top-1/4 right-[10%] h-[420px] w-[420px] rounded-full bg-blue-600/10 blur-[120px]"
+        className="absolute -top-1/4 right-[10%] h-[420px] w-[420px] rounded-full bg-blue-600/5 blur-[120px]"
         animate={{ opacity: [0.4, 0.7, 0.4], scale: [1, 1.12, 1] }}
         transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute bottom-0 left-[35%] h-[360px] w-[360px] rounded-full bg-emerald-500/8 blur-[120px]"
+        className="absolute bottom-0 left-[35%] h-[360px] w-[360px] rounded-full bg-emerald-500/3 blur-[120px]"
         animate={{ opacity: [0.3, 0.55, 0.3], scale: [1.1, 1, 1.1] }}
         transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
       />

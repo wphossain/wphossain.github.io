@@ -108,24 +108,24 @@ export function Sidebar({
   return (
     <header className={`sticky top-0 z-50 w-full transition-all duration-300 hidden lg:block ${
       isScrolled 
-        ? 'bg-[#050f1f]/95 backdrop-blur-xl border-b border-[#1E293B] shadow-md shadow-black/20' 
-        : 'bg-[#050f1f] border-b border-transparent'
+        ? 'bg-white/95 backdrop-blur-xl border-b border-[#E2E8F0] shadow-sm' 
+        : 'bg-white border-b border-transparent'
     }`}>
       <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-3 flex items-center justify-between gap-6">
         
         {/* Brand & Avatar with Green Blinking Status */}
         <Link href="/#home" className="flex items-center gap-3 group shrink-0">
           <div className="relative">
-            <div className="w-10 h-10 rounded-full p-0.5 bg-gradient-to-tr from-[#1a73e8] via-[#25D366] to-[#4c9bff] shadow-md transition-transform duration-300 group-hover:scale-105 shrink-0">
+            <div className="w-10 h-10 rounded-full p-0.5 bg-gradient-to-tr from-[#2563EB] via-[#25D366] to-[#3B82F6] shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
               {imgError ? (
-                <div className="w-full h-full rounded-full bg-[#1a73e8] grid place-items-center border-2 border-[#050f1f]">
+                <div className="w-full h-full rounded-full bg-[#2563EB] grid place-items-center border-2 border-white">
                   <span className="text-white text-xs font-bold">WH</span>
                 </div>
               ) : (
                 <img 
                   src={avatarUrl} 
                   alt={ownerName} 
-                  className="w-full h-full rounded-full object-cover border-2 border-[#050f1f]"
+                  className="w-full h-full rounded-full object-cover border-2 border-white"
                   onError={() => setImgError(true)}
                 />
               )}
@@ -133,12 +133,12 @@ export function Sidebar({
             {/* Blinking Green Dot on Top Edge of Avatar */}
             <span className="absolute -top-0.5 -right-0.5 flex h-3.5 w-3.5 pointer-events-none">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-80" />
-              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-[#25D366] border-2 border-[#050f1f]" />
+              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-[#25D366] border-2 border-white" />
             </span>
           </div>
 
           <div className="flex flex-col">
-            <span className="text-[17px] leading-tight font-bold text-white tracking-tight font-display group-hover:text-[#4c9bff] transition-colors">
+            <span className="text-[17px] leading-tight font-bold text-[#1E293B] tracking-tight font-display group-hover:text-[#2563EB] transition-colors">
               {ownerName}
             </span>
           </div>
@@ -155,8 +155,8 @@ export function Sidebar({
                 onClick={() => setActiveHash(item.key)}
                 className={`px-3.5 py-1.5 rounded-lg text-[13.5px] font-medium transition-all duration-200 ${
                   isActive 
-                    ? 'text-white font-bold bg-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]' 
-                    : 'text-[#aebcda] hover:text-white hover:bg-white/5'
+                    ? 'text-[#2563EB] font-bold bg-[#2563EB]/10' 
+                    : 'text-[#475569] hover:text-[#1E293B] hover:bg-slate-100'
                 }`}
               >
                 {item.label}
