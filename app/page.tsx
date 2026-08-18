@@ -7,7 +7,6 @@ import { MobileHeader } from '@/components/public/MobileHeader';
 import { MobileCtaBar } from '@/components/public/MobileCtaBar';
 import { PulseCard } from '@/components/public/PulseCard';
 import { GrowthEcosystemHero } from '@/components/public/GrowthEcosystemHero';
-import { PpcLeaksSection } from '@/components/public/PpcLeaksSection';
 import { IsThisYouSection } from '@/components/public/IsThisYouSection';
 import { ServiceGrid } from '@/components/public/ServiceGrid';
 import { WhyMeGrid } from '@/components/public/WhyMeGrid';
@@ -20,6 +19,7 @@ import { FloatingContactFab } from '@/components/public/FloatingContactFab';
 import { StructuredData } from '@/components/public/StructuredData';
 import { GoogleAdsCertBadge, GoogleAnalyticsCertBadge, GTMCertBadge, MetaCertBadge } from '@/components/public/CertBadges';
 import { Reveal } from '@/components/public/Reveal';
+import { BeforeAfterSliderSection } from '@/components/public/BeforeAfterSliderSection';
 import { Footer } from '@/components/public/Footer';
 import { db } from '@/lib/db';
 
@@ -302,17 +302,12 @@ export default async function Home() {
         </section>
 
         {/* ============================================================
-            2. INTERACTIVE GROWTH ECOSYSTEM (User's Favorite Section)
+            2. INTERACTIVE GROWTH ECOSYSTEM
             ============================================================ */}
         <GrowthEcosystemHero />
 
         {/* ============================================================
-            3. WHERE LOCAL BUSINESSES BLEED AD SPEND (PPC Leaks Matrix)
-            ============================================================ */}
-        <PpcLeaksSection />
-
-        {/* ============================================================
-            4. IS THIS YOU? DIAGNOSTIC SECTION (MikeNcube Inspired)
+            3. IS THIS YOU? DIAGNOSTIC SECTION
             ============================================================ */}
         <IsThisYouSection />
 
@@ -377,7 +372,12 @@ export default async function Home() {
         </section>
 
         {/* ============================================================
-            10. CERTIFICATIONS & BADGES (Left-Aligned)
+            10. PROOF OF WORK: BEFORE & AFTER INTERACTIVE SLIDER
+            ============================================================ */}
+        <BeforeAfterSliderSection />
+
+        {/* ============================================================
+            11. CERTIFICATIONS & BADGES (Left-Aligned)
             ============================================================ */}
         <section className="w-full bg-[#F8FAFC] border-b border-[#CBD5E1] py-20 relative overflow-hidden" id="certifications">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
