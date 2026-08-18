@@ -22,6 +22,16 @@ export function Sidebar({
 }: SidebarProps) {
   const [imgError, setImgError] = useState(false);
   const [activeHash, setActiveHash] = useState('#home');
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 40);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -96,7 +106,11 @@ export function Sidebar({
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#050f1f]/85 backdrop-blur-xl border-b border-white/10 shadow-xl hidden lg:block">
+    <header className={`sticky top-0 z-50 w-full transition-all duration-300 hidden lg:block ${
+      isScrolled 
+        ? 'bg-[#050f1f]/95 backdrop-blur-xl border-b border-[#1E293B] shadow-md shadow-black/20' 
+        : 'bg-[#050f1f] border-b border-transparent'
+    }`}>
       <div className="max-w-[var(--container)] mx-auto px-6 lg:px-10 py-3 flex items-center justify-between gap-6">
         
         {/* Brand & Avatar with Green Blinking Status */}

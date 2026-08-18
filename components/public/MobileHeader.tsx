@@ -23,6 +23,16 @@ export function MobileHeader({
   const [imgError, setImgError] = useState(false);
   const [activeHash, setActiveHash] = useState('#home');
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 40);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -80,7 +90,11 @@ export function MobileHeader({
   return (
     <>
       {/* Top Header Bar for Mobile & Tablet */}
-      <header className="mobile-bar sticky top-0 z-50 bg-[#050f1f]/85 border-b border-white/10 backdrop-blur-xl lg:hidden shadow-lg">
+      <header className={`mobile-bar sticky top-0 z-50 transition-all duration-300 lg:hidden ${
+        isScrolled 
+          ? 'bg-[#050f1f]/95 backdrop-blur-xl border-b border-[#1E293B] shadow-md shadow-black/20' 
+          : 'bg-[#050f1f] border-b border-transparent'
+      }`}>
         <div className="flex items-center justify-between gap-3 px-4 py-3">
           <Link href="/#home" className="mobile-brand flex items-center gap-2.5 group">
             <div className="relative">

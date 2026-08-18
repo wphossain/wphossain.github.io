@@ -15,12 +15,12 @@ export interface Service {
 type IconDef = { Icon: LucideIcon; color: string };
 
 const ICON_MAP: Record<string, IconDef> = {
-  hvac: { Icon: Thermometer, color: '#25D366' },
-  plumbing: { Icon: Droplets, color: '#f2a93d' },
-  roofing: { Icon: Home, color: '#f2a93d' },
-  electrical: { Icon: Zap, color: '#4c9bff' },
-  landscaping: { Icon: Leaf, color: '#25D366' },
-  other: { Icon: Wrench, color: '#4c9bff' },
+  hvac: { Icon: Thermometer, color: '#15803D' },
+  plumbing: { Icon: Droplets, color: '#B45309' },
+  roofing: { Icon: Home, color: '#B45309' },
+  electrical: { Icon: Zap, color: '#2563EB' },
+  landscaping: { Icon: Leaf, color: '#15803D' },
+  other: { Icon: Wrench, color: '#2563EB' },
 };
 
 const DEFAULT_SERVICES: Service[] = [

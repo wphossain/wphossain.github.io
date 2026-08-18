@@ -214,10 +214,10 @@ export default async function Home() {
                   { value: "$2.4M+", label: "Total Ad Spend Managed" },
                   { value: "42%", label: "Avg. CPL Reduction", highlight: true },
                   { value: "180+", label: "Campaigns Managed" },
-                  { value: "94%", label: "Client Retention" }
+                  { value: "94%", label: "Client Retention", highlight: true }
                 ]).map((stat: any, idx: number) => (
                   <div key={idx} className={`flex flex-col items-center text-center px-4 ${idx !== 3 ? 'md:border-r md:border-white/10' : ''}`}>
-                    <strong className={`font-display text-[28px] lg:text-[34px] font-extrabold tracking-tight leading-none mb-1.5 ${stat.highlight ? 'text-[#25D366]' : 'text-white'}`}>
+                    <strong className={`font-display text-[28px] lg:text-[34px] font-extrabold tracking-tight leading-none mb-1.5 ${stat.highlight || stat.label?.includes('Retention') ? 'text-[#25D366]' : 'text-white'}`}>
                       {stat.value}
                     </strong>
                     <span className="text-[11px] lg:text-[12px] font-extrabold uppercase tracking-wider text-[#7b8bad]">
@@ -291,7 +291,7 @@ export default async function Home() {
                       </div>
                     </div>
                     <div className="mt-8 pt-6 border-t border-[#E2E8F0]">
-                      <span className="text-[10px] font-extrabold tracking-wider uppercase text-[#25D366] block mb-2">Final Result</span>
+                      <span className="text-[10px] font-extrabold tracking-wider uppercase text-[#15803D] block mb-2">Final Result</span>
                       <p className="text-[16px] font-display font-bold text-[#1E293B] leading-tight mb-4">{c.result_summary}</p>
                       <Link href={`/portfolio/${c.slug}`} className="inline-flex items-center gap-2 text-[14px] font-bold text-[#2563EB] group/link hover:underline">
                         View Portfolio <span className="group-hover/link:translate-x-1 transition-transform">→</span>
@@ -343,14 +343,22 @@ export default async function Home() {
                 </p>
               </Reveal>
               <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-6">
-                {(resultsSection.content_json?.stats || []).map((stat: any, i: number) => (
-                  <div key={i} className="p-8 rounded-[32px] border border-[#E2E8F0] bg-white shadow-sm hover:shadow-md hover:border-slate-300 transition-all group overflow-hidden relative">
-                    <div className="absolute top-0 right-0 w-24 h-24 blur-3xl opacity-10 transition-opacity group-hover:opacity-20" style={{ background: stat.color }} />
-                    <CountUp value={stat.value} className="block text-5xl font-display font-bold text-[#1E293B] mb-2 tracking-tight tabular-nums" />
-                    <span className="text-[13px] font-bold uppercase tracking-widest block mb-3" style={{ color: stat.color }}>{stat.label}</span>
-                    <p className="text-[14px] text-[#475569] leading-relaxed">{stat.desc}</p>
-                  </div>
-                ))}
+                {(resultsSection.content_json?.stats || [
+                  { value: '$28.50', label: 'Avg Cost Per Lead', desc: 'Targeted search campaigns built for booked jobs.', color: '#2563EB', highlight: false },
+                  { value: '+310%', label: 'Conversions Growth', desc: 'Average increase in tracked calls and form submissions.', color: '#15803D', highlight: true },
+                  { value: '5.2%', label: 'Avg Conversion Rate', desc: 'High-intent search traffic hitting dedicated landing pages.', color: '#2563EB', highlight: false },
+                  { value: '28%', label: 'Lower Cost Per Call', desc: 'Reduced waste through negative keyword auditing.', color: '#15803D', highlight: true }
+                ]).map((stat: any, i: number) => {
+                  const isHighlight = stat.highlight === true || stat.value === '+310%' || stat.value === '28%' || stat.color === '#15803D' || stat.color === '#25D366';
+                  return (
+                    <div key={i} className="p-8 rounded-[32px] border border-[#E2E8F0] bg-white shadow-sm hover:shadow-md hover:border-slate-300 transition-all group overflow-hidden relative">
+                      <div className="absolute top-0 right-0 w-24 h-24 blur-3xl opacity-10 transition-opacity group-hover:opacity-20" style={{ background: isHighlight ? '#15803D' : '#2563EB' }} />
+                      <CountUp value={stat.value} className={`block text-5xl font-display font-bold mb-2 tracking-tight tabular-nums ${isHighlight ? 'text-[#15803D]' : 'text-[#1E293B]'}`} />
+                      <span className={`text-[13px] font-extrabold uppercase tracking-widest block mb-3 ${isHighlight ? 'text-[#15803D]' : 'text-[#2563EB]'}`}>{stat.label}</span>
+                      <p className="text-[14px] text-[#475569] leading-relaxed">{stat.desc}</p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </section>
@@ -373,7 +381,7 @@ export default async function Home() {
                 {blogs.slice(0, 2).map((post: any) => (
                   <article key={post.id} className="group bg-white border border-[#E2E8F0] shadow-sm rounded-[32px] p-8 hover:border-[#2563EB]/30 hover:shadow-md transition-all flex flex-col gap-6">
                     <div>
-                      <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest text-[#25D366] bg-[#25D366]/10 border border-[#25D366]/20 px-3 py-1 rounded-full mb-5">{post.category || 'Strategy Guide'}</span>
+                      <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest text-[#15803D] bg-[#15803D]/10 border border-[#15803D]/25 px-3 py-1 rounded-full mb-5">{post.category || 'Strategy Guide'}</span>
                       <h3 className="text-2xl font-display font-bold text-[#1E293B] mb-3 leading-tight group-hover:text-[#2563EB] transition-colors">
                         <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                       </h3>
@@ -468,7 +476,7 @@ export default async function Home() {
                       { title: "Next Steps Plan", desc: "A clear, no-fluff action plan for account growth and better ROI." }
                     ].map((item, i) => (
                       <div key={i} className="p-5 rounded-2xl border border-[#E2E8F0] bg-white shadow-sm flex flex-col gap-2 hover:border-slate-300 hover:shadow-md transition-all group">
-                        <span className="text-[10px] font-extrabold text-[#25D366] uppercase tracking-[0.1em] group-hover:translate-x-1 transition-transform inline-block">0{i+1}. {item.title}</span>
+                        <span className="text-[10px] font-extrabold text-[#15803D] uppercase tracking-[0.1em] group-hover:translate-x-1 transition-transform inline-block">0{i+1}. {item.title}</span>
                         <p className="text-[13px] text-[#475569] leading-relaxed">{item.desc}</p>
                       </div>
                     ))}

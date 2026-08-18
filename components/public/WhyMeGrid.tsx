@@ -34,37 +34,37 @@ const DEFAULT_WHY_CARDS: WhyCard[] = [
     title: "HVAC-first focus",
     icon: "target",
     desc: "Only local service businesses — so keywords and ad copy stay specific, not generic.",
-    color: "#ef4444"
+    color: "#dc2626"
   },
   {
     title: "Tracking that reports the truth",
     icon: "bar-chart",
     desc: "Calls, forms, and chat unified in GTM and GA4 — one accurate lead count, not guesswork.",
-    color: "#25D366"
+    color: "#15803D"
   },
   {
     title: "Landing page background",
     icon: "layout",
     desc: "I build the page the click lands on too, not just the campaign that sends it there.",
-    color: "#1a73e8"
+    color: "#2563EB"
   },
   {
     title: "Search-term discipline",
     icon: "search",
     desc: "Weekly search-term audits cut wasted spend before it eats into your budget.",
-    color: "#06b6d4"
+    color: "#0891b2"
   },
   {
     title: "Reporting you can read",
     icon: "file-text",
     desc: "Monthly reports in plain language — spend, calls, and cost per booked job.",
-    color: "#f2a93d"
+    color: "#B45309"
   },
   {
     title: "No lock-in",
     icon: "unlock",
     desc: "Month-to-month. If results stop, you're free to walk — no long contracts.",
-    color: "#10b981"
+    color: "#15803D"
   }
 ];
 
