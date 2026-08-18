@@ -19,7 +19,9 @@ import { FloatingContactFab } from '@/components/public/FloatingContactFab';
 import { StructuredData } from '@/components/public/StructuredData';
 import { GoogleAdsCertBadge, GoogleAnalyticsCertBadge, GTMCertBadge, MetaCertBadge } from '@/components/public/CertBadges';
 import { Reveal } from '@/components/public/Reveal';
+import { TrustedByStrip } from '@/components/public/TrustedByStrip';
 import { BeforeAfterSliderSection } from '@/components/public/BeforeAfterSliderSection';
+import { CertificationsSection } from '@/components/public/CertificationsSection';
 import { Footer } from '@/components/public/Footer';
 import { db } from '@/lib/db';
 
@@ -344,6 +346,11 @@ export default async function Home() {
         </section>
 
         {/* ============================================================
+            TRUSTED BY STRIP (BrandWeld, PaMii, Spring Health, WorldClass, etc.)
+            ============================================================ */}
+        <TrustedByStrip />
+
+        {/* ============================================================
             7. PORTFOLIO & PROOF VAULT (Real Results, Real Numbers)
             ============================================================ */}
         <PortfolioSection />
@@ -359,12 +366,12 @@ export default async function Home() {
         <section className="w-full bg-white border-b border-[#CBD5E1] py-20 relative overflow-hidden" id="testimonials">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-10 relative z-10">
             <div className="max-w-[760px] mb-12 text-left">
-              <span className="eyebrow mb-3.5">Verified Feedback</span>
+              <span className="eyebrow mb-3.5">Client Reviews</span>
               <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-3 text-[#0F172A] font-bold">
                 What Business Owners Say Once The Calls Start Rolling In
               </h2>
               <p className="text-[#475569] text-[16.5px] leading-relaxed">
-                Real feedback from verified contractors across the US.
+                Service business owners across the US trust WP Hossain to run their Google Ads. They get leads, not excuses.
               </p>
             </div>
             <TestimonialsSlider testimonials={testimonials} />
@@ -377,44 +384,9 @@ export default async function Home() {
         <BeforeAfterSliderSection />
 
         {/* ============================================================
-            11. CERTIFICATIONS & BADGES (Left-Aligned)
+            11. CERTIFICATIONS & OFFICIAL GOOGLE PARTNER
             ============================================================ */}
-        <section className="w-full bg-[#F8FAFC] border-b border-[#CBD5E1] py-20 relative overflow-hidden" id="certifications">
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
-            <div className="max-w-[760px] mb-12 text-left">
-              <span className="eyebrow mb-3.5">Official Accreditations</span>
-              <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-3 text-[#0F172A] font-bold">
-                Official Google Partner &amp; Certified Accreditations
-              </h2>
-              <p className="text-[#475569] text-[16.5px] leading-relaxed">
-                Verified credentials across Google Ads, Analytics, Tag Manager, and Meta conversion tracking.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-              {activeCerts.map((cert: any, i: number) => {
-                const brandTopColor = 
-                  cert.badge_type === 'google-ads' ? '#4285F4' :
-                  cert.badge_type === 'google-analytics' ? '#F9AB00' :
-                  cert.badge_type === 'tag-manager' ? '#246FDB' : '#1877F2';
-                return (
-                  <div 
-                    key={i} 
-                    className="group relative bg-white rounded-2xl p-6 h-36 flex items-center justify-center overflow-hidden border border-[#CBD5E1] shadow-2xs transition-all hover:shadow-md hover:-translate-y-1"
-                    style={{ borderTop: `4px solid ${brandTopColor}` }}
-                  >
-                    {cert.badge_type === 'google-ads' && <GoogleAdsCertBadge />}
-                    {cert.badge_type === 'google-analytics' && <GoogleAnalyticsCertBadge />}
-                    {cert.badge_type === 'tag-manager' && <GTMCertBadge />}
-                    {cert.badge_type === 'meta' && <MetaCertBadge />}
-                    {!['google-ads', 'google-analytics', 'tag-manager', 'meta'].includes(cert.badge_type) && (
-                      <div className="text-[#0F172A] font-display font-bold text-lg text-center">{cert.title}</div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
+        <CertificationsSection />
 
         {/* ============================================================
             11. FAQ ACCORDION (Left-Aligned)
