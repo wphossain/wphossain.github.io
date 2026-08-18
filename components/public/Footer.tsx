@@ -27,8 +27,12 @@ export function Footer({ settings }: FooterProps) {
   const zcalLink = settings?.zcal_link || "https://zcal.co/wphossain/free";
   const linkedinUrl = settings?.linkedin_url || "https://linkedin.com/in/wphossain";
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <footer className="w-full bg-[#F8FAFC] text-[#0F172A] pt-16 lg:pt-20 pb-12 relative overflow-hidden border-t border-[#CBD5E1]">
+    <footer className="w-full bg-[#F8FAFC] text-[#0F172A] pt-14 lg:pt-16 pb-12 relative overflow-hidden border-t border-[#CBD5E1]">
       
       {/* Subtle ambient light backlights */}
       <div className="absolute top-0 right-1/4 w-[500px] h-[300px] bg-[radial-gradient(ellipse,rgba(26,115,232,0.035),transparent_70%)] pointer-events-none" />
@@ -36,6 +40,45 @@ export function Footer({ settings }: FooterProps) {
 
       <div className="max-w-[1440px] mx-auto px-6 lg:px-10 relative z-10">
         
+        {/* ============================================================
+            PRE-FOOTER CTA CARD (High Converting Hero Banner)
+            ============================================================ */}
+        <div className="mb-14 rounded-[28px] border-2 border-[#0F172A] bg-white p-8 sm:p-10 shadow-xl flex flex-col lg:flex-row items-center justify-between gap-6 relative overflow-hidden">
+          <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-[radial-gradient(circle,rgba(5,150,105,0.08),transparent_70%)] pointer-events-none" />
+          
+          <div className="max-w-2xl text-center lg:text-left">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-[#059669] text-[11px] font-extrabold uppercase tracking-wider mb-3">
+              <span className="w-2 h-2 rounded-full bg-[#059669] animate-ping" />
+              Direct Specialist Access
+            </span>
+            <h3 className="text-[24px] sm:text-[30px] font-bold text-[#0F172A] leading-tight font-display tracking-tight mb-2">
+              Ready to Stop Click Bleed and Scale Booked Jobs?
+            </h3>
+            <p className="text-[14.5px] text-[#475569] leading-relaxed">
+              Book a 15-minute 1-on-1 strategy call with WP Hossain. We will review your search terms, spot budget waste, and show you how to generate high-margin contractor jobs.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full lg:w-auto">
+            <a
+              href={zcalLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-[#0F172A] text-white hover:bg-[#1A73E8] font-bold text-[14px] text-center shadow-md transition-all duration-200"
+            >
+              Book Free Strategy Audit →
+            </a>
+            <a
+              href={`https://wa.me/${whatsappNumber}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white border border-[#CBD5E1] text-[#0F172A] hover:border-[#059669] hover:text-[#059669] font-bold text-[14px] text-center shadow-2xs transition-all duration-200"
+            >
+              WhatsApp Direct 💬
+            </a>
+          </div>
+        </div>
+
         {/* ============================================================
             TOP 4-COLUMN GRID (Site Theme: Crisp White & Slate)
             ============================================================ */}
@@ -82,7 +125,7 @@ export function Footer({ settings }: FooterProps) {
               </Link>
 
               {/* Bio & Value Proposition */}
-              <p className="text-[#475569] text-[14.5px] leading-relaxed max-w-md mb-6">
+              <p className="text-[#475569] text-[14px] leading-relaxed max-w-md mb-6">
                 Google Ads Specialist turning search spend into real, booked service jobs for local contractors. High-intent search campaign architecture, 1,200+ negative keyword fortresses, and CallRail dynamic call tracking.
               </p>
             </div>
@@ -276,7 +319,7 @@ export function Footer({ settings }: FooterProps) {
         </div>
 
         {/* ============================================================
-            BOTTOM COPYRIGHT BAR
+            BOTTOM COPYRIGHT BAR & BACK TO TOP
             ============================================================ */}
         <div className="pt-8 border-t border-[#E2E8F0] flex flex-col md:flex-row items-center justify-between gap-4 text-[12.5px] text-[#64748B]">
           <div>
@@ -285,8 +328,17 @@ export function Footer({ settings }: FooterProps) {
             <span> · All rights reserved · Dedicated Google Ads Specialist for Local Contractors</span>
           </div>
 
-          <div className="text-[#64748B] text-center md:text-right">
-            <span>Turning local service clicks into booked jobs with verified attribution.</span>
+          <div className="flex items-center gap-4">
+            <span className="hidden sm:inline-block text-[#64748B]">
+              Turning local service clicks into booked jobs.
+            </span>
+            <button
+              onClick={scrollToTop}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-[#CBD5E1] text-[#0F172A] hover:bg-slate-50 hover:border-[#0F172A] font-semibold text-[12px] shadow-2xs transition-all"
+            >
+              <span>Back to Top</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+            </button>
           </div>
         </div>
 
