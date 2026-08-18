@@ -65,7 +65,7 @@ export function MobileHeader({
     { label: 'Ecosystem', href: '/#ecosystem', key: '#ecosystem' },
     { label: 'Services', href: '/#services', key: '#services' },
     { label: 'Why Me', href: '/#why-me', key: '#why-me' },
-    { label: 'Case Studies', href: '/#portfolio', key: '#portfolio' },
+    { label: 'Portfolio', href: '/#portfolio', key: '#portfolio' },
     { label: 'Packages', href: '/#packages', key: '#packages' },
     { label: 'Reviews', href: '/#testimonials', key: '#testimonials' },
     { label: 'FAQ', href: '/#faq', key: '#faq' },
@@ -85,18 +85,18 @@ export function MobileHeader({
           ? 'bg-white/95 backdrop-blur-md border-b border-[#E2E8F0] shadow-xs' 
           : 'bg-white border-b border-[#E2E8F0]'
       }`}>
-        <div className="flex items-center justify-between gap-3 px-4 py-3">
-          <Link href="/#home" className="mobile-brand flex items-center gap-2.5 group">
+        <div className="flex items-center justify-between px-4 py-3">
+          <Link href="/#home" className="flex items-center gap-2.5 group">
             <div className="relative">
               {imgError ? (
-                <div className="w-9 h-9 rounded-full bg-[#0F172A] grid place-items-center border-2 border-white text-white text-xs font-bold shrink-0">
+                <div className="w-8 h-8 rounded-full bg-[#0F172A] grid place-items-center text-white text-[10px] font-bold shrink-0 border-2 border-white shadow-xs">
                   WH
                 </div>
               ) : (
                 <img 
                   src={avatarUrl} 
                   alt="WP Hossain" 
-                  className="w-9 h-9 rounded-full object-cover border-2 border-white shrink-0" 
+                  className="w-8 h-8 rounded-full object-cover border-2 border-white shadow-xs shrink-0" 
                   onError={() => setImgError(true)} 
                 />
               )}
@@ -112,12 +112,14 @@ export function MobileHeader({
           </Link>
 
           <div className="flex items-center gap-2">
-            <Link 
+            <a 
               className="btn btn-primary text-[12px] font-bold py-1.5 px-3 rounded-xl shadow-xs" 
-              href="/#contact"
+              href="https://zcal.co/wphossain/free"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Book Call
-            </Link>
+            </a>
 
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -210,13 +212,15 @@ export function MobileHeader({
             </div>
 
             <div className="flex flex-col gap-4 border-t border-[#E2E8F0] pt-4 mt-auto">
-              <Link 
-                className="btn btn-primary w-full text-[13.5px] font-bold py-3 rounded-xl text-center shadow-md" 
-                href="/#contact"
+              <a 
+                className="btn btn-primary w-full text-[13.5px] font-bold py-3 rounded-xl text-center shadow-md block" 
+                href="https://zcal.co/wphossain/free"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setIsOpen(false)}
               >
                 Book Free Strategy Call
-              </Link>
+              </a>
 
               <div className="flex justify-center gap-3">
                 <a href="https://www.linkedin.com/in/wphossain/" target="_blank" rel="noopener" aria-label="LinkedIn" className="w-9 h-9 rounded-xl grid place-items-center bg-slate-50 border border-[#CBD5E1] text-[#475569] hover:text-[#0F172A] hover:bg-slate-100 transition-all">

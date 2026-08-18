@@ -119,7 +119,9 @@ export function PackagesSection() {
 
               {/* Action Button */}
               <a 
-                href="#contact" 
+                href="https://zcal.co/wphossain/free" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`btn btn-block py-3.5 rounded-xl text-[14px] font-bold ${
                   pkg.popular 
                     ? 'btn-primary' 
@@ -134,7 +136,7 @@ export function PackagesSection() {
 
         {/* Custom Scope Footer Teaser */}
         <p className="text-center text-[13.5px] text-[#64748B] mt-10">
-          Need a custom engagement or have multiple trade locations? <a href="#contact" className="text-[#0F172A] font-bold underline hover:text-[#059669]">Book a 15-min strategy call</a> and we will build a custom scope.
+          Need a custom engagement or have multiple trade locations? <a href="https://zcal.co/wphossain/free" target="_blank" rel="noopener noreferrer" className="text-[#0F172A] font-bold underline hover:text-[#059669]">Book a 15-min strategy call</a> and we will build a custom scope.
         </p>
 
       </div>

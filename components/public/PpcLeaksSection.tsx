@@ -108,7 +108,12 @@ export function PpcLeaksSection() {
             <h3 className="text-xl lg:text-2xl font-bold font-display text-white">Want to see where your account is leaking ad budget?</h3>
             <p className="text-slate-300 text-[14px]">I&apos;ll run a comprehensive audit of your search terms, negative keywords, and tracking setup for free.</p>
           </div>
-          <a href="#contact" className="btn btn-emerald px-7 py-3.5 text-[14px] font-bold rounded-xl whitespace-nowrap shrink-0 shadow-lg">
+          <a 
+            href="https://zcal.co/wphossain/free" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="btn btn-emerald px-7 py-3.5 text-[14px] font-bold rounded-xl whitespace-nowrap shrink-0 shadow-lg"
+          >
             Request Free Account Audit →
           </a>
         </div>

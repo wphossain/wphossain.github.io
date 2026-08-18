@@ -53,7 +53,7 @@ export function Sidebar({
     { label: 'Ecosystem', href: '/#ecosystem', key: '#ecosystem' },
     { label: 'Services', href: '/#services', key: '#services' },
     { label: 'Why Me', href: '/#why-me', key: '#why-me' },
-    { label: 'Case Studies', href: '/#portfolio', key: '#portfolio' },
+    { label: 'Portfolio', href: '/#portfolio', key: '#portfolio' },
     { label: 'Packages', href: '/#packages', key: '#packages' },
     { label: 'Reviews', href: '/#testimonials', key: '#testimonials' },
     { label: 'FAQ', href: '/#faq', key: '#faq' },
@@ -127,13 +127,15 @@ export function Sidebar({
 
         {/* Right CTA Button */}
         <div className="flex items-center gap-3 shrink-0">
-          <Link 
-            href="/#contact" 
-            className="btn btn-primary text-[13.5px] font-bold py-2.5 px-5 rounded-xl shadow-xs"
+          <a 
+            href="https://zcal.co/wphossain/free" 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary text-[13.5px] font-bold py-2.5 px-5 rounded-xl shadow-xs inline-flex items-center gap-1.5"
           >
             <span>Book Free Strategy Call</span>
             <span className="text-[14px]">→</span>
-          </Link>
+          </a>
         </div>
 
       </div>

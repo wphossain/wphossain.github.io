@@ -14,7 +14,7 @@ import { WhyMeGrid } from '@/components/public/WhyMeGrid';
 import { PackagesSection } from '@/components/public/PackagesSection';
 import { TestimonialsSlider } from '@/components/public/TestimonialsSlider';
 import { FaqAccordion } from '@/components/public/FaqAccordion';
-import { ZcalEmbed } from '@/components/public/ZcalEmbed';
+import { PortfolioSection } from '@/components/public/PortfolioSection';
 import { LeadForm } from '@/components/public/LeadForm';
 import { FloatingContactFab } from '@/components/public/FloatingContactFab';
 import { StructuredData } from '@/components/public/StructuredData';
@@ -193,7 +193,9 @@ export default async function Home() {
                   <div className="flex flex-wrap gap-4 mb-4 max-sm:flex-col">
                     <a 
                       className="btn btn-primary px-8 py-3.5 text-[15px] font-bold rounded-xl shadow-lg hover:shadow-xl transition-all" 
-                      href="#contact"
+                      href="https://zcal.co/wphossain/free"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white mr-2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                       Book Free Strategy Call
@@ -346,54 +348,9 @@ export default async function Home() {
         </section>
 
         {/* ============================================================
-            7. CASE STUDIES & PROOF VAULT
+            7. PORTFOLIO & PROOF VAULT (Real Results, Real Numbers)
             ============================================================ */}
-        <section className="w-full bg-[#F8FAFC] border-b border-[#CBD5E1] py-20 relative overflow-hidden" id="portfolio">
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
-            <Reveal className="max-w-[760px] mb-12 flex justify-between items-end gap-6 max-sm:flex-col max-sm:items-start">
-              <div>
-                <span className="eyebrow">Verified Proof</span>
-                <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight text-[#0F172A] font-bold">
-                  Real Accounts, Real Fixes — Contractor Case Studies.
-                </h2>
-              </div>
-            </Reveal>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-              {caseStudies.map((c: any, i: number) => (
-                <article key={i} className="group flex flex-col bg-white border border-[#CBD5E1] shadow-xs rounded-[28px] p-7 hover:border-[#0F172A] hover:shadow-md transition-all duration-300">
-                  <div className="flex justify-between items-center mb-5 pb-3 border-b border-[#E2E8F0]">
-                    <span className="text-[11px] font-extrabold tracking-wider uppercase text-[#059669] bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
-                      {c.client_niche || "HVAC Contractor"}
-                    </span>
-                    <span className="text-[11px] font-bold text-[#64748B]">
-                      Verified ROI
-                    </span>
-                  </div>
-
-                  <div className="space-y-4 flex-1">
-                    <div className="space-y-1.5">
-                      <span className="text-[10px] font-extrabold tracking-wider uppercase text-[#64748B] block">The Challenge</span>
-                      <p className="text-[14px] text-[#334155] leading-relaxed line-clamp-3">{c.challenge}</p>
-                    </div>
-                    <div className="space-y-1.5">
-                      <span className="text-[10px] font-extrabold tracking-wider uppercase text-[#64748B] block">The Strategy</span>
-                      <p className="text-[14px] text-[#334155] leading-relaxed line-clamp-3">{c.strategy}</p>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 pt-5 border-t border-[#E2E8F0] bg-slate-50 -mx-7 -mb-7 p-6 rounded-b-[28px]">
-                    <span className="text-[10px] font-extrabold tracking-wider uppercase text-[#059669] block mb-1">Final Result</span>
-                    <p className="text-[16px] font-display font-bold text-[#0F172A] leading-tight mb-3">{c.result_summary}</p>
-                    <Link href={`/portfolio/${c.slug}`} className="inline-flex items-center gap-1.5 text-[13.5px] font-bold text-[#0F172A] group/link hover:text-[#059669] transition-colors">
-                      View Full Breakdown <span className="group-hover/link:translate-x-1 transition-transform">→</span>
-                    </Link>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
+        <PortfolioSection />
 
         {/* ============================================================
             8. TRANSPARENT PACKAGES & SCOPE (MasudPPC Inspired)
@@ -473,39 +430,70 @@ export default async function Home() {
         <section className="w-full bg-[#F8FAFC] border-b border-[#CBD5E1] py-20 relative overflow-hidden" id="contact">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-10 relative z-10">
             
-            <Reveal className="max-w-[760px] mb-14">
-              <span className="eyebrow">Book Your 1-on-1 Strategy Call</span>
-              <h2 className="text-[clamp(28px,4vw,42px)] font-display leading-tight mb-4 text-[#0F172A] font-bold">
-                Book a Free 15-Minute Google Ads Strategy Call.
-              </h2>
-              <p className="text-[#475569] text-[17px]">
-                Select a time that works for you. I will personally review your search campaigns, negative keywords, and tracking setup before we talk.
-              </p>
-            </Reveal>
-
-            <div className="flex flex-col gap-10">
-              {/* Zcal Embedded Widget */}
-              <div className="w-full">
-                <ZcalEmbed isDark={false} />
-              </div>
-              
-              {/* 5-Step What to Expect on the Call */}
-              <div className="w-full bg-white border border-[#CBD5E1] rounded-[28px] p-7 lg:p-8 shadow-2xs">
-                <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#64748B] block mb-5">What Happens on the 15-Min Call</span>
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                  {[
-                    { title: "Search Term Audit", desc: "A review of actual search queries to find wasted spend on DIY and job hunter terms." },
-                    { title: "Negative Keyword Moat", desc: "Inspection of your negative keyword lists to prevent budget leakage." },
-                    { title: "Tracking & CallRail Check", desc: "Verification of dynamic number insertion and GA4 conversion attribution." },
-                    { title: "Landing Page CRO", desc: "Review of mobile page speed and tap-to-call conversion friction points." },
-                    { title: "Clear Action Plan", desc: "A straightforward 3-step growth plan for lower Cost Per Lead and higher ROI." }
-                  ].map((item, i) => (
-                    <div key={i} className="p-4 rounded-xl border border-[#E2E8F0] bg-slate-50 flex flex-col gap-1.5">
-                      <span className="text-[11px] font-bold text-[#059669] font-display">0{i+1}. {item.title}</span>
-                      <p className="text-[12.5px] text-[#475569] leading-relaxed">{item.desc}</p>
-                    </div>
-                  ))}
+            <div className="bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] rounded-[32px] p-8 lg:p-12 text-white border border-slate-700 shadow-2xl mb-12">
+              <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 items-center">
+                <div>
+                  <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11.5px] font-extrabold uppercase tracking-widest mb-4">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    Direct Booking Available
+                  </span>
+                  <h2 className="text-[clamp(28px,4vw,42px)] font-display font-extrabold text-white leading-tight mb-4">
+                    Book a Free 15-Minute Google Ads Strategy Call
+                  </h2>
+                  <p className="text-slate-300 text-[16px] leading-relaxed max-w-xl mb-6">
+                    Pick a convenient time slot on my calendar. I will personally review your search campaigns, negative keywords, and call tracking setup before we jump on the call.
+                  </p>
+                  <div className="flex flex-wrap gap-4 items-center">
+                    <a 
+                      href="https://zcal.co/wphossain/free" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="btn btn-primary px-8 py-4 text-[15px] font-bold rounded-xl shadow-xl hover:scale-105 transition-all inline-flex items-center gap-2"
+                    >
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                      <span>Book Free Strategy Call on Zcal</span>
+                      <span className="text-[16px]">↗</span>
+                    </a>
+                    <span className="text-[12.5px] text-slate-400 font-medium">
+                      ✓ Instant confirmation · Zero sales pitch
+                    </span>
+                  </div>
                 </div>
+
+                {/* Quick Benefit Cards */}
+                <div className="bg-slate-900/60 border border-slate-700/80 rounded-2xl p-6 flex flex-col gap-4">
+                  <div className="flex items-center gap-3 text-[14px] text-slate-200">
+                    <span className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm shrink-0">1</span>
+                    <span>15-Minute focused screen share on your account</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-[14px] text-slate-200">
+                    <span className="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-sm shrink-0">2</span>
+                    <span>Uncover search term leaks &amp; broad match bleed</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-[14px] text-slate-200">
+                    <span className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-sm shrink-0">3</span>
+                    <span>Get a direct 3-step action plan to lower CPL</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 5-Step What to Expect on the Call */}
+            <div className="w-full bg-white border border-[#CBD5E1] rounded-[28px] p-7 lg:p-8 shadow-2xs">
+              <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#64748B] block mb-5">What Happens on the 15-Min Call</span>
+              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                {[
+                  { title: "Search Term Audit", desc: "A review of actual search queries to find wasted spend on DIY and job hunter terms." },
+                  { title: "Negative Keyword Moat", desc: "Inspection of your negative keyword lists to prevent budget leakage." },
+                  { title: "Tracking & CallRail Check", desc: "Verification of dynamic number insertion and GA4 conversion attribution." },
+                  { title: "Landing Page CRO", desc: "Review of mobile page speed and tap-to-call conversion friction points." },
+                  { title: "Clear Action Plan", desc: "A straightforward 3-step growth plan for lower Cost Per Lead and higher ROI." }
+                ].map((item, i) => (
+                  <div key={i} className="p-4 rounded-xl border border-[#E2E8F0] bg-slate-50 flex flex-col gap-1.5">
+                    <span className="text-[11px] font-bold text-[#059669] font-display">0{i+1}. {item.title}</span>
+                    <p className="text-[12.5px] text-[#475569] leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -573,8 +561,6 @@ export default async function Home() {
         </footer>
 
       </main>
-
-      <Script src="https://static.zcal.co/embed/v1/embed.js" strategy="lazyOnload" />
 
       {/* Custom Body Scripts */}
       {tracking?.custom_body_scripts && (

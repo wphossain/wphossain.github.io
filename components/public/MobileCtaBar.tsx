@@ -17,7 +17,7 @@ export function MobileCtaBar() {
   const whatsappNumber = (settings.whatsapp_number || '').replace(/\D/g, '');
   const whatsapp = whatsappNumber ? `https://wa.me/${whatsappNumber}` : '';
   const tel = settings.phone ? `tel:${settings.phone.replace(/[^+\d]/g, '')}` : null;
-  const book = `#contact`;
+  const book = settings.zcal_link || 'https://zcal.co/wphossain/free';
 
   return (
     <nav
@@ -51,6 +51,8 @@ export function MobileCtaBar() {
         )}
         <a
           href={book}
+          target="_blank"
+          rel="noopener noreferrer"
           className="flex flex-col items-center justify-center gap-1 py-3 bg-[#2563EB] text-white active:bg-[#1D4ED8] transition-colors"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

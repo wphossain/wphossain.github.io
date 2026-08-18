@@ -40,7 +40,7 @@ const INITIAL_SETTINGS = {
   phone: '+1...',
   whatsapp_number: '10000000000',
   global_cta_text: 'Book Free Call',
-  zcal_link: 'https://zcal.co/i/hJJ3Hx9l',
+  zcal_link: 'https://zcal.co/wphossain/free',
   linkedin_url: 'https://www.linkedin.com/in/wphossain/',
   facebook_url: '',
   twitter_url: '',

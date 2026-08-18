@@ -34,7 +34,9 @@ export function FloatingContactFab({
 
           {/* Book Strategy Call Button */}
           <a
-            href="#contact"
+            href="https://zcal.co/wphossain/free"
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={() => setIsOpen(false)}
             className="flex items-center gap-2.5 bg-white border border-[#CBD5E1] text-[#0F172A] px-4 py-2.5 rounded-full shadow-lg hover:border-[#1A73E8] hover:scale-105 transition-all group font-bold text-[13px]"
           >
