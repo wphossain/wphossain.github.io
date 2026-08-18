@@ -20,6 +20,7 @@ import { FloatingContactFab } from '@/components/public/FloatingContactFab';
 import { StructuredData } from '@/components/public/StructuredData';
 import { GoogleAdsCertBadge, GoogleAnalyticsCertBadge, GTMCertBadge, MetaCertBadge } from '@/components/public/CertBadges';
 import { Reveal } from '@/components/public/Reveal';
+import { Footer } from '@/components/public/Footer';
 import { db } from '@/lib/db';
 
 export const revalidate = 60;
@@ -551,14 +552,9 @@ export default async function Home() {
         </section>
 
         {/* ============================================================
-            14. SITE FOOTER
+            14. PROFESSIONAL SITE FOOTER (4-Col + Highlight Stats)
             ============================================================ */}
-        <footer className="site-footer bg-[#F8FAFC] text-center text-[13px] text-[#64748B] py-12 border-t border-[#CBD5E1]">
-          <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
-            <p className="mb-2"><strong className="text-[#0F172A]">WP Hossain</strong> — Google Ads Specialist for Local Service Contractors. © 2026. All rights reserved.</p>
-            <p className="text-[12px] text-[#94A3B8]">Dedicated Google Ads &amp; Paid Search Growth Systems for Local Service Contractors.</p>
-          </div>
-        </footer>
+        <Footer settings={settings} />
 
       </main>
 

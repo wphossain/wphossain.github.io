@@ -4,6 +4,7 @@ import { Sidebar } from '@/components/public/Sidebar';
 import { MobileHeader } from '@/components/public/MobileHeader';
 import { db } from '@/lib/db';
 import { MobileCtaBar } from '@/components/public/MobileCtaBar';
+import { Footer } from '@/components/public/Footer';
 import { notFound } from 'next/navigation';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -29,8 +30,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function SingleCaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   let study: any = null;
+  let settings: any = {};
   try {
-    study = await db.getCaseStudyBySlug(slug);
+    const [st, set] = await Promise.all([
+      db.getCaseStudyBySlug(slug),
+      db.getSettings()
+    ]);
+    study = st;
+    settings = set || {};
   } catch (e) {
     console.error("Error fetching case study:", e);
   }
@@ -63,8 +70,8 @@ export default async function SingleCaseStudyPage({ params }: { params: Promise<
       <MobileHeader />
       <MobileCtaBar />
 
-      <main className="min-h-screen bg-white pb-24 lg:pb-12">
-        <div className="max-w-[1000px] mx-auto px-6 lg:px-10 pt-8 lg:pt-12 flex flex-col gap-6">
+      <main className="min-h-screen bg-white pb-24 lg:pb-0">
+        <div className="max-w-[1000px] mx-auto px-6 lg:px-10 pt-8 lg:pt-12 pb-16 flex flex-col gap-6">
           
           <Link 
             href="/#portfolio" 
@@ -144,6 +151,8 @@ export default async function SingleCaseStudyPage({ params }: { params: Promise<
 
           </article>
         </div>
+
+        <Footer settings={settings} />
       </main>
     </>
   );

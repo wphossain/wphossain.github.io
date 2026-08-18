@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
 interface SidebarProps {
@@ -12,17 +12,58 @@ interface SidebarProps {
   ctaText?: string;
 }
 
+const SERVICE_ITEMS = [
+  {
+    title: 'Google Ads Management',
+    icon: '🎯',
+    color: '#4285F4',
+    href: '/#services'
+  },
+  {
+    title: 'Negative Keyword Fortresses',
+    icon: '🛡️',
+    color: '#EA4335',
+    href: '/#services'
+  },
+  {
+    title: 'CallRail & Call Tracking DNI',
+    icon: '📞',
+    color: '#34A853',
+    href: '/#services'
+  },
+  {
+    title: 'Click-to-Call Landing Pages',
+    icon: '⚡',
+    color: '#FBBC04',
+    href: '/#services'
+  },
+  {
+    title: 'GA4 & GTM Attribution',
+    icon: '🔬',
+    color: '#1A73E8',
+    href: '/#services'
+  },
+  {
+    title: 'Local Service Ads (LSA)',
+    icon: '🚀',
+    color: '#059669',
+    href: '/#services'
+  }
+];
+
 export function Sidebar({
   ownerName = "WP Hossain",
   jobTitle = "Google Ads Specialist",
   avatarUrl = "/images/headshot.jpg",
   email = "Contact@wphossain.com",
   availabilityStatus = "Available for Q3/Q4 Projects",
-  ctaText = "Book Free Call"
+  ctaText = "Book Free Strategy Call"
 }: SidebarProps) {
   const [imgError, setImgError] = useState(false);
   const [activeHash, setActiveHash] = useState('#home');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,8 +78,6 @@ export function Sidebar({
     const handleHashChange = () => {
       if (window.location.hash) {
         setActiveHash(window.location.hash);
-      } else if (window.location.pathname.startsWith('/blog')) {
-        setActiveHash('/blog');
       } else {
         setActiveHash('#home');
       }
@@ -48,17 +87,16 @@ export function Sidebar({
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  const navItems = [
-    { label: 'Home', href: '/#home', key: '#home' },
-    { label: 'Ecosystem', href: '/#ecosystem', key: '#ecosystem' },
-    { label: 'Services', href: '/#services', key: '#services' },
-    { label: 'Why Me', href: '/#why-me', key: '#why-me' },
-    { label: 'Portfolio', href: '/#portfolio', key: '#portfolio' },
-    { label: 'Packages', href: '/#packages', key: '#packages' },
-    { label: 'Reviews', href: '/#testimonials', key: '#testimonials' },
-    { label: 'FAQ', href: '/#faq', key: '#faq' },
-    { label: 'Blog', href: '/blog', key: '/blog' }
-  ];
+  const handleMouseEnter = () => {
+    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+    setIsDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setIsDropdownOpen(false);
+    }, 180);
+  };
 
   return (
     <header className={`sticky top-0 z-50 w-full transition-all duration-300 hidden lg:block ${
@@ -68,7 +106,7 @@ export function Sidebar({
     }`}>
       <div className="max-w-[1440px] mx-auto px-6 lg:px-10 flex items-center justify-between gap-6">
         
-        {/* Brand / Logo (Always WP Hossain) */}
+        {/* Brand / Logo */}
         <Link href="/#home" className="flex items-center gap-3 group shrink-0">
           <div className="relative">
             {imgError ? (
@@ -105,24 +143,126 @@ export function Sidebar({
           </div>
         </Link>
 
-        {/* Center Navigation Links */}
+        {/* Center Navigation Links (Strictly: Home, Ecosystem, Services, Why Me, Portfolio, Pricing) */}
         <nav className="flex items-center gap-1 xl:gap-2">
-          {navItems.map((item) => {
-            const isActive = activeHash === item.key || (item.key === '#home' && activeHash === '');
-            return (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={`px-3 py-1.5 rounded-lg text-[13.5px] font-semibold transition-all duration-150 ${
-                  isActive
-                    ? 'text-[#0F172A] font-bold bg-slate-100'
-                    : 'text-[#475569] hover:text-[#0F172A] hover:bg-slate-50'
-                }`}
+          
+          {/* 1. Home */}
+          <Link
+            href="/#home"
+            className={`px-3 py-1.5 rounded-lg text-[13.5px] font-semibold transition-all duration-150 ${
+              activeHash === '#home' || activeHash === ''
+                ? 'text-[#0F172A] font-bold bg-slate-100'
+                : 'text-[#475569] hover:text-[#0F172A] hover:bg-slate-50'
+            }`}
+          >
+            Home
+          </Link>
+
+          {/* 2. Ecosystem */}
+          <Link
+            href="/#ecosystem"
+            className={`px-3 py-1.5 rounded-lg text-[13.5px] font-semibold transition-all duration-150 ${
+              activeHash === '#ecosystem'
+                ? 'text-[#0F172A] font-bold bg-slate-100'
+                : 'text-[#475569] hover:text-[#0F172A] hover:bg-slate-50'
+            }`}
+          >
+            Ecosystem
+          </Link>
+
+          {/* 3. Services with Dropdown Menu */}
+          <div 
+            className="relative"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <Link
+              href="/#services"
+              onClick={() => setIsDropdownOpen(false)}
+              className={`px-3 py-1.5 rounded-lg text-[13.5px] font-semibold transition-all duration-150 inline-flex items-center gap-1.5 ${
+                activeHash === '#services' || isDropdownOpen
+                  ? 'text-[#1A73E8] font-bold bg-blue-50/80'
+                  : 'text-[#475569] hover:text-[#0F172A] hover:bg-slate-50'
+              }`}
+            >
+              <span>Services</span>
+              <svg 
+                width="12" 
+                height="12" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2.5" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+                className={`transition-transform duration-200 ${isDropdownOpen ? 'rotate-180 text-[#1A73E8]' : 'text-slate-400'}`}
               >
-                {item.label}
-              </Link>
-            );
-          })}
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
+            </Link>
+
+            {/* Dropdown Popup Card (Crisp White Theme matching site) */}
+            {isDropdownOpen && (
+              <div 
+                className="absolute top-full left-0 mt-2 w-[280px] bg-white border border-[#CBD5E1] rounded-[20px] p-2 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150"
+              >
+                <div className="flex flex-col gap-1">
+                  {SERVICE_ITEMS.map((item, i) => (
+                    <Link
+                      key={i}
+                      href={item.href}
+                      onClick={() => setIsDropdownOpen(false)}
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 border border-transparent hover:border-[#E2E8F0] transition-all group"
+                    >
+                      <div className="w-8 h-8 rounded-lg bg-slate-50 border border-[#CBD5E1] flex items-center justify-center text-sm shrink-0 group-hover:scale-105 group-hover:border-[#1A73E8] transition-all shadow-2xs">
+                        {item.icon}
+                      </div>
+                      <span className="text-[13px] font-semibold text-[#0F172A] group-hover:text-[#1A73E8] transition-colors">
+                        {item.title}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* 4. Why Me */}
+          <Link
+            href="/#why-me"
+            className={`px-3 py-1.5 rounded-lg text-[13.5px] font-semibold transition-all duration-150 ${
+              activeHash === '#why-me'
+                ? 'text-[#0F172A] font-bold bg-slate-100'
+                : 'text-[#475569] hover:text-[#0F172A] hover:bg-slate-50'
+            }`}
+          >
+            Why Me
+          </Link>
+
+          {/* 5. Portfolio */}
+          <Link
+            href="/#portfolio"
+            className={`px-3 py-1.5 rounded-lg text-[13.5px] font-semibold transition-all duration-150 ${
+              activeHash === '#portfolio'
+                ? 'text-[#0F172A] font-bold bg-slate-100'
+                : 'text-[#475569] hover:text-[#0F172A] hover:bg-slate-50'
+            }`}
+          >
+            Portfolio
+          </Link>
+
+          {/* 6. Pricing (Points to Packages section) */}
+          <Link
+            href="/#packages"
+            className={`px-3 py-1.5 rounded-lg text-[13.5px] font-semibold transition-all duration-150 ${
+              activeHash === '#packages'
+                ? 'text-[#0F172A] font-bold bg-slate-100'
+                : 'text-[#475569] hover:text-[#0F172A] hover:bg-slate-50'
+            }`}
+          >
+            Pricing
+          </Link>
+
         </nav>
 
         {/* Right CTA Button */}

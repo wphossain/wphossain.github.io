@@ -12,6 +12,39 @@ interface MobileHeaderProps {
   ctaText?: string;
 }
 
+const SERVICE_ITEMS = [
+  {
+    title: 'Google Ads Management',
+    icon: '🎯',
+    href: '/#services'
+  },
+  {
+    title: 'Negative Keyword Fortresses',
+    icon: '🛡️',
+    href: '/#services'
+  },
+  {
+    title: 'CallRail & Call Tracking DNI',
+    icon: '📞',
+    href: '/#services'
+  },
+  {
+    title: 'Click-to-Call Landing Pages',
+    icon: '⚡',
+    href: '/#services'
+  },
+  {
+    title: 'GA4 & GTM Attribution',
+    icon: '🔬',
+    href: '/#services'
+  },
+  {
+    title: 'Local Service Ads (LSA)',
+    icon: '🚀',
+    href: '/#services'
+  }
+];
+
 export function MobileHeader({
   ownerName = "WP Hossain",
   jobTitle = "Google Ads Specialist",
@@ -23,6 +56,7 @@ export function MobileHeader({
   const [imgError, setImgError] = useState(false);
   const [activeHash, setActiveHash] = useState('#home');
   const [isOpen, setIsOpen] = useState(false);
+  const [isServicesExpanded, setIsServicesExpanded] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -38,8 +72,6 @@ export function MobileHeader({
     const handleHashChange = () => {
       if (window.location.hash) {
         setActiveHash(window.location.hash);
-      } else if (window.location.pathname.startsWith('/blog')) {
-        setActiveHash('/blog');
       } else {
         setActiveHash('#home');
       }
@@ -59,19 +91,6 @@ export function MobileHeader({
       document.body.style.overflow = '';
     };
   }, [isOpen]);
-
-  const menuItems = [
-    { label: 'Home', href: '/#home', key: '#home' },
-    { label: 'Ecosystem', href: '/#ecosystem', key: '#ecosystem' },
-    { label: 'Services', href: '/#services', key: '#services' },
-    { label: 'Why Me', href: '/#why-me', key: '#why-me' },
-    { label: 'Portfolio', href: '/#portfolio', key: '#portfolio' },
-    { label: 'Packages', href: '/#packages', key: '#packages' },
-    { label: 'Reviews', href: '/#testimonials', key: '#testimonials' },
-    { label: 'FAQ', href: '/#faq', key: '#faq' },
-    { label: 'Blog', href: '/blog', key: '/blog' },
-    { label: 'Contact', href: '/#contact', key: '#contact' }
-  ];
 
   const handleNavClick = (key: string) => {
     setActiveHash(key);
@@ -188,26 +207,137 @@ export function MobileHeader({
               </div>
 
               <nav className="flex flex-col gap-1 py-2">
-                {menuItems.map((item) => {
-                  const isActive = activeHash === item.key || (item.key === '#home' && activeHash === '');
-                  return (
+                
+                {/* 1. Home */}
+                <Link
+                  href="/#home"
+                  onClick={() => handleNavClick('#home')}
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-[14px] font-semibold transition-all duration-200 ${
+                    activeHash === '#home' || activeHash === ''
+                      ? 'text-[#0F172A] font-bold bg-slate-100 border-l-3 border-[#0F172A]'
+                      : 'text-[#475569] hover:text-[#0F172A] hover:bg-slate-50'
+                  }`}
+                >
+                  <span>Home</span>
+                  {(activeHash === '#home' || activeHash === '') && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#059669]" />
+                  )}
+                </Link>
+
+                {/* 2. Ecosystem */}
+                <Link
+                  href="/#ecosystem"
+                  onClick={() => handleNavClick('#ecosystem')}
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-[14px] font-semibold transition-all duration-200 ${
+                    activeHash === '#ecosystem'
+                      ? 'text-[#0F172A] font-bold bg-slate-100 border-l-3 border-[#0F172A]'
+                      : 'text-[#475569] hover:text-[#0F172A] hover:bg-slate-50'
+                  }`}
+                >
+                  <span>Ecosystem</span>
+                  {activeHash === '#ecosystem' && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#059669]" />
+                  )}
+                </Link>
+
+                {/* 3. Services with Collapsible Submenu */}
+                <div>
+                  <div className="flex items-center justify-between">
                     <Link
-                      key={item.label}
-                      href={item.href}
-                      onClick={() => handleNavClick(item.key)}
-                      className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-[14px] font-semibold transition-all duration-200 ${
-                        isActive
+                      href="/#services"
+                      onClick={() => handleNavClick('#services')}
+                      className={`flex-1 flex items-center justify-between px-3.5 py-2.5 rounded-xl text-[14px] font-semibold transition-all duration-200 ${
+                        activeHash === '#services'
                           ? 'text-[#0F172A] font-bold bg-slate-100 border-l-3 border-[#0F172A]'
                           : 'text-[#475569] hover:text-[#0F172A] hover:bg-slate-50'
                       }`}
                     >
-                      <span>{item.label}</span>
-                      {isActive && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#059669]" />
-                      )}
+                      <span>Services</span>
                     </Link>
-                  );
-                })}
+                    <button
+                      onClick={() => setIsServicesExpanded(!isServicesExpanded)}
+                      className="p-2.5 text-slate-400 hover:text-[#0F172A] transition-colors"
+                      aria-label="Toggle Services List"
+                    >
+                      <svg 
+                        width="14" 
+                        height="14" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2.5"
+                        className={`transition-transform duration-200 ${isServicesExpanded ? 'rotate-180 text-[#1A73E8]' : ''}`}
+                      >
+                        <path d="m6 9 6 6 6-6"/>
+                      </svg>
+                    </button>
+                  </div>
+
+                  {isServicesExpanded && (
+                    <div className="pl-3 pr-1 py-1.5 ml-3 border-l-2 border-slate-200 flex flex-col gap-1 mt-1 animate-in fade-in duration-200">
+                      {SERVICE_ITEMS.map((srv, idx) => (
+                        <Link
+                          key={idx}
+                          href={srv.href}
+                          onClick={() => handleNavClick('#services')}
+                          className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-[13px] text-[#475569] hover:text-[#0F172A] hover:bg-slate-100 transition-colors"
+                        >
+                          <span className="text-xs">{srv.icon}</span>
+                          <span>{srv.title}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* 4. Why Me */}
+                <Link
+                  href="/#why-me"
+                  onClick={() => handleNavClick('#why-me')}
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-[14px] font-semibold transition-all duration-200 ${
+                    activeHash === '#why-me'
+                      ? 'text-[#0F172A] font-bold bg-slate-100 border-l-3 border-[#0F172A]'
+                      : 'text-[#475569] hover:text-[#0F172A] hover:bg-slate-50'
+                  }`}
+                >
+                  <span>Why Me</span>
+                  {activeHash === '#why-me' && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#059669]" />
+                  )}
+                </Link>
+
+                {/* 5. Portfolio */}
+                <Link
+                  href="/#portfolio"
+                  onClick={() => handleNavClick('#portfolio')}
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-[14px] font-semibold transition-all duration-200 ${
+                    activeHash === '#portfolio'
+                      ? 'text-[#0F172A] font-bold bg-slate-100 border-l-3 border-[#0F172A]'
+                      : 'text-[#475569] hover:text-[#0F172A] hover:bg-slate-50'
+                  }`}
+                >
+                  <span>Portfolio</span>
+                  {activeHash === '#portfolio' && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#059669]" />
+                  )}
+                </Link>
+
+                {/* 6. Pricing */}
+                <Link
+                  href="/#packages"
+                  onClick={() => handleNavClick('#packages')}
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-[14px] font-semibold transition-all duration-200 ${
+                    activeHash === '#packages'
+                      ? 'text-[#0F172A] font-bold bg-slate-100 border-l-3 border-[#0F172A]'
+                      : 'text-[#475569] hover:text-[#0F172A] hover:bg-slate-50'
+                  }`}
+                >
+                  <span>Pricing</span>
+                  {activeHash === '#packages' && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#059669]" />
+                  )}
+                </Link>
+
               </nav>
             </div>
 

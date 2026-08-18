@@ -4,6 +4,7 @@ import { Sidebar } from '@/components/public/Sidebar';
 import { MobileHeader } from '@/components/public/MobileHeader';
 import { db } from '@/lib/db';
 import { MobileCtaBar } from '@/components/public/MobileCtaBar';
+import { Footer } from '@/components/public/Footer';
 
 export const metadata = {
   title: 'Contractor Google Ads Case Studies | WP Hossain',
@@ -12,8 +13,13 @@ export const metadata = {
 
 export default async function CaseStudiesIndexPage() {
   let studies: any[] = [];
+  let settings: any = {};
   try {
-    const fetched = await db.getCaseStudies();
+    const [fetched, set] = await Promise.all([
+      db.getCaseStudies(),
+      db.getSettings()
+    ]);
+    settings = set || {};
     if (Array.isArray(fetched) && fetched.length > 0) {
       studies = fetched.filter((s: any) => (typeof s.is_published === 'boolean' ? s.is_published : true));
     }
@@ -27,8 +33,8 @@ export default async function CaseStudiesIndexPage() {
       <MobileHeader />
       <MobileCtaBar />
 
-      <main className="min-h-screen bg-white pb-24 lg:pb-12">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-10 pt-8 lg:pt-12 flex flex-col gap-10">
+      <main className="min-h-screen bg-white pb-24 lg:pb-0">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-10 pt-8 lg:pt-12 pb-16 flex flex-col gap-10">
           
           {/* Header Banner */}
           <div className="bg-[#F8FAFC] border border-[#CBD5E1] rounded-[28px] p-8 lg:p-12 relative overflow-hidden">
@@ -99,6 +105,8 @@ export default async function CaseStudiesIndexPage() {
           </div>
 
         </div>
+
+        <Footer settings={settings} />
       </main>
     </>
   );
