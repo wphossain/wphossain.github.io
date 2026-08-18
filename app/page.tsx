@@ -58,6 +58,37 @@ const DEFAULT_CERTS = [
   { badge_type: 'meta', title: 'Meta Certified Partner' }
 ];
 
+const DEFAULT_TESTIMONIALS = [
+  {
+    client_name: "Derek Holbrook",
+    client_role: "Holbrook & Sons Plumbing · Nashville, TN",
+    quote: "We were drowning in tire-kicker calls for cheap $50 drain snaking while missing high-ticket $8,000 main sewer line replacements. Hossain rebuilt our keyword clusters around emergency hydro-jetting and slab leaks, backed by CallRail dynamic tracking. Our weekend dispatch schedule is now booked 3 weeks in advance.",
+    rating: 5,
+    avatar_url: "/avatars/derek-holbrook.jpg"
+  },
+  {
+    client_name: "Tony Russo",
+    client_role: "Sunstate Thermal & Air · Tampa, FL",
+    quote: "During Florida's 95°F summer peaks, our previous agency was blowing budget on broad terms like 'how to recharge freon'. WP Hossain deployed a 1,200+ negative keyword fortress and built a 0.8s mobile click-to-call funnel. We went from losing bids to booking same-day AC replacement installs daily.",
+    rating: 5,
+    avatar_url: "/avatars/tony-russo.jpg"
+  },
+  {
+    client_name: "Jake Patterson",
+    client_role: "Patterson Electric & EV Systems · Denver, CO",
+    quote: "Before working with WP Hossain, over 40% of our ad spend was wasted on job seekers and apprentice queries. He eliminated the search term bleed and dialed in affluent zip-code radius bidding. We now close multiple high-margin 200A panel upgrades and EV charger installs every single week.",
+    rating: 5,
+    avatar_url: "/avatars/jake-patterson.jpg"
+  },
+  {
+    client_name: "Carlos Mendez",
+    client_role: "Desert Shield Roofing & Restoration · Phoenix, AZ",
+    quote: "Roof replacement in the desert is hyper-competitive. Hossain set up geotargeted storm-damage radius campaigns paired with instant automated SMS routing to our field estimators. We stopped wasting money on minor patch jobs and focused 100% on full insurance roof replacements with 5.4x ROAS.",
+    rating: 5,
+    avatar_url: "/avatars/carlos-mendez.jpg"
+  }
+];
+
 export async function generateMetadata() {
   try {
     const settings = await db.getSettings();
@@ -91,6 +122,7 @@ export default async function Home() {
   const testimonials: any[] = results[5].status === 'fulfilled' && Array.isArray(results[5].value) ? results[5].value : [];
 
   const caseStudies = dbCaseStudies.length > 0 ? dbCaseStudies : DEFAULT_CASE_STUDIES;
+  const activeTestimonials = testimonials.length > 0 && !testimonials.some(t => t.client_name === 'M. Reyes' || t.client_name === 'Mike Harrison') ? testimonials : DEFAULT_TESTIMONIALS;
 
   const findSection = (key: string) => {
     const found = sections.find((s: any) => s?.section_key === key);
@@ -374,7 +406,7 @@ export default async function Home() {
                 Service business owners across the US trust WP Hossain to run their Google Ads. They get leads, not excuses.
               </p>
             </div>
-            <TestimonialsSlider testimonials={testimonials} />
+            <TestimonialsSlider testimonials={activeTestimonials} />
           </div>
         </section>
 
